@@ -50,7 +50,7 @@ assignees: Arman17Babaei
 
   **نام و نام خانوادگی:فریدون صلح جو 
 <details>
-  <summary>یگان ها و ساختمان ها (UML) </summary>
+  <summary> حکومت و یگان ها و ساختمان ها (UML) </summary>
 
   <div dir="ltr" align='right'>
 
