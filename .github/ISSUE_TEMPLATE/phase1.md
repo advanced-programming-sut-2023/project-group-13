@@ -45,14 +45,14 @@ assignees: Arman17Babaei
 
 ## تسک‌های نفر اول
 
-  **نام و نام خانوادگی:**
+  **نام و نام خانوادگی:فریدون صلح جو 
 <details>
-  <summary>تسک مربوطه</summary>
+  <summary>ساختمان ها و یگان ها (UML)</summary>
 
   <div dir="ltr" align='right'>
 
   1. [ ] شروع نشده
-  2. [ ] در حال انجام
+  2. [*] در حال انجام
   3. [ ] تمام شده
   </div>
 </details>
