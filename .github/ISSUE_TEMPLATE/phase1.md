@@ -47,12 +47,12 @@ assignees: Arman17Babaei
 
   **نام و نام خانوادگی:فریدون صلح جو 
 <details>
-  <summary>ساختمان ها و یگان ها (UML)</summary>
+  <summary> کلاس های لازم برای Object های اولیه مثل یگان‌ها و ساختمان‌ها</summary>
 
   <div dir="ltr" align='right'>
 
   1. [ ] شروع نشده
-  2. [*] در حال انجام
+  2. [X] در حال انجام
   3. [ ] تمام شده
   </div>
 </details>
