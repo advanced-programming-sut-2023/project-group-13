@@ -26,7 +26,7 @@ assignees: Arman17Babaei
 
   1. [ ] شروع نشده
   2. [ ] در حال انجام
-  3. [ X] تمام شده
+  3. [X] تمام شده
   </div>
 </details>
 
@@ -53,7 +53,7 @@ assignees: Arman17Babaei
 
   1. [ ] شروع نشده
   2. [] در حال انجام
-  3. [ X] تمام شده
+  3. [X] تمام شده
   </div>
 </details>
 
