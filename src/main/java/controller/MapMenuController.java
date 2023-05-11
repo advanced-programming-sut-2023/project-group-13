@@ -1,11 +1,9 @@
 package controller;
 
-import model.Cell;
-import model.Map;
-import model.TypeofGround;
-import model.groundColor;
+import model.*;
 import view.MapMenu;
 
+import javax.lang.model.element.TypeElement;
 import java.util.regex.Matcher;
 
 public class MapMenuController {
@@ -121,8 +119,8 @@ public class MapMenuController {
                 printMap(TypeofGround.SANDY.getFullNameType(), i, x, y, j);
             else if (cell.getTypeofGround().equals(TypeofGround.IRON.getFullNameType()))
                 printMap(TypeofGround.IRON.getFullNameType(), i, x, y, j);
-            else if (cell.getTypeofGround().equals(TypeofGround.WATER.getFullNameType()))
-                printMap(TypeofGround.WATER.getFullNameType(), i, x, y, j);
+            else if (cell.getTypeofGround().equals(TypeofGround.SEA.getFullNameType()))
+                printMap(TypeofGround.SEA.getFullNameType(), i, x, y, j);
 
         }
         //todo to complete this part of the code
@@ -265,6 +263,9 @@ public class MapMenuController {
             String direction = matcher.group("direction");
             if (!checkNegativity(x,y))
                 return "negative index!";
+//            if (checkTypeOfGround(x, y)) {
+//                return "you can't drop rock here!";
+//            }
             if (!direction.equals("n") && !direction.equals("s") && !direction.equals("w")
                     && !direction.equals("e") && !direction.equals("r"))
                 return "direction not valid!";
@@ -277,16 +278,66 @@ public class MapMenuController {
             // todo to later on upgrade the direction of the rock
         }
 
-        public String dropTree(Matcher matcher) {
+    private boolean checkTypeOfGround(String dropType, int x, int y, String drop) {
+            cell = map.getMapCells(x, y);
+            String typeOfGround = map.getMapCells(x,y).getTypeofGround();
+        if (dropType.equals("Soldier")) {
+            if (typeOfGround.equals(TypeofGround.SEA.getFullNameType()) ||
+                    typeOfGround.equals(TypeofGround.BIGPOOL.getFullNameType())) {
+                return false;
+                // todo to print in the calling method to sout the relevant message
+            }
+            if (cell.getBuilding().getName().equals(BuildingType.SQUARE_TOWER.getName()) ||
+                    cell.getBuilding().getName().equals(BuildingType.ROUND_TOWER.getName()) ||
+                    cell.getBuilding().getName().equals(BuildingType.LOOKOUT_TOWER.getName())
+                    || cell.getBuilding().getName().equals(BuildingType.PERIMETER_TOWER.getName())) {
+                if (drop.equals(SoldierType.HORSE_ARCHER.getName())) {
+                    return false;
+                    // todo to print the relevant message in here
+                }
+                if (drop.equals(SoldierType.KNIGHT.getName())) {
+                    return false;
+                    // todo to print the relevant message in here
+                }
+                if (cell.isHasTreeInCell()) {
+                    return false;
+                    // todo to print the relevant message in here
+                }
+            }
+        } else if (dropType.equals("Building") || dropType.equals("Tree")) {
+            if (typeOfGround.equals(TypeofGround.BIGPOOL.getFullNameType()) ||
+                    typeOfGround.equals(TypeofGround.SEA.getFullNameType())
+                    || typeOfGround.equals(TypeofGround.IRON.getFullNameType()) ||
+                    typeOfGround.equals(TypeofGround.RIVER.getFullNameType()) ||
+                    typeOfGround.equals(TypeofGround.OIL.getFullNameType()) ||
+                    typeOfGround.equals(TypeofGround.LOWDEPTHWATER.getFullNameType())
+                    || typeOfGround.equals(TypeofGround.LITTLEPOOL.getFullNameType())
+                    || typeOfGround.equals(TypeofGround.STONEY.getFullNameType())
+                    || typeOfGround.equals(TypeofGround.ROCKY.getFullNameType())) {
+                return false;
+                // todo to print relevant message in the calling method
+            }
+            if (cell.isHasSoldierInCell() || cell.isHasTreeInCell() || cell.isHasBuildingInCell()) {
+                return false;
+                // todo to print relevant message in the calling method
+            }
+        }
+        return true;
+    }
+
+    public String dropTree(Matcher matcher) {
             int x = Integer.parseInt(matcher.group("x"));
             int y = Integer.parseInt(matcher.group("y"));
             String type = matcher.group("type");
             if (!checkNegativity(x, y)) {
                 return "negative index!";
             }
-            if (cell.getTypeofGround().equals("water")) {
-                return "you can't drop tree in water";
-            }
+        if (!checkTypeOfGround("Tree", x, y, type)) {
+            return "you can't drop here!";
+        }
+//            if (cell.getTypeofGround().equals("water")) {
+//                return "you can't drop tree in water";
+//            }
             if (!cell.setTree(type)) {
                 return "there is no tree with this typename";
             }
@@ -304,10 +355,13 @@ public class MapMenuController {
             if (!checkNegativity(x, y)) {
                 return "negative index!";
             }
-            if (cell.getTypeofGround().equals("Water")) {
-                return "you can't drop building in here";
-                // todo to put check type of ground in an enum which needs more effort
+            if (!checkTypeOfGround("Building", x, y, type)) {
+                return "you can't drop building here!";
             }
+//            if (cell.getTypeofGround().equals("Water")) {
+//                return "you can't drop building in here";
+//                // todo to put check type of ground in an enum which needs more effort
+//            }
             if (!cell.setBuilding(type)) {
                 return "there is no building with this type name!";
             }
@@ -327,10 +381,13 @@ public class MapMenuController {
             int y = Integer.parseInt(matcher.group("y"));
             String type = matcher.group("type");
             checkNegativity(x,y,count);
-            cell = map.getMapCells(x,y);
-            if (cell.getTypeofGround().equals("Water")) {
-                return "you can't drop units in water area";
+            if (!checkTypeOfGround("Soldier", x, y, type)) {
+                return "you can't drop soldier here!";
             }
+            cell = map.getMapCells(x,y);
+//            if (cell.getTypeofGround().equals("Water")) {
+//                return "you can't drop units in water area";
+//            }
             cell.putTroop(type);
             cell.setHasSoldierInCell(true);
             map.SavetoJason();
