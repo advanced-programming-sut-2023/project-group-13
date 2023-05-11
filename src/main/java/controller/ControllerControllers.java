@@ -13,6 +13,7 @@ public class ControllerControllers {
     private final SignupMenu signupMenu;
     private final MapMenu mapMenu;
     private final ProfileMenu profileMenu;
+    private final StartGameMenu startGameMenu;
     private final MapMenuController mapMenuController;
     public ControllerControllers() {
         loginMenu = new LoginMenu(this);
@@ -22,6 +23,7 @@ public class ControllerControllers {
         mapMenu = new MapMenu(this);
         mapMenuController = new MapMenuController(this);
         mapMenu.setMapMenuController(mapMenuController);
+        startGameMenu = new StartGameMenu(this);
     }
     public void run() throws InterruptedException, IOException {
         Player.players = PlayerSaveAndLoadData.LoadPlayer(Player.players);
@@ -57,6 +59,10 @@ public class ControllerControllers {
                 case "map menu":
                     mapMenu.run(mainMenu);
                     break;
+                case "start game":
+                    startGameMenu.run();
+                    break;
+
             }
         }
     }
