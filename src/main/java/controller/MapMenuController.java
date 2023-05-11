@@ -4,6 +4,8 @@ import model.Cell;
 import model.Map;
 import model.TypeofGround;
 import model.groundColor;
+import model.Empire;
+import model.Enums.GroundColor;
 import view.MapMenu;
 
 import java.util.regex.Matcher;
@@ -155,22 +157,22 @@ public class MapMenuController {
             else if (x == x_initial && y == y_initial)
                 selectFormating = star;
             if(cell.isHasSoldierInCell() && (i % 4 == 2)) {
-                System.out.print("|" + groundColor.GETCOLOR.getColorByName(fullNameType)
-                        + "S" + selectFormating + groundColor.RESET.getColor());
+                System.out.print("|" + GroundColor.GETCOLOR.getColorByName(fullNameType)
+                        + "S" + selectFormating + GroundColor.RESET.getColor());
                 return;
             }
             if (cell.isHasBuildingInCell() && (i % 4 == 1)) {
-                System.out.print("|" + groundColor.GETCOLOR.getColorByName(fullNameType)
-                        + "B" + selectFormating + groundColor.RESET.getColor());
+                System.out.print("|" + GroundColor.GETCOLOR.getColorByName(fullNameType)
+                        + "B" + selectFormating + GroundColor.RESET.getColor());
                 return;
             }
             if (cell.isHasTreeInCell() && (i % 4 == 3)) {
-                System.out.print("|" + groundColor.GETCOLOR.getColorByName(fullNameType)
-                        + "T" + selectFormating + groundColor.RESET.getColor());
+                System.out.print("|" + GroundColor.GETCOLOR.getColorByName(fullNameType)
+                        + "T" + selectFormating + GroundColor.RESET.getColor());
                 return;
             }
-            else System.out.print("|" + groundColor.GETCOLOR.getColorByName(fullNameType)
-                    + "#" + selectFormating + groundColor.RESET.getColor());
+            else System.out.print("|" + GroundColor.GETCOLOR.getColorByName(fullNameType)
+                    + "#" + selectFormating + GroundColor.RESET.getColor());
 
         }
 
@@ -287,7 +289,7 @@ public class MapMenuController {
             if (cell.getTypeofGround().equals("water")) {
                 return "you can't drop tree in water";
             }
-            if (!cell.setTree(type)) {
+            if (!cell.setTree(type , x ,y)) {
                 return "there is no tree with this typename";
             }
             cell.setHasTreeInCell(true);
@@ -308,7 +310,7 @@ public class MapMenuController {
                 return "you can't drop building in here";
                 // todo to put check type of ground in an enum which needs more effort
             }
-            if (!cell.setBuilding(type)) {
+            if (!cell.setBuilding(type, x, y)) {
                 return "there is no building with this type name!";
             }
             cell.setHasBuildingInCell(true);
@@ -331,7 +333,7 @@ public class MapMenuController {
             if (cell.getTypeofGround().equals("Water")) {
                 return "you can't drop units in water area";
             }
-            cell.putTroop(type);
+            cell.putTroop(type, Empire.getCurrentEmpire());
             cell.setHasSoldierInCell(true);
             map.SavetoJason();
             return "dropping unit was successful";
