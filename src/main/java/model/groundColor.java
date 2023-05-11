@@ -1,4 +1,5 @@
 package model;
+import model.Enums.TypeofGround;
 
 public enum groundColor {
     YELLOW("\033[43m"),

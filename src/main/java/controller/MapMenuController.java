@@ -1,11 +1,8 @@
 package controller;
 
-import model.Cell;
-import model.Map;
-import model.TypeofGround;
-import model.groundColor;
-import model.Empire;
+import model.*;
 import model.Enums.GroundColor;
+import model.Enums.TypeofGround;
 import view.MapMenu;
 
 import javax.lang.model.element.TypeElement;
@@ -124,8 +121,8 @@ public class MapMenuController {
                 printMap(TypeofGround.SANDY.getFullNameType(), i, x, y, j);
             else if (cell.getTypeofGround().equals(TypeofGround.IRON.getFullNameType()))
                 printMap(TypeofGround.IRON.getFullNameType(), i, x, y, j);
-            else if (cell.getTypeofGround().equals(TypeofGround.WATER.getFullNameType()))
-                printMap(TypeofGround.WATER.getFullNameType(), i, x, y, j);
+            else if (cell.getTypeofGround().equals(TypeofGround.SEA.getFullNameType()))
+                printMap(TypeofGround.SEA.getFullNameType(), i, x, y, j);
 
         }
         //todo to complete this part of the code
@@ -340,7 +337,7 @@ public class MapMenuController {
 //            if (cell.getTypeofGround().equals("water")) {
 //                return "you can't drop tree in water";
 //            }
-            if (!cell.setTree(type)) {
+            if (!cell.setTree(type, x, y)) {
                 return "there is no tree with this typename";
             }
             cell.setHasTreeInCell(true);
@@ -365,7 +362,7 @@ public class MapMenuController {
 //                return "you can't drop building in here";
 //                // todo to put check type of ground in an enum which needs more effort
 //            }
-            if (!cell.setBuilding(type)) {
+            if (!cell.setBuilding(type, x, y)) {
                 return "there is no building with this type name!";
             }
             cell.setHasBuildingInCell(true);
@@ -391,7 +388,7 @@ public class MapMenuController {
 //            if (cell.getTypeofGround().equals("Water")) {
 //                return "you can't drop units in water area";
 //            }
-            cell.putTroop(type);
+            cell.putTroop(type, Empire.getCurrentEmpire());
             cell.setHasSoldierInCell(true);
             map.SavetoJason();
             return "dropping unit was successful";

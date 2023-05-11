@@ -9,7 +9,16 @@ public enum TypeofGround {
     GRASS("Grass","G"),
     MEADOW("Meadow","M"),
     DENSEMEADOW("DenseMeadow","DS"),
-    WATER("Water","WT");
+    SEA("Sea","S"),
+    LITTLEPOOL("Littlepool","LP"),
+    BIGPOOL("Bigpool","BP"),
+    RIVER("River","RI"),
+    BEACH("Beach","Be"),
+    LOWDEPTHWATER("Lowdepthwater","LDW"),
+    OIL("OIL","O"),
+    PLAIN("PLAIN","P");
+
+
     private String fullNameType;
     private String abbrevaiteNameType;
     private TypeofGround(String fullNameType,String abbreviateNameType) {

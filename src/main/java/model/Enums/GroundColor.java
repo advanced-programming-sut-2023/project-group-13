@@ -38,7 +38,7 @@ public enum GroundColor {
             return BRIGHTRED.getColor();
         else if (TypeofGround.ROCKY.getFullNameType().equals(typeofground))
             return GRAY.getColor();
-        else if (TypeofGround.WATER.getFullNameType().equals(typeofground))
+        else if (TypeofGround.SEA.getFullNameType().equals(typeofground))
             return BLUE.getColor();
         else if (TypeofGround.STONEY.getFullNameType().equals(typeofground))
             return WHITE.getColor();
