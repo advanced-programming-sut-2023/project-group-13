@@ -2,6 +2,8 @@ package view;
 
 import controller.ControllerControllers;
 import model.Enums.MainMenuCommands;
+import model.Player;
+import model.PlayerSaveAndLoadData;
 
 import java.util.regex.Matcher;
 
@@ -39,7 +41,9 @@ public class MainMenu {
                 else System.out.println("enter menu failed : invalid menu name!");
                 // todo complete MainMenu
             } else if (command.matches("^\\s*logout\\s*$")) {
-                // todo do the work to logout the current user
+                // todo do the work to logout the current user\
+                Player.getCurrentPlayer().setLoggedIn(false);
+                PlayerSaveAndLoadData.SaveToJson(Player.getPlayers());
                 return "logout";
             }
             else System.out.println("Main menu: invalid command!");

@@ -56,9 +56,9 @@ public enum BuildingType {
     private int hitPoint;
     private int goldPrice;
     private Resources resourcesPrice;
-    private int workerPrice;
-    private int engineerPrice;
-    private boolean canYouEnterIt;
+    private int workerNeededAmount;
+    private int engineerNeededAmount;
+    private boolean penetrable;
 
     private String name;
     private Class<?> BuildingClass;
@@ -68,10 +68,10 @@ public enum BuildingType {
         this.hitPoint = hitPoint;
         this.goldPrice = goldPrice;
 //        this.resourcesPrice =  new Resources(resourcePriceAmount, ResourcesType.]\\);
-        this.workerPrice = workerPrice;
-        this.engineerPrice = engineerPrice;
+        this.workerNeededAmount = workerPrice;
+        this.engineerNeededAmount = engineerPrice;
         this.size = size;
-        this.canYouEnterIt = canYouEnterIt;
+        this.penetrable = canYouEnterIt;
         this.name = name;
         /*this.height = height;*/
     }
@@ -108,12 +108,12 @@ public enum BuildingType {
 //                    tileStructure == TileStructure.DENSE_MEADOW;
 //    }
 
-    public int getWorkerPrice() {
-        return workerPrice;
+    public int getWorkerNeededAmount() {
+        return workerNeededAmount;
     }
 
-    public int getEngineerPrice() {
-        return engineerPrice;
+    public int getEngineerNeededAmount() {
+        return engineerNeededAmount;
     }
 
     public int getGoldPrice() {
@@ -136,8 +136,8 @@ public enum BuildingType {
         return hitPoint;
     }
 
-    public boolean isCanYouEnterIt() {
-        return canYouEnterIt;
+    public boolean isPenetrable() {
+        return penetrable;
     }
 
     public String getName() {

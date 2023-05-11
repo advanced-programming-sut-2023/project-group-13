@@ -1,5 +1,7 @@
 package model;
 
+import model.Enums.TypeofGround;
+
 import java.util.ArrayList;
 
 public class Cell {
@@ -46,10 +48,10 @@ public class Cell {
         return hasSoldierInCell;
     }
 
-    public boolean setBuilding(String building) {
+    public boolean setBuilding(String building , int x, int y) {
         BuildingType buildingType = BuildingType.getBuildingTypeByName(building);
         if (buildingType == null ) return false;
-        this.building = new Building(buildingType.getHitPoint(),building,buildingType);
+        this.building = new Building(buildingType.getHitPoint(),building,buildingType, x, y);
         // todo get building by name and assign it to this.building = building
         return true;
     }
@@ -66,10 +68,10 @@ public class Cell {
         return hasBuildingInCell;
     }
 
-    public boolean setTree(String type) {
+    public boolean setTree(String type ,int x , int y) {
         TreeType treeType = TreeType.getTreeTypeByName(type);
         if (treeType == null) return false;
-        this.building = new Building(treeType.getHp(),type,treeType);
+        this.building = new Building(treeType.getHp(),type,treeType, x , y);
         // todo to complete this part
         return true;
     }
@@ -95,10 +97,10 @@ public class Cell {
        this.setHasSoldierInCell(false);
             // todo to make empty the arraylist of soldiers
     }
-    public boolean putTroop(String type) {
+    public boolean putTroop(String type , Empire owner) {
         SoldierType soldierType = SoldierType.getSoldierTypeByString(type);
         if (soldierType == null) return false;
-        soldiers.add(new Soldier(soldierType.getHp(),type,soldierType));
+        soldiers.add(new Soldier(soldierType.getHp(),type,soldierType, owner ));
         return true;
     }
 }
