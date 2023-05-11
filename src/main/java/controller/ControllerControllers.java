@@ -60,9 +60,8 @@ public class ControllerControllers {
                     mapMenu.run(mainMenu);
                     break;
                 case "start game":
-                    startGameMenu.run();
+                    startGameMenu.run(mainMenu);
                     break;
-
             }
         }
     }

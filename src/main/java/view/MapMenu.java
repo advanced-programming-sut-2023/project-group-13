@@ -3,6 +3,7 @@ package view;
 import controller.ControllerControllers;
 import controller.MapMenuController;
 import model.Enums.CommandsMap;
+import model.Map;
 
 import java.util.regex.Matcher;
 
@@ -31,6 +32,11 @@ public class MapMenu {
             buildMapChoice();
         }
         else {
+            System.out.println("enter the map name from this list:");
+            for (int i = 0; i < Map.getMaps().size(); i++) {
+                System.out.println(Map.getMaps().get());
+                // todo to complete here
+            }
             System.out.println(command = mapMenuController.loadMap());
             if (command.equals("there is no preload map!")) {
                 System.out.println("you have to create a map before continuing or exit map menu!");

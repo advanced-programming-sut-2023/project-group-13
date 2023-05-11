@@ -45,8 +45,13 @@ public class MainMenu {
                 Player.getCurrentPlayer().setLoggedIn(false);
                 PlayerSaveAndLoadData.SaveToJson(Player.getPlayers());
                 return "logout";
+            } else if (command.matches("^\\s*start\\s+a\\s+new\\s+game\\s*$")) {
+                System.out.println("prepare to start a new game!");
+                return "start game";
+
+            } else {
+                System.out.println("Main menu: invalid command!");
             }
-            else System.out.println("Main menu: invalid command!");
         }
 
     }

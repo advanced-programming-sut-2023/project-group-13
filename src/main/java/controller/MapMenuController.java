@@ -442,6 +442,7 @@ public class MapMenuController {
             if (!map.loadMap()) {
                 return "there is no preload map!";
             }
+
             return "map loaded successfully!";
         }
 

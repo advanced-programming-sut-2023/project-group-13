@@ -6,10 +6,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Map {
-//    private ArrayList<Cell> map = new ArrayList<>();
     private Cell[][] map;
+    private Map mapfields;
+    private String mapName;
+    private static HashMap<String,Cell[][]> maps = new HashMap<>();
     private int sizeOfTheMap;
 
     public Map(int sizeOfTheMap) {
@@ -26,7 +30,14 @@ public class Map {
         }
         SavetoJason();
     }
-    public boolean loadMap(){
+    public boolean loadMap() {
+        // todo to pass the mapname to this method
+        for (int i = 0; i < maps.size(); i++) {
+            if (!maps.containsKey(mapName)) {
+                System.out.println("no such map exist!");
+                return false;
+            }
+        }
         String json = null;
         try {
             json = new String(Files.readAllBytes(Paths.get("map.json")));
@@ -44,10 +55,13 @@ public class Map {
     }
 
     public void SavetoJason() {
+        // todo to pass the mapName to this method
+        mapfields.setMapName(mapName);
         try {
             FileWriter MapWriter = new FileWriter("map.json");
             MapWriter.write(new Gson().toJson(map));
             MapWriter.close();
+            maps.put(mapfields.getMapName(), map);
         } catch (IOException e) {
             System.out.println("an error has happened");
         }
@@ -62,4 +76,15 @@ public class Map {
         return map[x][y];
     }
 
+    public void setMapName(String mapName) {
+        this.mapName = mapName;
+    }
+
+    public String getMapName() {
+        return mapName;
+    }
+
+    public static HashMap<String, Cell[][]> getMaps() {
+        return maps;
+    }
 }
