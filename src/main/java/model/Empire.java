@@ -5,20 +5,38 @@ import model.Enums.GroundColor;
 import java.util.ArrayList;
 
 public class Empire {
+    private int popularity;
+
+    public int getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
+    }
+
     private static Empire currentEmpire;
     private Player player;
-    int totalGoldAmount;
-
+    private int totalGoldAmount;
     private GroundColor groundColor;
     private ArrayList<Granary> granaries;
     private ArrayList<Stockpile> stockpiles;
     private ArrayList<Armoury> armouries;
     private int FearFactorRate;
     private int TotalFood;
-    private ArrayList<Food> foods = new ArrayList<>();
+    private ArrayList<Food> foods ;
     private int taxRate;
     private int foodRate;
     private int foodDiversity;
+    private int fearRate;
+
+    public int getFearRate() {
+        return fearRate;
+    }
+
+    public void setFearRate(int fearRate) {
+        this.fearRate = fearRate;
+    }
 
     private String name;
     private ArrayList<PopularityFactor> popularityFactors;
@@ -29,8 +47,8 @@ public class Empire {
     private int SoldierAmount;
     private int allPeopleAmount; //worker and none worker and troops
     private int maximumPeopleAmount = 120;
-    private ArrayList<Building> buildings = new ArrayList<>();
-    private ArrayList<Soldier> soldiers = new ArrayList<>();
+    private ArrayList<Building> buildings;
+    private ArrayList<Soldier> soldiers;
 
     Building kingPit;
 
@@ -40,7 +58,17 @@ public class Empire {
         this.kingPit = kingPit;
         this.allPeopleAmount = 10;
         this.noneWorkerAmount = 10;
-
+        this.SoldierAmount = 0;
+        this.workerAmount = 0;
+        this. totalGoldAmount = 2000;
+        this.foodDiversity = 0;
+        this.foods = new ArrayList<>();
+        this.soldiers = new ArrayList<>();
+        this.buildings = new ArrayList<>();
+        this.popularityFactors = new ArrayList<>();
+        this.granaries = new ArrayList<>();
+        this.armouries = new ArrayList<>();
+        this.stockpiles= new ArrayList<>();
 
     }
 

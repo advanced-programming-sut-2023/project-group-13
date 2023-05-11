@@ -81,7 +81,7 @@ public class LoginMenu {
                     return "logged in";
 //                    return "main menu";
                 }
-            } else if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.DONT_HAVE_ACCOUNT)).find()) {
+            } else if ((matcher =  LoginMenuCommands.getMatcher(command, LoginMenuCommands.DONT_HAVE_ACCOUNT)).find()) {
                 //go to signup menu
                 System.out.println("going to sign up menu");
                 signupMenu.run();
