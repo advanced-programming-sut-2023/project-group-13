@@ -438,7 +438,7 @@ public class MapMenuController {
         public String loadMap(){
             setSize_of_map(400);
             // todo to upgrade the size of the map while loading the map;
-            map = new Map(400);
+            map  = new Map(400);
             if (!map.loadMap()) {
                 return "there is no preload map!";
             }
