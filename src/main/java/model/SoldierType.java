@@ -24,8 +24,7 @@ public enum SoldierType {
     ARABIAN_SWORDSMAN(500, 220, 0.2, 4, 2, 0, 80, 0, 0, WeaponType.SWORD, WeaponType.LEATHER_ARMOR, false, false, true, "arabian swordsman", false, true),
     FIRE_THROWER(150, 200, 0.1, 4, 2, 0, 70, 0.1, 0, null, null, false, false, true, "fire throwers", false, true),
 
-    COW(50, 0, 0, 3, 0, 0, 0, 0, 0, null, null, false, false, false, "cow", false, true);;
-    //cow and war dogs?
+  ;
 
     private int hp;
     private int SoldierDamage;

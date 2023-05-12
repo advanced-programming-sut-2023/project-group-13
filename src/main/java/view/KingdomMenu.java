@@ -28,6 +28,7 @@ public class KingdomMenu {
             } else if ((matcher = KingdomMenuCommands.getMatcher(command, KingdomMenuCommands.SHOW_FOOD_LIST)).find()) {
                 System.out.println(KingdomMenuController.showFoodList());
             } else if (command.matches("^back$")) {
+                //go to game menu
                 return "back";
             } else System.out.println("Invalid command!");
         }

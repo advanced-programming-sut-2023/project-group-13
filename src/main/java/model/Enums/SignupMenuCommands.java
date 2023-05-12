@@ -5,8 +5,8 @@ import java.util.regex.Pattern;
 public enum SignupMenuCommands {
     CREATE_USER("(?=.* -u (?<username>(\"[^\"]*\")|(\\S*)))(?=.* -e (?<email>(\"[^\"]*\")|(\\S*)))" +
             "(?=.* -n (?<nickname>(\"[^\"]*\")|(\\S*)))(?=.* -s (?<slogan>(\"[^\"]*\")|(\\S*)))?" +
-            "(?=.* -p (?<password>(\"[^\"]*\")|(\\S*)))(?=.* -c (?<passwordConfirmation>(\"[^\"]*\")|(\\S*)))" +
-            "?^create user( -[unpces] ((\"[^\"]*\")|(\\S*))){4,6}$"),
+            "(?=.* -p (?<password>(\"[^\"]*\")|(\\S*)))(?=.* -c (?<passwordConfirmation>(\"[^\"]*\")|(\\S*)))?" +
+            "^create user( -[unpces] ((\"[^\"]*\")|(\\S*))){4,6}$"),
     //create user -u amir -p Aa3#fsaf -c Aa3#fsaf -e email@gmail.com -n feri
     //sample for signup
     SECURITY_QUESTION("Pick your security question:\n" +

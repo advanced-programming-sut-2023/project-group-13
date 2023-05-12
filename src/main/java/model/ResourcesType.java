@@ -14,4 +14,5 @@ public enum ResourcesType {
     public String getResourceName() {
         return resourceName;
     }
+
 }
