@@ -1,11 +1,11 @@
 package controller;
 
 import model.*;
-import model.Enums.GroundColor;
 import model.Enums.TypeofGround;
 import view.MapMenu;
 
-import javax.lang.model.element.TypeElement;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class MapMenuController {
@@ -16,6 +16,7 @@ public class MapMenuController {
 
         private MapMenu mapMenu;
         private Cell cell;
+        private boolean isMapExist;
 
         private int size_of_map;
 
@@ -411,15 +412,17 @@ public class MapMenuController {
             }
             return true;
         }
-        public String setSize(int setTheSize) {
+        public String setSize(int setTheSize, String mapName) {
             if (setTheSize == 1) {
-                map = new Map(200);
+                map = new Map(200,mapName);
                 setSize_of_map(200);
+                map.setMapName(mapName);
                 map.createMap();
                 return "map created successfully with size 200!";
             } else if (setTheSize == 2) {
-                map = new Map(400);
+                map = new Map(400,mapName);
                 setSize_of_map(400);
+                map.setMapName(mapName);
                 map.createMap();
                 return "map created successfully with size 400!";
             }
@@ -435,15 +438,29 @@ public class MapMenuController {
             this.size_of_map = size_of_map;
         }
 
-        public String loadMap(){
+        public String loadMap(String mapName) throws IOException {
             setSize_of_map(400);
             // todo to upgrade the size of the map while loading the map;
-            map = new Map(400);
+            map = new Map(400,mapName);
             if (!map.loadMap()) {
-                return "there is no preload map!";
+                return "there is no such map!";
             }
-
             return "map loaded successfully!";
         }
 
+    public boolean CheckMapExist(String command, ArrayList<Map> maps) {
+        for (Map map1 : maps) {
+            if (map1.getMapName().equals(command))
+                setMapExist(true);
+        }
+        return isMapExist();
+    }
+
+    public void setMapExist(boolean mapExist) {
+        isMapExist = mapExist;
+    }
+
+    public boolean isMapExist() {
+        return isMapExist;
+    }
 }

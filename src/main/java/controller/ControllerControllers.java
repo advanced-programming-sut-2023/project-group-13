@@ -1,7 +1,8 @@
 package controller;
 
+import com.google.gson.reflect.TypeToken;
 import model.Player;
-import model.PlayerSaveAndLoadData;
+import model.SaveAndLoadData;
 import view.*;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class ControllerControllers {
         startGameMenu = new StartGameMenu(this);
     }
     public void run() throws InterruptedException, IOException {
-        Player.players = PlayerSaveAndLoadData.LoadPlayer(Player.players);
+        Player.players = SaveAndLoadData.LoadData("players.json", new TypeToken<ArrayList<Player>>(){}.getType());
         if (Player.players == null) {
             Player.players = new ArrayList<>();
         }
@@ -47,6 +48,10 @@ public class ControllerControllers {
                 System.out.println("an error occured!");
             }
         }
+        runMainMenu();
+    }
+
+    public void runMainMenu() throws IOException, InterruptedException {
         while (true) {
             switch (mainMenu.run()) {
                 case "profile menu":

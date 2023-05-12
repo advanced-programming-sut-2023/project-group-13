@@ -2,6 +2,7 @@ package view;
 
 import controller.ControllerControllers;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 
 public class StartGameMenu{
@@ -13,7 +14,7 @@ public class StartGameMenu{
         this.controllerControllers = controllerControllers;
     }
 
-    public void run(MainMenu mainMenu) {
+    public void run(MainMenu mainMenu) throws IOException, InterruptedException {
         int command;
         System.out.println("if you want to start a new game:\t\ttype \"1\"\n" +
                 "if you want to load a saved game:\t\ttype \"2\"\n" +
@@ -29,7 +30,7 @@ public class StartGameMenu{
             }
             if (command == 3) {
                 System.out.println("you entered main menu!");
-                mainMenu.run();
+                controllerControllers.runMainMenu();
             }
         }
     }

@@ -3,7 +3,7 @@ package view;
 import controller.ControllerControllers;
 import model.Enums.MainMenuCommands;
 import model.Player;
-import model.PlayerSaveAndLoadData;
+import model.SaveAndLoadData;
 
 import java.util.regex.Matcher;
 
@@ -43,7 +43,7 @@ public class MainMenu {
             } else if (command.matches("^\\s*logout\\s*$")) {
                 // todo do the work to logout the current user\
                 Player.getCurrentPlayer().setLoggedIn(false);
-                PlayerSaveAndLoadData.SaveToJson(Player.getPlayers());
+                SaveAndLoadData.SaveToJson(Player.getPlayers(),"players.json");
                 return "logout";
             } else if (command.matches("^\\s*start\\s+a\\s+new\\s+game\\s*$")) {
                 System.out.println("prepare to start a new game!");
