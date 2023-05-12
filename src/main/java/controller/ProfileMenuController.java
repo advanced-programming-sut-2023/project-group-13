@@ -27,7 +27,7 @@ public class ProfileMenuController {
                 return "player with this username already exist.";
             case 3:
                 player.setUsername(username);
-                SaveAndLoadData.SaveToJson(Player.players);
+                SaveAndLoadData.SaveToJson(Player.players,"");
                 return "username successfully changed.";
             default:
                 return "";
@@ -61,7 +61,7 @@ public class ProfileMenuController {
                     RandomsAndCaptcha.setRealNumber("");
 
                     player.setPassword(newPassword);
-                    SaveAndLoadData.SaveToJson(Player.players);
+                    SaveAndLoadData.SaveToJson(Player.players,"players.json");
                     return "password successfully changed.";
                 }
                 return "password and the confirmation doesn't match.";
@@ -78,7 +78,7 @@ public class ProfileMenuController {
                 return "Invalid email format.";
             case 2:
                 player.setEmail(email);
-                SaveAndLoadData.SaveToJson(Player.players);
+                SaveAndLoadData.SaveToJson(Player.players,"players.json");
                 return "email successfully changed.";
             default:
                 return "";
@@ -91,7 +91,7 @@ public class ProfileMenuController {
                 return "nickname filed is empty.";
             case 1:
                 player.setEmail(nickname);
-                SaveAndLoadData.SaveToJson(Player.players);
+                SaveAndLoadData.SaveToJson(Player.players,"players.json");
                 return "nickname successfully changed.";
             default:
                 return "";
@@ -100,13 +100,13 @@ public class ProfileMenuController {
 
     public static String changeSlogan(String nickname, Player player) {
         player.setSlogan(nickname);
-        SaveAndLoadData.SaveToJson(Player.players);
+        SaveAndLoadData.SaveToJson(Player.players,"players.json");
         return "slogan successfully changed.";
     }
 
     public static String removeSlogan(Player player) {
         player.setSlogan("");
-        SaveAndLoadData.SaveToJson(Player.players);
+        SaveAndLoadData.SaveToJson(Player.players,"players.json");
         return "slogan successfully removed.";
     }
 

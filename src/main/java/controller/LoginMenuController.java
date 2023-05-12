@@ -41,7 +41,7 @@ public class LoginMenuController {
             }
             RandomsAndCaptcha.setRealNumber("");
             player.setPassword(password);
-            SaveAndLoadData.SaveToJson(Player.players);
+            SaveAndLoadData.SaveToJson(Player.players,"players.json");
             // go to main menu
         }
 
