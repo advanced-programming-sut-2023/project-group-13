@@ -14,7 +14,7 @@ public class ControllerControllers {
     private final SignupMenu signupMenu;
     private final MapMenu mapMenu;
     private final ProfileMenu profileMenu;
-    private final StartGameMenu startGameMenu;
+    private final RunGameMenu RunGameMenu;
     private final MapMenuController mapMenuController;
     public ControllerControllers() {
         loginMenu = new LoginMenu(this);
@@ -24,7 +24,7 @@ public class ControllerControllers {
         mapMenu = new MapMenu(this);
         mapMenuController = new MapMenuController(this);
         mapMenu.setMapMenuController(mapMenuController);
-        startGameMenu = new StartGameMenu(this);
+        RunGameMenu = new RunGameMenu(this);
     }
     public void run() throws InterruptedException, IOException {
         Player.players = SaveAndLoadData.LoadData("players.json", new TypeToken<ArrayList<Player>>(){}.getType());
@@ -59,13 +59,14 @@ public class ControllerControllers {
                     break;
                 case "logout":
                     if (loginMenu.run(signupMenu).equals("exit"))
-                        return;
+                        System.exit(0);
+                    //todo to make here nicer
                     break;
                 case "map menu":
                     mapMenu.run(mainMenu);
                     break;
                 case "start game":
-                    startGameMenu.run(mainMenu);
+                    RunGameMenu.run(mainMenu);
                     break;
             }
         }

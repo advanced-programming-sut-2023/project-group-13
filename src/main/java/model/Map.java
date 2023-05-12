@@ -3,12 +3,12 @@ package model;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Map {
     private Cell[][] map;
@@ -33,26 +33,24 @@ public class Map {
         }
         SavetoJason();
     }
-    public boolean loadMap() throws IOException {
+    public static Cell[][] loadMap(String mapName) throws IOException {
+        boolean isMapExist = false;
         maps = SaveAndLoadData.LoadData("Maps.json", new TypeToken<ArrayList<Map>>(){}.getType());
-        formatMapName = mapName.replaceAll(" ","") + ".json";
+        String formatMapName = mapName.replaceAll(" ","") + ".json";
         // todo to pass the mapname to this method
         for (Map map1 : maps) {
             if (map1.getMapName().equals(mapName)) {
-                setMapExist(true);
+                isMapExist = true;
+                String json = null;
+                try {
+                    json = new String(Files.readAllBytes(Paths.get(formatMapName)));
+                } catch (IOException e) {
+                    System.out.println("error occured in loading the map!");
+                }
+                return new Gson().fromJson(json, Cell[][].class);
             }
         }
-        if (!isMapExist()) return false;
-        String json = null;
-        try {
-            json = new String(Files.readAllBytes(Paths.get(formatMapName)));
-        } catch (IOException e) {
-            System.out.println("error occured in loading the map!");
-        }
-         map = new Gson().fromJson(json, Cell[][].class);
-        if (map == null) return false;
-        int k = 0;
-        return true;
+        return null;
     }
 
     public void SavetoJason() {
@@ -62,7 +60,14 @@ public class Map {
             FileWriter MapWriter = new FileWriter(formatMapName);
             MapWriter.write(new Gson().toJson(map));
             MapWriter.close();
+//            if (maps.size() != 0) {
+//                if (maps.contains(map))
+//                    maps.remove(map);
+//            }
+            File file = new File("Maps.json");
+            if (file.exists()) maps = SaveAndLoadData.LoadData("Maps.json", new TypeToken<ArrayList<Map>>(){}.getType());
             maps.add(this);
+            System.out.println(mapName.length());
             SaveAndLoadData.SaveToJson(maps,"Maps.json");
         } catch (IOException e) {
             System.out.println("an error has happened");
@@ -97,5 +102,9 @@ public class Map {
 
     public void setMapExist(boolean mapExist) {
         isMapExist = mapExist;
+    }
+
+    public void setMap(Cell[][] loadedMap) {
+        this.map = loadedMap;
     }
 }

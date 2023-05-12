@@ -16,6 +16,7 @@ public class MapMenuController {
 
         private MapMenu mapMenu;
         private Cell cell;
+        private Cell[][] loaded_map;
         private boolean isMapExist;
 
         private int size_of_map;
@@ -412,22 +413,15 @@ public class MapMenuController {
             }
             return true;
         }
-        public String setSize(int setTheSize, String mapName) {
-            if (setTheSize == 1) {
-                map = new Map(200,mapName);
-                setSize_of_map(200);
-                map.setMapName(mapName);
-                map.createMap();
-                return "map created successfully with size 200!";
-            } else if (setTheSize == 2) {
-                map = new Map(400,mapName);
-                setSize_of_map(400);
-                map.setMapName(mapName);
-                map.createMap();
-                return "map created successfully with size 400!";
-            }
-            return "map creation not successful please enter the correct size!";
-            // todo to modify this part
+        public String CreateMap(Matcher matcher) {
+            int size = Integer.parseInt(matcher.group("size"));
+            String mapName = matcher.group("mapName");
+            if (!checkNegativity(size)) return "invalid size";
+            if (size != 200 && size != 400) return "map size can only be 200 or 400";
+            map = new Map(size,mapName);
+            setSize_of_map(size);
+            map.createMap();
+                return "map created successfully with size" + size + "!";
         }
 
         public int getSize_of_map() {
@@ -438,13 +432,14 @@ public class MapMenuController {
             this.size_of_map = size_of_map;
         }
 
-        public String loadMap(String mapName) throws IOException {
-            setSize_of_map(400);
+        public String loadMap(Matcher matcher) throws IOException {
+            String mapName = matcher.group("mapName");
             // todo to upgrade the size of the map while loading the map;
-            map = new Map(400,mapName);
-            if (!map.loadMap()) {
+            if ((loaded_map = Map.loadMap(mapName)) == null) {
                 return "there is no such map!";
             }
+            map = new Map(loaded_map.length, mapName);
+            map.setMap(loaded_map);
             return "map loaded successfully!";
         }
 
