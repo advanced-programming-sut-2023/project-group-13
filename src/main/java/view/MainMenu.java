@@ -43,7 +43,6 @@ public class MainMenu {
             } else {
                 System.out.println("Main menu: invalid command!");
             }
-            else System.out.println("Main menu: invalid command!");
         }
 
     }
