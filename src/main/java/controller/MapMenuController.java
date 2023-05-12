@@ -362,7 +362,7 @@ public class MapMenuController {
 //                return "you can't drop building in here";
 //                // todo to put check type of ground in an enum which needs more effort
 //            }
-            if (!cell.setBuilding(type, x, y)) {
+            if (!cell.setBuilding(type,x,y)) {
                 return "there is no building with this type name!";
             }
             cell.setHasBuildingInCell(true);

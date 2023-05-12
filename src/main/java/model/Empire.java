@@ -25,8 +25,8 @@ public class Empire {
     private int FearFactorRate;
     private int TotalFood;
     private ArrayList<Food> foods ;
-    private int taxRate;
-    private int foodRate;
+    private int  taxRate;
+    private int  foodRate;
     private int foodDiversity;
     private int fearRate;
 
@@ -39,8 +39,7 @@ public class Empire {
     }
 
     private String name;
-    private ArrayList<PopularityFactor> popularityFactors;
-    // private Soldier king;
+     private Soldier lord;
     private int peopleAmount = 8; //worker and none worker
     private int noneWorkerAmount;
     private int workerAmount;
@@ -49,12 +48,49 @@ public class Empire {
     private int maximumPeopleAmount = 120;
     private ArrayList<Building> buildings;
     private ArrayList<Soldier> soldiers;
+    private int religionPopularity;
+    private int foodPopularity;
+    private int taxPopularity;
+    private int innPopularity;
+
+    public int getReligionPopularity() {
+        return religionPopularity;
+    }
+
+    public void setReligionPopularity(int religionPopularity) {
+        this.religionPopularity = religionPopularity;
+    }
+
+    public int getFoodPopularity() {
+        return foodPopularity;
+    }
+
+    public void setFoodPopularity(int foodPopularity) {
+        this.foodPopularity = foodPopularity;
+    }
+
+    public int getTaxPopularity() {
+        return taxPopularity;
+    }
+
+    public void setTaxPopularity(int taxPopularity) {
+        this.taxPopularity = taxPopularity;
+    }
+
+    public int getInnPopularity() {
+        return innPopularity;
+    }
+
+    public void setInnPopularity(int innPopularity) {
+        this.innPopularity = innPopularity;
+    }
 
     Building kingPit;
 
     public Empire(Player player, GroundColor groundColor, Building kingPit) {
         this.player = player;
         this.groundColor = groundColor;
+        this.lord = new Soldier(SoldierType.KING.getHp(),player.getNickname(),SoldierType.KING, this);
         this.kingPit = kingPit;
         this.allPeopleAmount = 10;
         this.noneWorkerAmount = 10;
@@ -65,7 +101,6 @@ public class Empire {
         this.foods = new ArrayList<>();
         this.soldiers = new ArrayList<>();
         this.buildings = new ArrayList<>();
-        this.popularityFactors = new ArrayList<>();
         this.granaries = new ArrayList<>();
         this.armouries = new ArrayList<>();
         this.stockpiles= new ArrayList<>();
@@ -184,13 +219,6 @@ public class Empire {
         this.name = name;
     }
 
-    public ArrayList<PopularityFactor> getPopularityFactors() {
-        return popularityFactors;
-    }
-
-    public void setPopularityFactors(ArrayList<PopularityFactor> popularityFactors) {
-        this.popularityFactors = popularityFactors;
-    }
 
     public int getPeopleAmount() {
         return peopleAmount;

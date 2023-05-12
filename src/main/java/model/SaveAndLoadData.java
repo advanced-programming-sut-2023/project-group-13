@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerSaveAndLoadData {
+public class SaveAndLoadData {
     public static void  SaveToJson(ArrayList<Player> players) {
         try {
              FileWriter fileWriter = new FileWriter("players.json");

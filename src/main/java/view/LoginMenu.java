@@ -4,7 +4,7 @@ import controller.ControllerControllers;
 import controller.LoginMenuController;
 import model.Enums.LoginMenuCommands;
 import model.Player;
-import model.PlayerSaveAndLoadData;
+import model.SaveAndLoadData;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -72,7 +72,7 @@ public class LoginMenu {
                         for (Player temp : Player.players) {
                             if (temp != player) temp.setLoggedIn(false);
                         }
-                        PlayerSaveAndLoadData.SaveToJson(Player.players);
+                        SaveAndLoadData.SaveToJson(Player.players);
                     }
                     Player.setCurrentPlayer(player);
                     LoginMenu.setNumberOfAttempt(0);

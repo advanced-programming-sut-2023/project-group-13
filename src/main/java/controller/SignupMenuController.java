@@ -2,7 +2,7 @@ package controller;
 
 import model.Enums.SignupMenuCommands;
 import model.Player;
-import model.PlayerSaveAndLoadData;
+import model.SaveAndLoadData;
 import model.RandomsAndCaptcha;
 import view.ScannerMatcher;
 
@@ -91,16 +91,18 @@ public class SignupMenuController {
                 System.out.print(a[i]);
             }
             System.out.println("\nplease enter the captcha numbers.");
-            int answerNumber = scanner.nextInt();
-            String temp = scanner.nextLine();
+            int answerNumber = ScannerMatcher.getScanner().nextInt();
+            String temp = ScannerMatcher.getScanner().nextLine();
             if (answerNumber != (Integer.parseInt(RandomsAndCaptcha.getRealNumber()))) {
                 RandomsAndCaptcha.setRealNumber("");
                 return "answer doesn't match with captcha";
             }
             RandomsAndCaptcha.setRealNumber("");
+
+
             Player player = new Player(username, password, slogan, email, nickname, questionNumber, answer);
             Player.players.add(player);
-            PlayerSaveAndLoadData.SaveToJson(Player.players);
+            SaveAndLoadData.SaveToJson(Player.players);
             return "user was successfully signed up";
         } else return "Invalid command!";
 

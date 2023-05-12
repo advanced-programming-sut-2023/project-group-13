@@ -1,7 +1,7 @@
 package controller;
 
 import model.Player;
-import model.PlayerSaveAndLoadData;
+import model.SaveAndLoadData;
 import view.*;
 
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class ControllerControllers {
         mapMenu.setMapMenuController(mapMenuController);
     }
     public void run() throws InterruptedException, IOException {
-        Player.players = PlayerSaveAndLoadData.LoadPlayer(Player.players);
+        Player.players = SaveAndLoadData.LoadPlayer(Player.players);
         if (Player.players == null) {
             Player.players = new ArrayList<>();
         }

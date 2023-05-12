@@ -2,6 +2,7 @@ package controller;
 
 import model.Enums.LoginMenuCommands;
 import model.Player;
+import model.SaveAndLoadData;
 import model.RandomsAndCaptcha;
 import view.ScannerMatcher;
 
@@ -34,13 +35,13 @@ public class LoginMenuController {
             System.out.println("\nplease enter the captcha numbers.");
             int answerNumber = ScannerMatcher.getScanner().nextInt();
             String temp = ScannerMatcher.getScanner().nextLine();
-            System.out.println(RandomsAndCaptcha.getRealNumber());
             if (answerNumber != (Integer.parseInt(RandomsAndCaptcha.getRealNumber()))) {
                 RandomsAndCaptcha.setRealNumber("");
                 return "answer doesn't match with captcha";
             }
             RandomsAndCaptcha.setRealNumber("");
             player.setPassword(password);
+            SaveAndLoadData.SaveToJson(Player.players);
             // go to main menu
         }
 

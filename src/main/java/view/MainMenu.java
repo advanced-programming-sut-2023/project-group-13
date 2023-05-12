@@ -3,7 +3,7 @@ package view;
 import controller.ControllerControllers;
 import model.Enums.MainMenuCommands;
 import model.Player;
-import model.PlayerSaveAndLoadData;
+import model.SaveAndLoadData;
 
 import java.util.regex.Matcher;
 
@@ -21,16 +21,7 @@ public class MainMenu {
         while(true) {
            command = ScannerMatcher.getScanner().nextLine();
             if ((matcher = ScannerMatcher.getMatcher(command, MainMenuCommands.WHICHMENU.getPattern())) != null) {
-//                if (matcher.group("Menu").matches("\\s*login\\s+menu\\s*")) {
-//                    System.out.println("entered login menu!");
-//                    return "login menu";
-//                    // todo can we go from here to login menu
-//                    // i think no we can't
-//                }
-//                if (matcher.group("Menu").matches("\\s*sign up\\s+menu\\s*")) {
-//                    System.out.println("entered sign up menu!");
-//                    return "sign up menu";
-//                }
+//
                 if (matcher.group("Menu").matches("\\s*profile\\s+menu\\s*")) {
                     System.out.println("entered profile menu!");
                     return "profile menu";
@@ -43,7 +34,7 @@ public class MainMenu {
             } else if (command.matches("^\\s*logout\\s*$")) {
                 // todo do the work to logout the current user\
                 Player.getCurrentPlayer().setLoggedIn(false);
-                PlayerSaveAndLoadData.SaveToJson(Player.getPlayers());
+                SaveAndLoadData.SaveToJson(Player.getPlayers());
                 return "logout";
             }
             else System.out.println("Main menu: invalid command!");

@@ -25,7 +25,7 @@ public class ProfileMenu {
             } else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.CHANGE_NICKNAME)).find()) {
                 System.out.println(ProfileMenuController.changeNickname(matcher.group("nickname"), player));
             } else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.CHANGE_PASSWORD)).find()) {
-                System.out.println(ProfileMenuController.changePassword(matcher.group("password"), matcher.group("passwordConfirmation"), player));
+                System.out.println(ProfileMenuController.changePassword(matcher.group("oldPassword"), matcher.group("newPassword"), player));
             } else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.CHANGE_EMAIL)).find()) {
                 System.out.println(ProfileMenuController.changeEmail(matcher.group("email"), player));
             } else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.CHANGE_SLOGAN)).find()) {

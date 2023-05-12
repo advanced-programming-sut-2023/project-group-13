@@ -1,9 +1,15 @@
 package controller;
 
 import model.Player;
+import model.SaveAndLoadData;
+import model.RandomsAndCaptcha;
 import model.UserFunction;
+import view.ScannerMatcher;
+
+import java.util.Scanner;
 
 public class ProfileMenuController {
+    public static Scanner scanner = ScannerMatcher.getScanner();
     public static String showSlogan(Player player) {
         if (player.getSlogan() == null) return "slogan is empty.";
         return player.getSlogan();
@@ -21,23 +27,41 @@ public class ProfileMenuController {
                 return "player with this username already exist.";
             case 3:
                 player.setUsername(username);
+                SaveAndLoadData.SaveToJson(Player.players);
                 return "username successfully changed.";
             default:
                 return "";
         }
     }
 
-    public static String changePassword(String password, String passwordConfirmation, Player player) {
-        switch (UserFunction.CheckPasswordValidation(password)) {
+    public static String changePassword(String oldPassword , String newPassword , Player player) {
+        if (!player.getPassword().equals(oldPassword)) return "password is wrong.";
+        switch (UserFunction.CheckPasswordValidation(newPassword)) {
             case 0:
-                return "password filed is empty.";
+                return "new password filed is empty.";
             case 1:
-                return "password length is below 6.";
+                return "new password length is below 6.";
             case 2:
-                return "weak password: Invalid password format.";
+                return "weak password: Invalid new password format.";
             case 3:
-                if (passwordConfirmation.equals(password)) {
-                    player.setPassword(password);
+                System.out.println("please re-enter your new password:");
+                String confirmation = ScannerMatcher.getScanner().nextLine();
+                if (confirmation.equals(newPassword)) {
+                    String[] a = RandomsAndCaptcha.captchaGenerator();
+                    for (int i = 0; i < a.length; i++) {             // print captcha
+                        System.out.print(a[i]);
+                    }
+                    System.out.println("\nplease enter the captcha numbers.");
+                    int answerNumber = ScannerMatcher.getScanner().nextInt();
+                    String temp = ScannerMatcher.getScanner().nextLine();
+                    if (answerNumber != (Integer.parseInt(RandomsAndCaptcha.getRealNumber()))) {
+                        RandomsAndCaptcha.setRealNumber("");
+                        return "answer doesn't match with captcha";
+                    }
+                    RandomsAndCaptcha.setRealNumber("");
+
+                    player.setPassword(newPassword);
+                    SaveAndLoadData.SaveToJson(Player.players);
                     return "password successfully changed.";
                 }
                 return "password and the confirmation doesn't match.";
@@ -54,6 +78,7 @@ public class ProfileMenuController {
                 return "Invalid email format.";
             case 2:
                 player.setEmail(email);
+                SaveAndLoadData.SaveToJson(Player.players);
                 return "email successfully changed.";
             default:
                 return "";
@@ -66,6 +91,7 @@ public class ProfileMenuController {
                 return "nickname filed is empty.";
             case 1:
                 player.setEmail(nickname);
+                SaveAndLoadData.SaveToJson(Player.players);
                 return "nickname successfully changed.";
             default:
                 return "";
@@ -74,11 +100,13 @@ public class ProfileMenuController {
 
     public static String changeSlogan(String nickname, Player player) {
         player.setSlogan(nickname);
+        SaveAndLoadData.SaveToJson(Player.players);
         return "slogan successfully changed.";
     }
 
     public static String removeSlogan(Player player) {
         player.setSlogan("");
+        SaveAndLoadData.SaveToJson(Player.players);
         return "slogan successfully removed.";
     }
 
@@ -98,3 +126,4 @@ public class ProfileMenuController {
         return "rank: " + player.getPlayerRank();
     }
 }
+
