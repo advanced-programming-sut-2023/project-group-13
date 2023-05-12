@@ -16,6 +16,7 @@ public class ProfileMenu {
         this.controllerControllers = controllerControllers;
     }
     public String run(MainMenu mainMenu) throws IOException, InterruptedException {
+        // TODO to remove the main menu from the parameters
         System.out.println("you are in profile menu!");
         while (true) {
             Matcher matcher;
