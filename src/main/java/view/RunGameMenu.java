@@ -1,6 +1,7 @@
 package view;
 
 import controller.ControllerControllers;
+import controller.RunGameController;
 import model.Enums.RunGameMenuCommands;
 
 import java.io.IOException;
@@ -11,6 +12,9 @@ public class RunGameMenu {
         private ControllerControllers controllerControllers;
         private Matcher matcher;
         private MainMenu mainMenu;
+        private NewGameMenu newGameMenu;
+        private LoadGameMenu loadGameMenu;
+        private RunGameController runGameController;
 
         public RunGameMenu(ControllerControllers controllerControllers) {
             this.controllerControllers = controllerControllers;
@@ -27,14 +31,20 @@ public class RunGameMenu {
             while (true) {
                 command = ScannerMatcher.getScanner().nextLine();
                 if ((matcher = ScannerMatcher.getMatcher(command, RunGameMenuCommands.STARTNEWGAME.getRegex())) != null) {
-                    // todo complete
+                    newGameMenu.run();
                 }
-                else if ((matcher = ScannerMatcher.getMatcher(command, RunGameMenuCommands.LOADSAVEDGAME.getRegex())) != null) {
-                    // todo complete
-                } else if (command.matches("\\s*show\\s+all\\s+maps\\s*")) {
-                    // todo complete
+//                else if ((matcher = ScannerMatcher.getMatcher(command, RunGameMenuCommands.LOADSAVEDGAME.getRegex())) != null) {
+//                    loadGameMenu.run();
+//                }
+                else if (command.matches("\\s*show\\s+all\\s+maps\\s*")) {
+                    runGameController.ShowAllMaps();
+
                 } else if (command.matches("\\s*show\\s+all\\s+players\\s*")) {
-                    // todo complete
+                    runGameController.ShowAllMaps();
+                } else if (command.matches("^back$")) {
+                    controllerControllers.runMainMenu();
+                } else {
+                    System.out.println("invalid command!");
                 }
             }
         }
