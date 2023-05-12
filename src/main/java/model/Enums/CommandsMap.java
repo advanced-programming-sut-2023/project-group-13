@@ -17,7 +17,9 @@ public enum CommandsMap {
     DROPTREE("^droptree -x (?<x>-?\\d+) -y (?<y>-?\\d+) -t (?<type>\\S+)$"),
     DROPBUILDING("^dropbuilding -x (?<x>-?\\d+) -y (?<y>-?\\d+) -t (?<type>.*)$"),
 
-    DROPUNIT("^dropunit -x (?<x>-?\\d+) -y (?<y>-?\\d+) -t (?<type>\\S+) -c (?<count>-?\\d+)$");
+    DROPUNIT("^dropunit -x (?<x>-?\\d+) -y (?<y>-?\\d+) -t (?<type>\\S+) -c (?<count>-?\\d+)$"),
+    CREATENEWMAP("create new map -n (?<mapName>\\S+) -s (?<size>-?\\d+)"),
+    LOADMAP("load map -n (?<mapName>\\S+)");
 
     private String regex;
 

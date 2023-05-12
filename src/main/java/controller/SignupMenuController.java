@@ -98,11 +98,9 @@ public class SignupMenuController {
                 return "answer doesn't match with captcha";
             }
             RandomsAndCaptcha.setRealNumber("");
-
-
             Player player = new Player(username, password, slogan, email, nickname, questionNumber, answer);
             Player.players.add(player);
-            SaveAndLoadData.SaveToJson(Player.players);
+            SaveAndLoadData.SaveToJson(Player.players, "players.json");
             return "user was successfully signed up";
         } else return "Invalid command!";
 

@@ -1,11 +1,11 @@
 package controller;
 
 import model.*;
-import model.Enums.GroundColor;
 import model.Enums.TypeofGround;
 import view.MapMenu;
 
-import javax.lang.model.element.TypeElement;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class MapMenuController {
@@ -16,6 +16,8 @@ public class MapMenuController {
 
         private MapMenu mapMenu;
         private Cell cell;
+        private Cell[][] loaded_map;
+        private boolean isMapExist;
 
         private int size_of_map;
 
@@ -411,20 +413,15 @@ public class MapMenuController {
             }
             return true;
         }
-        public String setSize(int setTheSize) {
-            if (setTheSize == 1) {
-                map = new Map(200);
-                setSize_of_map(200);
-                map.createMap();
-                return "map created successfully with size 200!";
-            } else if (setTheSize == 2) {
-                map = new Map(400);
-                setSize_of_map(400);
-                map.createMap();
-                return "map created successfully with size 400!";
-            }
-            return "map creation not successful please enter the correct size!";
-            // todo to modify this part
+        public String CreateMap(Matcher matcher) {
+            int size = Integer.parseInt(matcher.group("size"));
+            String mapName = matcher.group("mapName");
+            if (!checkNegativity(size)) return "invalid size";
+            if (size != 200 && size != 400) return "map size can only be 200 or 400";
+            map = new Map(size,mapName);
+            setSize_of_map(size);
+            map.createMap();
+                return "map created successfully with size" + size + "!";
         }
 
         public int getSize_of_map() {
@@ -435,14 +432,30 @@ public class MapMenuController {
             this.size_of_map = size_of_map;
         }
 
-        public String loadMap(){
-            setSize_of_map(400);
+        public String loadMap(Matcher matcher) throws IOException {
+            String mapName = matcher.group("mapName");
             // todo to upgrade the size of the map while loading the map;
-            map = new Map(400);
-            if (!map.loadMap()) {
-                return "there is no preload map!";
+            if ((loaded_map = Map.loadMap(mapName)) == null) {
+                return "there is no such map!";
             }
+            map = new Map(loaded_map.length, mapName);
+            map.setMap(loaded_map);
             return "map loaded successfully!";
         }
 
+    public boolean CheckMapExist(String command, ArrayList<Map> maps) {
+        for (Map map1 : maps) {
+            if (map1.getMapName().equals(command))
+                setMapExist(true);
+        }
+        return isMapExist();
+    }
+
+    public void setMapExist(boolean mapExist) {
+        isMapExist = mapExist;
+    }
+
+    public boolean isMapExist() {
+        return isMapExist;
+    }
 }

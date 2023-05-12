@@ -72,7 +72,7 @@ public class LoginMenu {
                         for (Player temp : Player.players) {
                             if (temp != player) temp.setLoggedIn(false);
                         }
-                        SaveAndLoadData.SaveToJson(Player.players);
+                        SaveAndLoadData.SaveToJson(Player.players,"players.json");
                     }
                     Player.setCurrentPlayer(player);
                     LoginMenu.setNumberOfAttempt(0);
