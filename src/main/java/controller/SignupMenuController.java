@@ -2,7 +2,7 @@ package controller;
 
 import model.Enums.SignupMenuCommands;
 import model.Player;
-import model.PlayerSaveAndLoadData;
+import model.SaveAndLoadData;
 import model.RandomsAndCaptcha;
 import view.ScannerMatcher;
 
@@ -100,7 +100,7 @@ public class SignupMenuController {
             RandomsAndCaptcha.setRealNumber("");
             Player player = new Player(username, password, slogan, email, nickname, questionNumber, answer);
             Player.players.add(player);
-            PlayerSaveAndLoadData.SaveToJson(Player.players);
+            SaveAndLoadData.SaveToJson(Player.players, "players.json");
             return "user was successfully signed up";
         } else return "Invalid command!";
 

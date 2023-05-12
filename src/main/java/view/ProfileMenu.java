@@ -5,6 +5,7 @@ import controller.ProfileMenuController;
 import model.Enums.ProfileMenuCommands;
 import model.Player;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 
 public class ProfileMenu {
@@ -14,7 +15,7 @@ public class ProfileMenu {
     public ProfileMenu(ControllerControllers controllerControllers) {
         this.controllerControllers = controllerControllers;
     }
-    public String run(MainMenu mainMenu) {
+    public String run(MainMenu mainMenu) throws IOException, InterruptedException {
         System.out.println("you are in profile menu!");
         while (true) {
             Matcher matcher;
@@ -41,7 +42,7 @@ public class ProfileMenu {
             } else if (ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.SHOW_PROFILE).find()) {
                 System.out.println(ProfileMenuController.showProfile(player));
             } else if (command.matches("^back$")) {
-                mainMenu.run();
+                controllerControllers.runMainMenu();
             } else {
                 System.out.println("profile menu: Invalid command");
             }
