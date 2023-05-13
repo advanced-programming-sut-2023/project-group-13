@@ -1,5 +1,6 @@
 package controller;
 
+import model.Enums.DataEnumFile;
 import model.Enums.LoginMenuCommands;
 import model.Player;
 import model.SaveAndLoadData;
@@ -41,7 +42,7 @@ public class LoginMenuController {
             }
             RandomsAndCaptcha.setRealNumber("");
             player.setPassword(password);
-            SaveAndLoadData.SaveToJson(Player.players,"players.json");
+            SaveAndLoadData.SaveToJson(Player.players, DataEnumFile.PLAYERS.getFileName());
             // go to main menu
         }
 
