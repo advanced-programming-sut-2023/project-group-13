@@ -136,6 +136,11 @@ public class NewGameController {
         // mr freydoon get the arraylist of players from here
     }
 
+    public static ArrayList<Empire> getEmpires() {
+        return empires;
+        // freydoon get access empires here;
+    }
+
     public boolean isMapSelected() {
         return mapSelected;
     }
