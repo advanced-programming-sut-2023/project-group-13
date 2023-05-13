@@ -2,6 +2,7 @@ package model;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import model.Enums.DataEnumFile;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -35,7 +36,7 @@ public class Map {
     }
     public static Cell[][] loadMap(String mapName) throws IOException {
         boolean isMapExist = false;
-        maps = SaveAndLoadData.LoadData("Maps.json", new TypeToken<ArrayList<Map>>(){}.getType());
+        maps = SaveAndLoadData.LoadData(DataEnumFile.MAPS.getFileName(), DataEnumFile.MAPS.getDataType());
         String formatMapName = mapName.replaceAll(" ","") + ".json";
         // todo to pass the mapname to this method
         for (Map map1 : maps) {
@@ -64,11 +65,11 @@ public class Map {
 //                if (maps.contains(map))
 //                    maps.remove(map);
 //            }
-            File file = new File("Maps.json");
-            if (file.exists()) maps = SaveAndLoadData.LoadData("Maps.json", new TypeToken<ArrayList<Map>>(){}.getType());
+            File file = new File(DataEnumFile.MAPS.getFileName());
+            if (file.exists()) maps = SaveAndLoadData.LoadData(DataEnumFile.MAPS.getFileName(), DataEnumFile.MAPS.getDataType());
             maps.add(this);
-            System.out.println(mapName.length());
-            SaveAndLoadData.SaveToJson(maps,"Maps.json");
+            System.out.println("map updated!");
+            SaveAndLoadData.SaveToJson(maps,DataEnumFile.MAPS.getFileName());
         } catch (IOException e) {
             System.out.println("an error has happened");
         }

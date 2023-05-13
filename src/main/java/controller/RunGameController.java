@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.reflect.TypeToken;
+import model.Enums.DataEnumFile;
 import model.Map;
 import model.Player;
 import model.SaveAndLoadData;
@@ -14,8 +15,7 @@ public class RunGameController {
     // todo to understand that it must be static or not
     public void ShowAllMaps() throws IOException {
         int counter = 0;
-        maps = SaveAndLoadData.LoadData("Maps.json", new TypeToken<ArrayList<Map>>() {
-        }.getType());
+        maps = SaveAndLoadData.LoadData(DataEnumFile.MAPS.getFileName(), DataEnumFile.MAPS.getDataType());
         for (Map map : maps) {
             System.out.println(++counter + map.getMapName());
         }
@@ -23,7 +23,7 @@ public class RunGameController {
 
     public void showAllMembers() throws IOException {
         int counter = 0;
-        players = SaveAndLoadData.LoadData("players.json", new TypeToken<ArrayList<Player>>(){}.getType());
+        players = SaveAndLoadData.LoadData(DataEnumFile.PLAYERS.getFileName(), DataEnumFile.PLAYERS.getDataType());
         for (Player player : players) {
             System.out.println(++counter + player.getNickname());
         }

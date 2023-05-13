@@ -38,7 +38,8 @@ public class Empire {
         this.fearRate = fearRate;
     }
 
-    private String name;
+    private String empireName;
+    // changed this name to empireName;
      private Soldier lord;
     private int peopleAmount = 8; //worker and none worker
     private int noneWorkerAmount;
@@ -87,11 +88,11 @@ public class Empire {
 
     Building kingPit;
 
-    public Empire(Player player, GroundColor groundColor, Building kingPit) {
+    public Empire(Player player, GroundColor groundColor, Building kingPit, String empireName) {
         this.player = player;
         this.groundColor = groundColor;
         this.lord = new Soldier(SoldierType.KING.getHp(),player.getNickname(),SoldierType.KING, this);
-        this.kingPit = kingPit;
+        this.kingPit = kingPit; // it is the same main castle
         this.allPeopleAmount = 10;
         this.noneWorkerAmount = 10;
         this.SoldierAmount = 0;
@@ -211,12 +212,12 @@ public class Empire {
         this.foodDiversity = foodDiversity;
     }
 
-    public String getName() {
-        return name;
+    public String getEmpireName() {
+        return empireName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmpireName(String empireName) {
+        this.empireName = empireName;
     }
 
 

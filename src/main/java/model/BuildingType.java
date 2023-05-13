@@ -45,7 +45,7 @@ public enum BuildingType {
     BAKERY(300,0,3,ResourcesType.WOOD,10,1,0,false,"bakery"),
     BREWER(300,0,3,ResourcesType.WOOD,10,1,0,false,"brewer"), //abjo sazi
     GRANARY(500,0,1,ResourcesType.WOOD,5,0,0,false,"granary"), //anbar ghaza
-    MAIN_CASTLE(0, 0, 7, null, 0, 0, 0, true, "main castle"),
+    MAIN_CASTLE(40000, 0, 7, null, 0, 0, 0, true, "main castle"),
     // STAIR and WALL are temporary and need to be fixed !!! todo
     STAIR(100, 0, 1, null, 0, 0, 0, false, "stair"),
     WALL(100, 0, 1, null, 0, 0, 0, false, "wall"),

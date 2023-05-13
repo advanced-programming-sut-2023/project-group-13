@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.reflect.TypeToken;
+import model.Enums.DataEnumFile;
 import model.Player;
 import model.SaveAndLoadData;
 import view.*;
@@ -27,7 +28,8 @@ public class ControllerControllers {
         RunGameMenu = new RunGameMenu(this);
     }
     public void run() throws InterruptedException, IOException {
-        Player.players = SaveAndLoadData.LoadData("players.json", new TypeToken<ArrayList<Player>>(){}.getType());
+        Player.players = SaveAndLoadData.LoadData(DataEnumFile.PLAYERS.getFileName(),
+                DataEnumFile.PLAYERS.getDataType());
         if (Player.players == null) {
             Player.players = new ArrayList<>();
         }
