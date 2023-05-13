@@ -25,6 +25,7 @@ public class NewGameController {
 
     public String Selectplayers(Matcher matcher) {
         // todo to implement SelectPlayers
+        return "";
     }
 
     public static Map getCurrent_map() {
