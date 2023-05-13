@@ -1,5 +1,5 @@
 ---
-name: تمپلیت فاز صفر
+empireName: تمپلیت فاز صفر
 about: برای ساخت ایشوی فاز صفر از این تمپلیت استفاده کنید
 title: Phase 0 Report
 labels: progress

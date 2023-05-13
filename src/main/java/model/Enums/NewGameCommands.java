@@ -10,7 +10,7 @@ public enum NewGameCommands {
             "(?=.* -n5 (?<player5>\\S+))?" +
             "(?=.* -n6 (?<player6>\\S+))?" +
             "(?=.* -n7 (?<player7>\\S+))?" +
-            "(?=.* -n8 (?<player8>\\S+))?^select players( -n[12345678] \\S+){2,8}$");
+            "(?=.* -n8 (?<player8>\\S+))?^select players -s (?<size>-?\\d+)( -n[12345678] \\S+){2,8}$");
 
     private String regex;
     private NewGameCommands (String regex) {

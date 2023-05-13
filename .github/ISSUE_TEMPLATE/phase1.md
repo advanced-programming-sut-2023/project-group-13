@@ -1,5 +1,5 @@
 ---
-name: تمپلیت فاز یک
+empireName: تمپلیت فاز یک
 about: برای ساخت ایشوی فاز یک از این تمپلیت استفاده کنید
 title: Phase 1 Report
 labels: progress
