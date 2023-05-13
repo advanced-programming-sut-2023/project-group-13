@@ -1,5 +1,6 @@
 package controller;
 
+import model.Enums.DataEnumFile;
 import model.Enums.SignupMenuCommands;
 import model.Player;
 import model.SaveAndLoadData;
@@ -100,7 +101,7 @@ public class SignupMenuController {
             RandomsAndCaptcha.setRealNumber("");
             Player player = new Player(username, password, slogan, email, nickname, questionNumber, answer);
             Player.players.add(player);
-            SaveAndLoadData.SaveToJson(Player.players, "players.json");
+            SaveAndLoadData.SaveToJson(Player.players, DataEnumFile.PLAYERS.getFileName());
             return "user was successfully signed up";
         } else return "Invalid command!";
 
