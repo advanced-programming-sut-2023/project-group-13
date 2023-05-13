@@ -1,5 +1,6 @@
 package controller;
 
+import model.Enums.DataEnumFile;
 import model.Player;
 import model.SaveAndLoadData;
 import model.RandomsAndCaptcha;
@@ -61,7 +62,7 @@ public class ProfileMenuController {
                     RandomsAndCaptcha.setRealNumber("");
 
                     player.setPassword(newPassword);
-                    SaveAndLoadData.SaveToJson(Player.players,"players.json");
+                    SaveAndLoadData.SaveToJson(Player.players, DataEnumFile.PLAYERS.getFileName());
                     return "password successfully changed.";
                 }
                 return "password and the confirmation doesn't match.";
@@ -78,7 +79,7 @@ public class ProfileMenuController {
                 return "Invalid email format.";
             case 2:
                 player.setEmail(email);
-                SaveAndLoadData.SaveToJson(Player.players,"players.json");
+                SaveAndLoadData.SaveToJson(Player.players,DataEnumFile.PLAYERS.getFileName());
                 return "email successfully changed.";
             default:
                 return "";
@@ -91,7 +92,7 @@ public class ProfileMenuController {
                 return "nickname filed is empty.";
             case 1:
                 player.setEmail(nickname);
-                SaveAndLoadData.SaveToJson(Player.players,"players.json");
+                SaveAndLoadData.SaveToJson(Player.players,DataEnumFile.PLAYERS.getFileName());
                 return "nickname successfully changed.";
             default:
                 return "";
@@ -100,13 +101,13 @@ public class ProfileMenuController {
 
     public static String changeSlogan(String nickname, Player player) {
         player.setSlogan(nickname);
-        SaveAndLoadData.SaveToJson(Player.players,"players.json");
+        SaveAndLoadData.SaveToJson(Player.players,DataEnumFile.PLAYERS.getFileName());
         return "slogan successfully changed.";
     }
 
     public static String removeSlogan(Player player) {
         player.setSlogan("");
-        SaveAndLoadData.SaveToJson(Player.players,"players.json");
+        SaveAndLoadData.SaveToJson(Player.players,DataEnumFile.PLAYERS.getFileName());
         return "slogan successfully removed.";
     }
 

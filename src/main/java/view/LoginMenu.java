@@ -2,6 +2,7 @@ package view;
 
 import controller.ControllerControllers;
 import controller.LoginMenuController;
+import model.Enums.DataEnumFile;
 import model.Enums.LoginMenuCommands;
 import model.Player;
 import model.SaveAndLoadData;
@@ -72,7 +73,7 @@ public class LoginMenu {
                         for (Player temp : Player.players) {
                             if (temp != player) temp.setLoggedIn(false);
                         }
-                        SaveAndLoadData.SaveToJson(Player.players,"players.json");
+                        SaveAndLoadData.SaveToJson(Player.players, DataEnumFile.PLAYERS.getFileName());
                     }
                     Player.setCurrentPlayer(player);
                     LoginMenu.setNumberOfAttempt(0);

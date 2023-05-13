@@ -3,12 +3,12 @@ package view;
 import controller.GameMenuController;
 import controller.KingdomMenuController;
 import model.Enums.GameMenuCommands;
-import model.Enums.;
+import model.Enums.*;
 
 import java.util.regex.Matcher;
 
 public class GameMenu {
-    public String run() {
+    public void run() {
         String command;
         Matcher matcher;
         while (true) {
@@ -34,13 +34,14 @@ public class GameMenu {
             } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SET_STATE)).find()) {
 
             } else if (command.matches("^exit game$")) {
-                return "exit game";
+                System.out.println("exit from game!");
+                return;
             } else if (command.matches("^next turn$")) {
                 System.out.println(GameMenuController.nextTurn());
             } else if (command.matches("^kingdom menu$")) {
                 //goto kingdom menu
             }
-             else System.out.println("Invalid command!");
+             else System.out.println("GameMenu: Invalid command!");
         }
     }
 }
