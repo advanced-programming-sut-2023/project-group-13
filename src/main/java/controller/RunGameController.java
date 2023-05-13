@@ -17,7 +17,7 @@ public class RunGameController {
         int counter = 0;
         maps = SaveAndLoadData.LoadData(DataEnumFile.MAPS.getFileName(), DataEnumFile.MAPS.getDataType());
         for (Map map : maps) {
-            System.out.println(++counter + map.getMapName());
+            System.out.println("map " + ++counter + ": " + map.getMapName());
         }
     }
 
@@ -25,7 +25,8 @@ public class RunGameController {
         int counter = 0;
         players = SaveAndLoadData.LoadData(DataEnumFile.PLAYERS.getFileName(), DataEnumFile.PLAYERS.getDataType());
         for (Player player : players) {
-            System.out.println(++counter + player.getNickname());
+            System.out.println("player " + ++counter + ": " + player.getNickname());
+
         }
     }
 }

@@ -38,6 +38,8 @@ public class NewGameController {
         ArrayList<String> repeatedPlayer = new ArrayList<>();
         int size = Integer.parseInt(matcher.group("size"));
         if (size <= 0)
+         // Player player =  Player.getPlayerByUsername(username);
+
             return "invalid size number!";
         savedplayers = SaveAndLoadData.LoadData(DataEnumFile.PLAYERS.getFileName(),DataEnumFile.PLAYERS.getDataType());
         if (matcher.group("player" + (size + 1)) != null) {
@@ -58,13 +60,16 @@ public class NewGameController {
         for (int i = 1; i <= size; i++) {
             String playerName = matcher.group("player" + i);
             for (Player player : savedplayers) {
-                if (player.getNickname().equals(playerName) && !players.contains(player)) {
+                if (player.getUsername().equals(playerName) && !players.contains(player) && Player.getPlayerByUsername(playerName) != null) {
                     players.add(player);
                 }
             }
         }
-        setPlayersSelected(true);
-        return size + " players selected successfully!";
+        if (players.size() == size) {
+            setPlayersSelected(true);
+            return size + " players selected successfully!";
+        }
+        else return "player invalid username.";
     }
 
     public String gameStartCondition() {
