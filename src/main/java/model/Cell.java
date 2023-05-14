@@ -89,18 +89,23 @@ public class Cell {
     }
 
     public void remove() {
-       this.building = null;
-       this.tree = null;
-       this.setTypeofGround(TypeofGround.EARTH.getFullNameType());
-       this.setHasTreeInCell(false);
-       this.setHasBuildingInCell(false);
-       this.setHasSoldierInCell(false);
-            // todo to make empty the arraylist of soldiers
+        this.building = null;
+        this.tree = null;
+        this.setTypeofGround(TypeofGround.EARTH.getFullNameType());
+        this.getSoldiers().clear();
+        this.setHasTreeInCell(false);
+        this.setHasBuildingInCell(false);
+        this.setHasSoldierInCell(false);
+        // todo to make empty the arraylist of soldiers
     }
     public boolean putTroop(String type , Empire owner) {
         SoldierType soldierType = SoldierType.getSoldierTypeByString(type);
         if (soldierType == null) return false;
         soldiers.add(new Soldier(soldierType.getHp(),type,soldierType, owner ));
         return true;
+    }
+
+    public Soldier getSoldier() {
+        return soldier;
     }
 }
