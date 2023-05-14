@@ -5,6 +5,7 @@ import model.Enums.DataEnumFile;
 import model.Enums.TypeofGround;
 import view.MapMenu;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -433,10 +434,13 @@ public class MapMenuController {
     public String CreateMap(Matcher matcher) throws IOException {
         int size = Integer.parseInt(matcher.group("size"));
         String mapName = matcher.group("mapName");
-        maps = SaveAndLoadData.LoadData(DataEnumFile.MAPS.getFileName(), DataEnumFile.MAPS.getDataType());
-        for (Map map1 : maps) {
-            if (map1.getMapName().equals(mapName))
-                return "a map with this name already exists!";
+        File file = new File(DataEnumFile.MAPS.getFileName());
+        if (file.exists()) {
+            maps = SaveAndLoadData.LoadData(DataEnumFile.MAPS.getFileName(), DataEnumFile.MAPS.getDataType());
+            for (Map map1 : maps) {
+                if (map1.getMapName().equals(mapName))
+                    return "a map with this name already exists!";
+            }
         }
         if (!checkNegativity(size)) return "invalid size";
         if (size != 200 && size != 400) return "map size can only be 200 or 400";
@@ -481,4 +485,3 @@ public class MapMenuController {
         return isMapExist;
     }
 }
-
