@@ -4,6 +4,10 @@ import model.*;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
+import model.Empire;
+import model.Map;
+
+import java.util.regex.Matcher;
 
 public class GameMenuController {
     public static Map map = NewGameController.getCurrent_map();
@@ -185,5 +189,9 @@ public class GameMenuController {
                 }
             }
         }
+    }
+
+    public String moveunit(Matcher matcher) {
+
     }
 }

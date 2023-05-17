@@ -16,6 +16,7 @@ public class Map {
     private boolean isMapExist;
     private String mapName;
     private String formatMapName;
+    private Map mapToRemove;
     private static ArrayList<Map> maps = new ArrayList<>();
     private int sizeOfTheMap;
 
@@ -29,7 +30,8 @@ public class Map {
 //        map.add(new Cell());
         for (int i = 0; i < sizeOfTheMap; i++) {
             for (int j = 0; j < sizeOfTheMap; j++) {
-                map[i][j] = new Cell();
+                map[i][j] = new Cell(false);
+                // todo to determine where are the obstacles
             }
         }
         SavetoJason();
@@ -67,6 +69,12 @@ public class Map {
 //            }
             File file = new File(DataEnumFile.MAPS.getFileName());
             if (file.exists()) maps = SaveAndLoadData.LoadData(DataEnumFile.MAPS.getFileName(), DataEnumFile.MAPS.getDataType());
+            for (Map map1 : maps) {
+                if (map1.getMapName().equals(this.getMapName())) {
+                    mapToRemove = map1;
+                }
+            }
+            maps.remove(mapToRemove);
             maps.add(this);
             System.out.println("map updated!");
             SaveAndLoadData.SaveToJson(maps,DataEnumFile.MAPS.getFileName());

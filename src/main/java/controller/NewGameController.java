@@ -67,8 +67,11 @@ public class NewGameController {
         if (players.size() == size) {
             setPlayersSelected(true);
             return size + " players selected successfully!";
+        } else {
+            players.clear();
+            // add the upper line to fix another minor bug
+            return "player invalid username.";
         }
-        else return "player invalid username.";
     }
 
     public String gameStartCondition() {
