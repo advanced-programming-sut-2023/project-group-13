@@ -13,11 +13,13 @@ public class Cell {
     private ArrayList<Soldier> soldiers = new ArrayList<Soldier>();
     private Soldier soldier;
     private Building building;
+    private boolean obstacle;
 
     private TreeType tree;
 
-    public Cell() {
+    public Cell(boolean obstacle) {
         typeofGround = TypeofGround.EARTH.getFullNameType();
+        this.obstacle = obstacle;
     }
 
     public String getTypeofGround() {
@@ -51,7 +53,7 @@ public class Cell {
     public boolean setBuilding(String building , int x, int y) {
         BuildingType buildingType = BuildingType.getBuildingTypeByName(building);
         if (buildingType == null ) return false;
-        this.building = new Building(buildingType.getHitPoint(),building,buildingType, x, y);
+        this.building = new Building(buildingType.getHp(),building,buildingType, x, y);
         // todo get building by name and assign it to this.building = building
         return true;
     }
@@ -98,10 +100,10 @@ public class Cell {
         this.setHasSoldierInCell(false);
         // todo to make empty the arraylist of soldiers
     }
-    public boolean putTroop(String type , Empire owner) {
+    public boolean putTroop(String type , Empire owner , int x , int y) {
         SoldierType soldierType = SoldierType.getSoldierTypeByString(type);
         if (soldierType == null) return false;
-        soldiers.add(new Soldier(soldierType.getHp(),type,soldierType, owner ));
+        soldiers.add(new Soldier(soldierType.getHp(),type,soldierType, owner, x, y));
         return true;
     }
 

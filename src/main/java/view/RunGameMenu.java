@@ -46,7 +46,7 @@ public class RunGameMenu {
                 } else if (command.matches("^back$")) {
                     controllerControllers.runMainMenu();
                 } else {
-                    System.out.println("RunGameMenu: invalid command!");
+                    System.out.println("invalid command!");
                 }
             }
         }

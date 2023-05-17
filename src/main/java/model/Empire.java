@@ -87,11 +87,16 @@ public class Empire {
     }
 
     Building kingPit;
+    private ArrayList<Stable> stables = new ArrayList<>();
+
+    public ArrayList<Stable> getStables() {
+        return stables;
+    }
 
     public Empire(Player player, GroundColor groundColor, Building kingPit, String empireName) {
         this.player = player;
         this.groundColor = groundColor;
-        this.lord = new Soldier(SoldierType.KING.getHp(),player.getNickname(),SoldierType.KING, this);
+        this.lord = new Soldier(SoldierType.KING.getHp(),player.getNickname(),SoldierType.KING, this, kingPit.getX(), kingPit.getY());
         this.kingPit = kingPit; // it is the same main castle
         this.allPeopleAmount = 10;
         this.noneWorkerAmount = 10;
@@ -105,6 +110,8 @@ public class Empire {
         this.granaries = new ArrayList<>();
         this.armouries = new ArrayList<>();
         this.stockpiles= new ArrayList<>();
+        stockpiles.add(new Stockpile(kingPit.getX(),kingPit.getY()+1,100 , 10 , 50 ,
+                0 ,0 ,0 ,0 ,0));
 
     }
 

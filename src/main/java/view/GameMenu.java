@@ -8,6 +8,7 @@ import model.Enums.*;
 import java.util.regex.Matcher;
 
 public class GameMenu {
+    private GameMenuController gameMenuController;
     public String run() {
         String command;
         Matcher matcher;
@@ -24,6 +25,7 @@ public class GameMenu {
             } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.DISBAND)).find()) {
 
             } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.MOVE_UNIT)).find()) {
+                System.out.println(gameMenuController.moveunit(matcher));
 
             } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.STOP)).find()) {
 

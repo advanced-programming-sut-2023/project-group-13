@@ -23,10 +23,7 @@ public class Stockpile extends Building {
         this.wheatAmount = wheatAmount;
     }
 
-    public Stockpile(int hp, String name, int x, int y) {
-        super(hp, name, BuildingType.STOCKPILE, x, y);
 
-    }
 
     public int getWoodAmount() {
         return woodAmount;

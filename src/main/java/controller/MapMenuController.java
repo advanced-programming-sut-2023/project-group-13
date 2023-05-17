@@ -408,7 +408,7 @@ public class MapMenuController {
 //                return "you can't drop units in water area";
 //            }
         for (int i = 0 ; i < count; i++)
-            cell.putTroop(type, Empire.getCurrentEmpire());
+            cell.putTroop(type, Empire.getCurrentEmpire(),x , y);
         cell.setHasSoldierInCell(true);
         map.SavetoJason();
         return "dropping unit was successful";

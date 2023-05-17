@@ -9,6 +9,8 @@ public class Armoury extends Building {
    private int SwordAmount;
    private int BowAmount;
    private int SpearAmount;
+   private final int capacity = 50;
+   private int totalWeaponAmount;
 
     public Armoury(int hp,int x, int y, int metalArmourAmount, int leatherArmourAmount,
                    int crossBowAmount, int maceAmount, int pikeAmount, int swordAmount, int bowAmount, int spearAmount) {
@@ -21,6 +23,7 @@ public class Armoury extends Building {
         SwordAmount = swordAmount;
         BowAmount = bowAmount;
         SpearAmount = spearAmount;
+        totalWeaponAmount = 0;
     }
 
     public int getMetalArmourAmount() {
@@ -85,5 +88,19 @@ public class Armoury extends Building {
 
     public void setSpearAmount(int spearAmount) {
         SpearAmount = spearAmount;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public int getTotalWeaponAmount() {
+        return totalWeaponAmount;
+    }
+
+    public void setTotalWeaponAmount() {
+
+        this.totalWeaponAmount = getBowAmount() + getCrossBowAmount() + getPikeAmount() + getLeatherArmourAmount()
+                + getSpearAmount() + getSwordAmount() +getMaceAmount() + getMetalArmourAmount();
     }
 }
