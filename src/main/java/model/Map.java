@@ -30,7 +30,8 @@ public class Map {
 //        map.add(new Cell());
         for (int i = 0; i < sizeOfTheMap; i++) {
             for (int j = 0; j < sizeOfTheMap; j++) {
-                map[i][j] = new Cell();
+                map[i][j] = new Cell(false);
+                // todo to determine where are the obstacles
             }
         }
         SavetoJason();

@@ -8,7 +8,7 @@ public class Soldier extends People {
     private SoldierType soldierType;
     private int situation;
 
-    public Soldier(int hp, String name, SoldierType soldierType, Empire owner) {
+    public Soldier(int hp, String name, SoldierType soldierType, Empire owner, int x, int y) {
         super(hp);
         this.name = name;
         this.soldierType = soldierType;

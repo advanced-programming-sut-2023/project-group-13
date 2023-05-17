@@ -91,7 +91,7 @@ public class Empire {
     public Empire(Player player, GroundColor groundColor, Building kingPit, String empireName) {
         this.player = player;
         this.groundColor = groundColor;
-        this.lord = new Soldier(SoldierType.KING.getHp(),player.getNickname(),SoldierType.KING, this);
+        this.lord = new Soldier(SoldierType.KING.getHp(),player.getNickname(),SoldierType.KING, this, kingPit.x, kingPit.y);
         this.kingPit = kingPit; // it is the same main castle
         this.allPeopleAmount = 10;
         this.noneWorkerAmount = 10;
