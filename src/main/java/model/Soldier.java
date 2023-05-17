@@ -10,6 +10,10 @@ public class Soldier extends People {
     private int x;
     private int y;
 
+    public SoldierType getSoldierType() {
+        return soldierType;
+    }
+
     public Soldier(int hp, String name, SoldierType soldierType, Empire owner, int x, int y) {
         super(hp);
         this.name = name;

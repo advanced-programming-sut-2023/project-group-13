@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Map {
     private Cell[][] map;
@@ -30,7 +32,7 @@ public class Map {
 //        map.add(new Cell());
         for (int i = 0; i < sizeOfTheMap; i++) {
             for (int j = 0; j < sizeOfTheMap; j++) {
-                map[i][j] = new Cell(false);
+                map[i][j] = new Cell(i, j, false);
                 // todo to determine where are the obstacles
             }
         }
@@ -74,8 +76,9 @@ public class Map {
                     mapToRemove = map1;
                 }
             }
-            maps.remove(mapToRemove);
+            maps.removeAll(Collections.singleton(mapToRemove));
             maps.add(this);
+            System.out.println(maps.size());
             System.out.println("map updated!");
             SaveAndLoadData.SaveToJson(maps,DataEnumFile.MAPS.getFileName());
         } catch (IOException e) {

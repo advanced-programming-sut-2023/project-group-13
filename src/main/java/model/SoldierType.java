@@ -31,6 +31,7 @@ public enum SoldierType {
     private double defensePower;
     private int speed;
     private int range;
+    private int movementRange;
     private int secondRange;
     private int moneyCost;
     private double precision;
@@ -47,7 +48,7 @@ public enum SoldierType {
 
 
 
-    SoldierType(int hp, int attackPower, double defensePower, int speed, int range, int secondRange, int moneyCost,
+    SoldierType(int hp, int attackPower, double defensePower, int speed, int range, int secondRange,int moneyCost,
                 double precision, int delay, WeaponType weapon, WeaponType weapon2, boolean canClimb,/* boolean canThrowLadders,*/ boolean canDigDitch, boolean isArab, String name, boolean isArcherType,
                 boolean canBeDroppedOnBuilding) {
         this.hp = hp;
@@ -55,6 +56,7 @@ public enum SoldierType {
         this.defensePower = defensePower;
         this.speed = speed;
         this.range = range;
+        this.movementRange = this.speed * 5;
         this.secondRange = secondRange;
         this.moneyCost = moneyCost;
         this.precision = precision;
@@ -131,6 +133,10 @@ public enum SoldierType {
 
     public WeaponType getWeapon2() {
         return weapon2;
+    }
+
+    public int getMovementRange() {
+        return movementRange;
     }
 
     public static SoldierType getSoldierTypeByString(String soldierName) {

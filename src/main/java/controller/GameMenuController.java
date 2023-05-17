@@ -3,12 +3,10 @@ package controller;
 import model.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
-
 import model.Empire;
 import model.Map;
-
-import javax.management.MBeanAttributeInfo;
 
 public class GameMenuController {
     public static Map map = NewGameController.getCurrent_map();
@@ -18,11 +16,11 @@ public class GameMenuController {
     public static Building selectedBuilding;
     public static int roundNumber = 0;
     public static Empire CurrentEmpire;
-    public static BuildingType buildingType = GameMenuController.selectedBuilding.getBuildingType();
+    public static BuildingType buildingType;
+    private static int select_x;
+    private static int select_y;
+    public static ArrayList<Soldier> selected_soldiers = new ArrayList<>();
 
-    public GameMenuController() {
-        this.selectedSoldiers = new ArrayList<>();
-    }
 
     public static String nextTurn() {
         roundNumber++;
@@ -260,8 +258,106 @@ public class GameMenuController {
         }
     }
 
-    public String moveunit(Matcher matcher) {
-    return "";
+    public String moveUnit(Matcher matcher) {
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+        if (!checkNegativity(x, y)) {
+            return "negative index";
+        }
+        List<Cell> path = AstarShortestPath.findShortestPath(NewGameController.getCurrent_map(), NewGameController.getCurrent_map().getMapCells(getSelect_x(), getSelect_y()), NewGameController.getCurrent_map().getMapCells(x, y));
+        if (path.isEmpty()) {
+            return "No path found.";
+        } else {
+            System.out.println("Shortest path:");
+            for (Cell cell : path) {
+                System.out.println("(" + cell.getX() + ", " + cell.getY() + ")");
+            }
+        }
+        return "moved unit successfully";
+    }
+
+
+
+    public String selectUnit(Matcher matcher) {
+
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+        String type = matcher.group("unitType");
+
+        if (!checkNegativity(x, y)) {
+            return "negative index!";
+        }
+        if (NewGameController.getCurrent_map().getMapCells(x, y).getSoldiers().isEmpty()) {
+            return "there is no unit in this cell";
+        }
+        if (type != null) {
+            if (SoldierType.getSoldierTypeByString(type)!= null) {
+                for (Soldier soldier : NewGameController.getCurrent_map().getMapCells(x, y).getSoldiers()) {
+                    if (soldier.getSoldierType().getName().equals(type)) {
+                        selectedSoldiers.add(soldier);
+                    }
+                }
+                if (selectedSoldiers.isEmpty()) return "there was no unit with this type at this cell.";
+            }
+            else return "Invalid unit type.";
+        }
+        else {
+            selectedSoldiers.addAll(NewGameController.getCurrent_map().getMapCells(x, y).getSoldiers());
+            setSelect_x(x);
+            setSelect_y(y);
+        }
+        return "units selected successfully!";
+    }
+
+    private boolean checkNegativity(int... param) {
+        for (int a : param) {
+            if (a < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static int getSelect_x() {
+        return select_x;
+    }
+
+    public static void setSelect_x(int select_x) {
+        GameMenuController.select_x = select_x;
+    }
+
+    public static int getSelect_y() {
+        return select_y;
+    }
+
+    public static void setSelect_y(int select_y) {
+        GameMenuController.select_y = select_y;
+    }
+
+    public static void setBuildingType(BuildingType buildingType) {
+        GameMenuController.buildingType = buildingType;
+    }
+
+
+    public static String dropBuilding(Matcher matcher) {
+        if (checkCordination(matcher)) {
+            int x = Integer.parseInt(matcher.group("x"));
+            int y = Integer.parseInt(matcher.group("y"));
+            BuildingType buildingType1 = BuildingType.getBuildingTypeByName(matcher.group("type"));
+            if (buildingType1 == null) return "there is not such a building type.";
+            String type = matcher.group("type");
+            if (buildingType1.getGoldPrice() > currentEmpire.getTotalGoldAmount())
+                return "you need more gold to build this building.";
+            Cell cell = map.getMapCells(x , y);
+            if (cell.getBuilding() != null)
+                return "already there is a building at this cell.";
+            if (cell.getSoldiers().size() > 0)
+                return "there is(are) soldier(s) here.";
+
+         //   if (cell.getTypeofGround().equals() || cell.isHasTreeInCell()  )
+        } else
+            return "Invalid cordination.";
+        return "";
     }
 
     public static int getHorseAmount() {
@@ -288,44 +384,4 @@ public class GameMenuController {
             }
         }
     }
-
-    public static void removeHorsesFromStables(int amount) {
-        if (amount > getHorseAmount()) return;
-
-        for (Stable stable : currentEmpire.getStables()) {
-            if (stable.getCurrentNumberOfHorses() >= amount) {
-                stable.addCurrentNumberOfHorses(-amount);
-                break;
-            } else {
-                int remainAmount = amount - stable.getCurrentNumberOfHorses();
-                stable.addCurrentNumberOfHorses(-1 * remainAmount);
-                amount -= remainAmount;
-                if (amount <= 0) {
-                    break;
-                }
-            }
-        }
-    }
-
-    public static String dropBuilding(Matcher matcher) {
-        if (checkCordination(matcher)) {
-            int x = Integer.parseInt(matcher.group("x"));
-            int y = Integer.parseInt(matcher.group("y"));
-            BuildingType buildingType1 = BuildingType.getBuildingTypeByName(matcher.group("type"));
-            if (buildingType1 == null) return "there is not such a building type.";
-            String type = matcher.group("type");
-            if (buildingType1.getGoldPrice() > currentEmpire.getTotalGoldAmount())
-                return "you need more gold to build this building.";
-            Cell cell = map.getMapCells(x , y);
-            if (cell.getBuilding() != null)
-                return "already there is a building at this cell.";
-            if (cell.getSoldiers().size() > 0)
-                return "there is(are) soldier(s) here.";
-
-         //   if (cell.getTypeofGround().equals() || cell.isHasTreeInCell()  )
-        } else
-            return "Invalid cordination.";
-        return "";
-    }
-
 }
