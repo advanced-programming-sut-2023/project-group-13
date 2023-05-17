@@ -22,7 +22,7 @@ public class NewGameController {
         maps = SaveAndLoadData.LoadData(DataEnumFile.MAPS.getFileName(), DataEnumFile.MAPS.getDataType());
         for (Map map : maps) {
             if (map.getMapName().equals(mapName)) {
-                current_map = map;
+                 setCurrent_map(map);
                 setMapSelected(true);
                 return "map selected successfully!";
             }
@@ -147,6 +147,10 @@ public class NewGameController {
     public static ArrayList<Empire> getEmpires() {
         return empires;
         // freydoon get access empires here;
+    }
+
+    public static void setCurrent_map(Map current_map) {
+        NewGameController.current_map = current_map;
     }
 
     public boolean isMapSelected() {

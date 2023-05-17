@@ -16,7 +16,7 @@ public class Stable {
         return CurrentNumberOfHorses;
     }
 
-    public void setCurrentNumberOfHorses(int currentNumberOfHorses) {
-        CurrentNumberOfHorses = currentNumberOfHorses;
+    public void addCurrentNumberOfHorses(int currentNumberOfHorses) {
+        CurrentNumberOfHorses += currentNumberOfHorses;
     }
 }

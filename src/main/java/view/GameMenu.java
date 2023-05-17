@@ -1,20 +1,19 @@
 package view;
 
 import controller.GameMenuController;
-import controller.KingdomMenuController;
 import model.Enums.GameMenuCommands;
-import model.Enums.*;
 
 import java.util.regex.Matcher;
 
 public class GameMenu {
-    private GameMenuController gameMenuController;
+    private GameMenuController gameMenuController = new GameMenuController();
     public String run() {
         String command;
         Matcher matcher;
         while (true) {
             command = ScannerMatcher.getScanner().nextLine();
             if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SELECT_UNIT)).find()) {
+                System.out.println(gameMenuController.selectUnit(matcher));
 
             } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.ATTACK)).find()) {
 
@@ -25,7 +24,7 @@ public class GameMenu {
             } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.DISBAND)).find()) {
 
             } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.MOVE_UNIT)).find()) {
-                System.out.println(gameMenuController.moveunit(matcher));
+                System.out.println(gameMenuController.moveUnit(matcher));
 
             } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.STOP)).find()) {
 

@@ -238,10 +238,20 @@ public class MapMenuController {
         if (!checkNegativity(x, y)) {
             return "negative index!";
         }
+        checkTypeObstacle(type, x, y);
         map.getMapCells(x,y).setTypeofGround(type);
         map.SavetoJason();
         return "change texture of ground successful";
         // todo to complete this method
+    }
+
+    private void checkTypeObstacle(String type, int x, int y) {
+        if (TypeofGround.SEA.getFullNameType().equals(type) || TypeofGround.BIGPOOL.getFullNameType().equals(type)
+                || TypeofGround.PLAIN.getFullNameType().equals(type) || TypeofGround.LITTLEPOOL.getFullNameType().equals(type)
+                || TypeofGround.RIVER.getFullNameType().equals(type) || TypeofGround.OIL.getFullNameType().equals(type)
+                || TypeofGround.ROCKY.getFullNameType().equals(type)) {
+            map.getMapCells(x, y).setObstacle(true);
+        }
     }
 
     public String setTextureOfAnArea(Matcher matcher) {
@@ -256,6 +266,7 @@ public class MapMenuController {
         for (int i = x1; i <= x2; i++) {
             for (int j = y1; j <= y2; j++) {
                 map.getMapCells(i,j).setTypeofGround(type);
+                checkTypeObstacle(type, i, j);
             }
         }
         map.SavetoJason();
@@ -269,6 +280,7 @@ public class MapMenuController {
         if(!checkNegativity(x,y))
             return "negative index!";
         map.getMapCells(x,y).remove();
+        map.getMapCells(x, y).setObstacle(false);
         map.SavetoJason();
         //todo to deal with the soldires in this function
         return "clear tile successful";
@@ -285,6 +297,7 @@ public class MapMenuController {
         if (direction.equals("r"))
             direction = "s";
         map.getMapCells(x,y).setTypeofGround(TypeofGround.ROCKY.getFullNameType());
+        map.getMapCells(x, y).setObstacle(true);
         map.SavetoJason();
         return "dropped rock successful";
         // todo to upgrade the random direction to a better thing
@@ -356,6 +369,7 @@ public class MapMenuController {
         if (!cell.setTree(type, x, y)) {
             return "there is no tree with this typename";
         }
+        map.getMapCells(x, y).setObstacle(true);
         cell.setHasTreeInCell(true);
         map.SavetoJason();
         return "tree dropped successfully";
@@ -383,6 +397,11 @@ public class MapMenuController {
 //            }
         if (!cell.setBuilding(type,x,y)) {
             return "there is no building with this type name!";
+        }
+        if (!BuildingType.STOCKPILE.getName().equals(type) && !BuildingType.DIARY_FARMER.getName().equals(type)
+                && !BuildingType.APPLE_ORCHARD.getName().equals(type) && !BuildingType.WHEAT_FARMER.getName().equals(type)
+                && !BuildingType.HOPS_FARMER.getName().equals(type)) {
+            cell.setObstacle(true);
         }
         cell.setHasBuildingInCell(true);
         map.SavetoJason();
