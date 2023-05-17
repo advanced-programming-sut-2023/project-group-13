@@ -4,7 +4,7 @@ import model.Enums.TypeofGround;
 
 import java.util.ArrayList;
 
-public class Cell {
+public class Cell implements Comparable<Cell> {
     private String typeofGround;
     private boolean hasSoldierInCell;
     private boolean hasBuildingInCell;
@@ -13,13 +13,23 @@ public class Cell {
     private ArrayList<Soldier> soldiers = new ArrayList<Soldier>();
     private Soldier soldier;
     private Building building;
+    private int x;
+    private int y;
+    private int f; // it understands the cost of the path
+    private int g; // it understand the distance
     private boolean obstacle;
+    private Cell parent;
 
     private TreeType tree;
 
-    public Cell(boolean obstacle) {
+    public Cell(int x, int y,boolean obstacle) {
         typeofGround = TypeofGround.EARTH.getFullNameType();
         this.obstacle = obstacle;
+        this.x = x;
+        this.y = y;
+        this.f = 0;
+        this.g = 0;
+        this.parent = null;
     }
 
     public String getTypeofGround() {
@@ -109,5 +119,50 @@ public class Cell {
 
     public Soldier getSoldier() {
         return soldier;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public boolean isObstacle() {
+        return obstacle;
+    }
+
+    public int getF() {
+        return f;
+    }
+
+    public void setF(int f) {
+        this.f = f;
+    }
+
+    public int getG() {
+        return g;
+    }
+
+    public void setG(int g) {
+        this.g = g;
+    }
+
+    @Override
+    public int compareTo(Cell other) {
+        return Integer.compare(this.f, other.f);
+    }
+
+    public Cell getParent() {
+        return parent;
+    }
+
+    public void setParent(Cell parent) {
+        this.parent = parent;
+    }
+
+    public void setObstacle(boolean obstacle) {
+        this.obstacle = obstacle;
     }
 }
