@@ -92,6 +92,15 @@ public class Empire {
     public ArrayList<Stable> getStables() {
         return stables;
     }
+    private int efficiency ;
+
+    public int getEfficiency() {
+        return efficiency;
+    }
+
+    public void setEfficiency(int efficiency) {
+        this.efficiency = efficiency;
+    }
 
     public Empire(Player player, GroundColor groundColor, Building kingPit, String empireName) {
         this.player = player;

@@ -30,7 +30,7 @@ public class Armoury extends Building {
         return MetalArmourAmount;
     }
 
-    public void setMetalArmourAmount(int metalArmourAmount) {
+    public void addMetalArmourAmount(int metalArmourAmount) {
         MetalArmourAmount = metalArmourAmount;
     }
 
@@ -38,7 +38,7 @@ public class Armoury extends Building {
         return LeatherArmourAmount;
     }
 
-    public void setLeatherArmourAmount(int leatherArmourAmount) {
+    public void addLeatherArmourAmount(int leatherArmourAmount) {
         LeatherArmourAmount = leatherArmourAmount;
     }
 
@@ -46,7 +46,7 @@ public class Armoury extends Building {
         return CrossBowAmount;
     }
 
-    public void setCrossBowAmount(int crossBowAmount) {
+    public void addCrossBowAmount(int crossBowAmount) {
         CrossBowAmount = crossBowAmount;
     }
 
@@ -54,40 +54,41 @@ public class Armoury extends Building {
         return MaceAmount;
     }
 
-    public void setMaceAmount(int maceAmount) {
-        MaceAmount = maceAmount;
+    public void addMaceAmount(int maceAmount) {
+        MaceAmount += maceAmount;
     }
+
 
     public int getPikeAmount() {
         return PikeAmount;
     }
 
-    public void setPikeAmount(int pikeAmount) {
-        PikeAmount = pikeAmount;
+    public void addPikeAmount(int pikeAmount) {
+        PikeAmount += pikeAmount;
     }
 
     public int getSwordAmount() {
         return SwordAmount;
     }
 
-    public void setSwordAmount(int swordAmount) {
-        SwordAmount = swordAmount;
+    public void addSwordAmount(int swordAmount) {
+        SwordAmount += swordAmount;
     }
 
     public int getBowAmount() {
         return BowAmount;
     }
 
-    public void setBowAmount(int bowAmount) {
-        BowAmount = bowAmount;
+    public void addBowAmount(int bowAmount) {
+        BowAmount += bowAmount;
     }
 
     public int getSpearAmount() {
         return SpearAmount;
     }
 
-    public void setSpearAmount(int spearAmount) {
-        SpearAmount = spearAmount;
+    public void addSpearAmount(int spearAmount) {
+        SpearAmount += spearAmount;
     }
 
     public int getCapacity() {
