@@ -24,6 +24,7 @@ public class NewGameController {
             if (map.getMapName().equals(mapName)) {
                  setCurrent_map(map);
                 setMapSelected(true);
+                GameMenuController.setMap(map);
                 return "map selected successfully!";
             }
         }
@@ -95,7 +96,8 @@ public class NewGameController {
             x += increase_coordinateSet;
             y += increase_coordinateSet;
         }
-
+        GameMenuController.setPlayersInGame(players);
+        GameMenuController.setEmpires(empires);
         return "**game started successfully**";
     }
 

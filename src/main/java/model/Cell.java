@@ -117,6 +117,16 @@ public class Cell implements Comparable<Cell> {
         return true;
     }
 
+    public void removeTroop(Soldier soldier) {
+        soldiers.remove(soldier);
+        // todo to handle the returning of these method
+    }
+
+    public void moveTroop(Soldier soldier) {
+        soldiers.add(soldier);
+        soldier.setX(getX());
+        soldier.setY(getY());
+    }
     public Soldier getSoldier() {
         return soldier;
     }

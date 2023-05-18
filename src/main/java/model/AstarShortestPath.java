@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class AstarShortestPath {
+    private static Map map;
     private static final int[][] DIRECTIONS = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
     public static List<Cell> findShortestPath(Map map,Cell start, Cell end) {
+        AstarShortestPath.map = map;
         PriorityQueue<Cell> openSet = new PriorityQueue<>();
         boolean[][] visited = new boolean[map.getSizeOfTheMap()][map.getSizeOfTheMap()];
         start.setG(0);
@@ -51,13 +53,13 @@ public class AstarShortestPath {
 
     private static List<Cell> reconstructPath(Cell current) {
         List<Cell> path = new ArrayList<>();
-
         while (current != null) {
             path.add(current);
             current = current.getParent();
         }
 
         Collections.reverse(path);
+        map.resetMapFGParent();
         return path;
     }
 

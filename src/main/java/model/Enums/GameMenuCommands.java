@@ -9,8 +9,11 @@ public enum GameMenuCommands {
     SELECT_UNIT("(?=.* -x (?<x>-?\\d+))(?=.* -y (?<y>-?\\d+))(?=.* -t (?<unitType>(\"[^\"]*\")|(\\S+)))" +
             "^select unit( -[xyt] ((\"[^\"]*\")|(\\S+))){2,3}$"),
     MOVE_UNIT("(?=.* -x (?<x>-?\\d+))(?=.* -y (?<y>-?\\d+))^move unit to( -[xy] -?\\d+){2}$"),
-    PATROL_UNIT("(?=.* -x (?<x>-?\\d+))(?=.* -y (?<y>-?\\d+))^patrol unit( -[xy] \\d+){2}$"),
+//    PATROL_UNIT("(?=.* -x (?<x>-?\\d+))(?=.* -y (?<y>-?\\d+))^patrol unit( -[xy] \\d+){2}$"),
+    PATROL_UNIT("^patrol unit -x1 (?<x1>-?\\d+) -y1 (?<y1>-?\\d+)" +
+        " -x2 (?<x2>-?\\d+) -y2 (?<y2>-?\\d+)$"),
     SET_STATE("^set -x (?<x>-?\\d+) -y (?<y>-?\\d+) -s (?<s>\\S+)$"),
+    SHOWMAPCOORDINATED("^show map -x (?<x>-?\\d+) -y (?<y>-?\\d+)$"),
     ATTACK("^attack -e (?<xEnemy>-?\\d+) (?<yEnemy>-?\\d+)$"),
     POUR_OIL("^pour oil -d (?<direction>\\S+)$"),
     OPEN_TRADE_MENU("^open trade menu$"),

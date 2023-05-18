@@ -27,21 +27,24 @@ public class GameMenu {
                 System.out.println(gameMenuController.moveUnit(matcher));
 
             } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.STOP)).find()) {
+                System.out.println(gameMenuController.stop());
+            } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.PATROL_UNIT)).find()) {
+                System.out.println(gameMenuController.patrolUnit(matcher));
 
             } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.STOP_PATROL)).find()) {
-
-            } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.STOP_PATROL)).find()) {
+                System.out.println(gameMenuController.stopPatrol());
 
             } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SET_STATE)).find()) {
 
+            } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SHOWMAPCOORDINATED)).find()) {
+                System.out.println(gameMenuController.showmap(matcher));
             } else if (command.matches("^exit game$")) {
                 return "exit game";
             } else if (command.matches("^next turn$")) {
                 System.out.println(GameMenuController.nextTurn());
             } else if (command.matches("^kingdom menu$")) {
                 //goto kingdom menu
-            }
-             else System.out.println("Invalid command!");
+            } else System.out.println("Invalid command!");
         }
     }
 }

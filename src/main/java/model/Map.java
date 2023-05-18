@@ -1,7 +1,6 @@
 package model;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import model.Enums.DataEnumFile;
 
 import java.io.File;
@@ -10,7 +9,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class Map {
@@ -118,5 +116,19 @@ public class Map {
 
     public void setMap(Cell[][] loadedMap) {
         this.map = loadedMap;
+    }
+
+    public Cell[][] getMap() {
+        return map;
+    }
+
+    public void resetMapFGParent() {
+        for (int i = 0; i < getSizeOfTheMap(); i++) {
+            for (int j = 0; j < getSizeOfTheMap(); j++) {
+                getMap()[i][j].setF(0);
+                getMap()[i][j].setG(0);
+                getMap()[i][j].setParent(null);
+            }
+        }
     }
 }
