@@ -102,7 +102,7 @@ public class Empire {
         this.efficiency = efficiency;
     }
 
-    public Empire(Player player, GroundColor groundColor, Building kingPit, String empireName) {
+    public Empire (Player player, GroundColor groundColor, Building kingPit, String empireName) {
         this.player = player;
         this.groundColor = groundColor;
         this.lord = new Soldier(SoldierType.KING.getHp(),player.getNickname(),SoldierType.KING, this, kingPit.getX(), kingPit.getY());
@@ -304,6 +304,7 @@ public class Empire {
     public Building getKingPit() {
         return kingPit;
     }
+
 
     public void setKingPit(Building kingPit) {
         this.kingPit = kingPit;

@@ -16,6 +16,10 @@ public class MapMenuController {
         this.controllerControllers = controllerControllers;
     }
 
+    public MapMenuController() {
+        // empty constructor :)
+    }
+
     private MapMenu mapMenu;
     private Cell cell;
     private Cell[][] loaded_map;
@@ -55,6 +59,11 @@ public class MapMenuController {
     }
 
     public void showMapCoordinated(int x, int y) {
+        if (!checkNegativity(x, y)) {
+            System.out.println("negative index");
+            return;
+            // todo to make this method cleaner and nicer
+        }
         x_initial = x;
         y_initial = y;
         int scaleOfBiggerMap = 0;
@@ -161,7 +170,7 @@ public class MapMenuController {
         }
         else if (x == x_initial && y == y_initial)
             selectFormating = colorstar;
-        if(cell.isHasSoldierInCell() && (i % 4 == 2)) {
+        if(!cell.getSoldiers().isEmpty() && (i % 4 == 2)) {
             int countSoldiers = cell.getSoldiers().size();
 
             String numberString = Integer.toString(countSoldiers);
@@ -408,6 +417,35 @@ public class MapMenuController {
         return "building dropped successfully";
         // todo to complete this method
     }
+    public String dropBuilding(int x, int y, String type) {
+        cell = map.getMapCells(x,y);
+        if (!checkNegativity(x, y)) {
+            return "negative index!";
+        }
+        if (!checkTypeOfGround("Building", x, y, type)) {
+            return "you can't drop building in here";
+        }
+        if (cell.getTypeofGround().equals("Water")) {
+            return "you can't drop building in here";
+            // todo to put check type of ground in an enum which needs more effort
+        }
+//            if (cell.getTypeofGround().equals("Water")) {
+//                return "you can't drop building in here";
+//                // todo to put check type of ground in an enum which needs more effort
+//            }
+        if (!cell.setBuilding(type,x,y)) {
+            return "there is no building with this type name!";
+        }
+        if (!BuildingType.STOCKPILE.getName().equals(type) && !BuildingType.DIARY_FARMER.getName().equals(type)
+                && !BuildingType.APPLE_ORCHARD.getName().equals(type) && !BuildingType.WHEAT_FARMER.getName().equals(type)
+                && !BuildingType.HOPS_FARMER.getName().equals(type)) {
+            cell.setObstacle(true);
+        }
+        cell.setHasBuildingInCell(true);
+        map.SavetoJason();
+        return "building dropped successfully";
+        // todo to complete this method
+    }
 
     // todo later on change the int types to the Integer
     public String dropUnit(Matcher matcher) {
@@ -498,6 +536,11 @@ public class MapMenuController {
 
     public void setMapExist(boolean mapExist) {
         isMapExist = mapExist;
+    }
+
+    public void setMapFromGameMenu(Map map) {
+        this.map = new Map(map.getSizeOfTheMap(), map.getMapName());
+        this.map.setMap(map.getMap());
     }
 
     public boolean isMapExist() {

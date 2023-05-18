@@ -2,7 +2,7 @@ package model;
 
 public enum SoldierType {
     KING(800, 160, 0.2, 3, 1, 0, 0, 0, 0, null, null, false, false, false, "king", false,true),
-    ARCHER(200, 100, 0.15, 4, 10, 4, 12, 0.3, 0, WeaponType.BOW, null, false, false, false, "archer", true,true),
+    ARCHER(200, 100, 0.15, 1, 10, 4, 12, 0.3, 0, WeaponType.BOW, null, false, false, false, "archer", true,true),
     CROSSBOW_MAN(250, 120, 0.2, 3, 5, 0, 20, 0.1, 0, WeaponType.CROSSBOW, WeaponType.LEATHER_ARMOR, false, false, false, "crossbow man", true,true),
     SPEAR_MAN(150, 180, 0.1, 3, 2, 0, 8, 0.1, 2, WeaponType.SPEAR, null, true, true, false, "spear man", false,true),
     PIKE_MAN(500, 200, 0.3, 2, 1, 0, 20, 0, 0, WeaponType.PIKE, WeaponType.METAL_ARMOR, false, false, false, "pike man", false,true),
@@ -56,7 +56,7 @@ public enum SoldierType {
         this.defensePower = defensePower;
         this.speed = speed;
         this.range = range;
-        this.movementRange = this.speed * 5;
+        this.movementRange = this.speed * 2;
         this.secondRange = secondRange;
         this.moneyCost = moneyCost;
         this.precision = precision;
