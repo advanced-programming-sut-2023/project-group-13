@@ -124,6 +124,16 @@ assignees: Arman17Babaei
   3. [X] تمام شده
   </div>
 </details>
+  <details>
+  <summary>SHA-256</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
 
 ## تسک‌های نفر سوم
 
