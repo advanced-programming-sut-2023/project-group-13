@@ -6,6 +6,7 @@ import model.Player;
 import model.SaveAndLoadData;
 import view.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -28,8 +29,11 @@ public class ControllerControllers {
         RunGameMenu = new RunGameMenu(this);
     }
     public void run() throws InterruptedException, IOException {
-        Player.players = SaveAndLoadData.LoadData(DataEnumFile.PLAYERS.getFileName(),
-                DataEnumFile.PLAYERS.getDataType());
+        File file = new File(DataEnumFile.PLAYERS.getFileName());
+        if (file.exists()) {
+            Player.players = SaveAndLoadData.LoadData(DataEnumFile.PLAYERS.getFileName(),
+                    DataEnumFile.PLAYERS.getDataType());
+        }
         if (Player.players == null) {
             Player.players = new ArrayList<>();
         }

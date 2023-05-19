@@ -395,12 +395,12 @@ public class GameMenuController {
         Apath = new ArrayList<>(path);
         select = new ArrayList<>(selectedSoldiers);
         if (path.size() > selectedSoldiers.get(0).getSoldierType().getMovementRange()) {
-
-            System.out.println("Shortest path:");
-
-            for (Cell cell : Apath) {
-                System.out.println("(" + cell.getX() + ", " + cell.getY() + ")");
-            }
+//
+//            System.out.println("Shortest path:");
+//
+//            for (Cell cell : Apath) {
+//                System.out.println("(" + cell.getX() + ", " + cell.getY() + ")");
+//            }
 
             if (!selectedSoldiers.get(0).isPatrol()) {
                 selectedSoldiers.clear();

@@ -62,6 +62,8 @@ public enum groundColor {
             return DARK.getColor();
         } else if (TypeofGround.PLAIN.getFullNameType().equals(typeofground)) {
             return DARKGREEN.getColor();
+        } else if (TypeofGround.RIVER.getFullNameType().equals(typeofground)) {
+            return BLUE.getColor();
         } else {
             return RESET.getColor();
         }
