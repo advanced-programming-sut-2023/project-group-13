@@ -16,7 +16,7 @@ public enum SignupMenuCommands {
     QUESTION_PICK("^question pick -q (?<questionNumber>-?\\d) -a (?<answer>.*) -c (?<answerConfirm>.*)$"),
     RANDOM_PASSWORD("user create -u <username> -n <nickname> -p random -e <email>\n"),
     RANDOM_PASSWORD_SLOGAN("user create -u <username> -p random -s random -n <nickname>\n"),
-    CHECK_EMAIL("^[\\w_]+@[\\w_]+.[\\w_]{2,}$");
+    CHECK_EMAIL("^[\\w_]+@[\\w_]+\\.[\\w_]{2,}$");
     ;
 
     String regex;
