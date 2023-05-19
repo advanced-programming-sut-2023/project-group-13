@@ -94,7 +94,7 @@ assignees: Arman17Babaei
 </details>
   
   <details>
-  <summary>وصل کردن پروژه ها با کنترل واحد</summary>
+  <summary>وصل کردن پروژه ها با کنترلر واحد</summary>
 
   <div dir="ltr" align='right'>
 
