@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import controller.ControllerControllers;
 import controller.MapMenuController;
 import model.Enums.CommandsMap;
+import model.Enums.TypeofGround;
 import model.Map;
 import model.SaveAndLoadData;
 
@@ -48,7 +49,7 @@ public class MapMenu {
             } else if ((matcher = ScannerMatcher.getMatcher(command, CommandsMap.SETTEXTURESINGLEBLOCK.getPattern())) != null) {
                 System.out.println(mapMenuController.setTextureOfTheSingleBlock
                         (Integer.parseInt(matcher.group("x")),Integer.parseInt(matcher.group("y"))
-                        ,matcher.group("type")));
+                        , TypeofGround.getTypeOfGroundByName(matcher.group("type"))));
             } else if ((matcher = ScannerMatcher.getMatcher(command, CommandsMap.SETTEXTUREAREA.getPattern())) != null) {
                 System.out.println(mapMenuController.setTextureOfAnArea(matcher));
             } else if ((matcher = ScannerMatcher.getMatcher(command, CommandsMap.CLEARGROUND.getPattern())) != null) {

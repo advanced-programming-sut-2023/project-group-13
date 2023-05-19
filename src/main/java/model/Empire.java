@@ -1,5 +1,6 @@
 package model;
 
+import controller.GameMenuController;
 import model.Enums.GroundColor;
 
 import java.util.ArrayList;
@@ -24,9 +25,9 @@ public class Empire {
     private ArrayList<Armoury> armouries;
     private int FearFactorRate;
     private int TotalFood;
-    private ArrayList<Food> foods ;
-    private int  taxRate;
-    private int  foodRate;
+    private ArrayList<Food> foods;
+    private int taxRate;
+    private int foodRate;
     private int foodDiversity;
     private int fearRate;
 
@@ -40,7 +41,7 @@ public class Empire {
 
     private String empireName;
     // changed this name to empireName;
-     private Soldier lord;
+    private Soldier lord;
     private int peopleAmount = 8; //worker and none worker
     private int noneWorkerAmount;
     private int workerAmount;
@@ -92,35 +93,60 @@ public class Empire {
     public ArrayList<Stable> getStables() {
         return stables;
     }
-    private int efficiency ;
 
-    public int getEfficiency() {
-        return efficiency;
+    private double efficiency;
+
+    public double getEfficiency() {
+        switch (GameMenuController.currentempire.getFearRate()) {
+            case -5:
+                return 2;
+            case -4:
+                return 1.8;
+            case -3:
+                return 1.6;
+            case -2:
+                return 1.4;
+            case -1:
+                return 1.2;
+            case -0:
+                return 1;
+            case 1:
+                return 0.9;
+            case 2:
+                return 0.8;
+            case 3:
+                return 0.7;
+            case 4:
+                return 0.6;
+            case 5:
+                return 0.5;
+            default: return -1;
+        }
     }
 
-    public void setEfficiency(int efficiency) {
-        this.efficiency = efficiency;
-    }
 
-    public Empire (Player player, GroundColor groundColor, Building kingPit, String empireName) {
+    public Empire(Player player, GroundColor groundColor) {
         this.player = player;
         this.groundColor = groundColor;
-        this.lord = new Soldier(SoldierType.KING.getHp(),player.getNickname(),SoldierType.KING, this, kingPit.getX(), kingPit.getY());
-        this.kingPit = kingPit; // it is the same main castle
+        this.lord = new Soldier(SoldierType.KING.getHp(), player.getNickname(), SoldierType.KING, this, kingPit.getX(), kingPit.getY());
         this.allPeopleAmount = 10;
         this.noneWorkerAmount = 10;
         this.SoldierAmount = 0;
         this.workerAmount = 0;
-        this. totalGoldAmount = 2000;
+        this.totalGoldAmount = 2000;
         this.foodDiversity = 0;
         this.foods = new ArrayList<>();
         this.soldiers = new ArrayList<>();
         this.buildings = new ArrayList<>();
         this.granaries = new ArrayList<>();
         this.armouries = new ArrayList<>();
-        this.stockpiles= new ArrayList<>();
-        stockpiles.add(new Stockpile(kingPit.getX(),kingPit.getY()+1,100 , 10 , 50 ,
-                0 ,0 ,0 ,0 ,0));
+        this.stockpiles = new ArrayList<>();
+        this.taxRate = 0;
+        this.fearRate = 0;
+        this.foodRate = 0;
+        this.popularity = 100;
+        stockpiles.add(new Stockpile(kingPit.getX(), kingPit.getY() + 1, 100, 10, 50,
+                0, 0, 0, 0, 0));
 
     }
 

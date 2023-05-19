@@ -7,14 +7,16 @@ public class Building {
     private TreeType treeType;
     private int x;
     private int y;
+    private Empire empire;
 
 
-    public Building(int hp, String name, BuildingType buildingType, int x, int y) {
+    public Building(int hp, String name, BuildingType buildingType, int x, int y, Empire empire) {
         this.hp = hp;
         this.name = name;
         this.buildingType = buildingType;
         this.x = x;
         this.y = y;
+        this.empire = empire;
     }
 
     public Building(int hp, String name, TreeType treeType, int x, int y) {
@@ -47,6 +49,26 @@ public class Building {
 
     public BuildingType getBuildingType() {
         return buildingType;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public TreeType getTreeType() {
+        return treeType;
+    }
+
+    public void setTreeType(TreeType treeType) {
+        this.treeType = treeType;
     }
 
     public void setBuildingType(BuildingType buildingType) {

@@ -120,23 +120,23 @@ public class MapMenuController {
 
     private void specifyTypeOfGround(int x, int y, int i, int j) {
         cell = map.getMapCells(x,y);
-        if (cell.getTypeofGround().equals(TypeofGround.EARTH.getFullNameType()))
+        if (cell.getTypeofGround().equals(TypeofGround.EARTH))
             printMap(TypeofGround.EARTH.getFullNameType(), i, x, y, j);
-        else if (cell.getTypeofGround().equals(TypeofGround.GRASS.getFullNameType()))
+        else if (cell.getTypeofGround().equals(TypeofGround.GRASS))
             printMap(TypeofGround.GRASS.getFullNameType(), i, x, y, j);
-        else if (cell.getTypeofGround().equals(TypeofGround.DENSEMEADOW.getFullNameType()))
+        else if (cell.getTypeofGround().equals(TypeofGround.DENSEMEADOW))
             printMap(TypeofGround.DENSEMEADOW.getFullNameType(), i, x, y, j);
-        else if (cell.getTypeofGround().equals(TypeofGround.MEADOW.getFullNameType()))
+        else if (cell.getTypeofGround().equals(TypeofGround.MEADOW))
             printMap(TypeofGround.MEADOW.getFullNameType(), i, x, y, j);
-        else if (cell.getTypeofGround().equals(TypeofGround.ROCKY.getFullNameType()))
+        else if (cell.getTypeofGround().equals(TypeofGround.ROCKY))
             printMap(TypeofGround.ROCKY.getFullNameType(), i, x, y, j);
-        else if (cell.getTypeofGround().equals(TypeofGround.STONEY.getFullNameType()))
+        else if (cell.getTypeofGround().equals(TypeofGround.STONEY))
             printMap(TypeofGround.STONEY.getFullNameType(), i, x, y, j);
-        else if (cell.getTypeofGround().equals(TypeofGround.SANDY.getFullNameType()))
+        else if (cell.getTypeofGround().equals(TypeofGround.SANDY))
             printMap(TypeofGround.SANDY.getFullNameType(), i, x, y, j);
-        else if (cell.getTypeofGround().equals(TypeofGround.IRON.getFullNameType()))
+        else if (cell.getTypeofGround().equals(TypeofGround.IRON))
             printMap(TypeofGround.IRON.getFullNameType(), i, x, y, j);
-        else if (cell.getTypeofGround().equals(TypeofGround.SEA.getFullNameType()))
+        else if (cell.getTypeofGround().equals(TypeofGround.SEA))
             printMap(TypeofGround.SEA.getFullNameType(), i, x, y, j);
 
     }
@@ -243,7 +243,7 @@ public class MapMenuController {
 
     }
 
-    public String setTextureOfTheSingleBlock(int x, int y, String type) {
+    public String setTextureOfTheSingleBlock(int x, int y, TypeofGround type) {
         if (!checkNegativity(x, y)) {
             return "negative index!";
         }
@@ -254,11 +254,11 @@ public class MapMenuController {
         // todo to complete this method
     }
 
-    private void checkTypeObstacle(String type, int x, int y) {
-        if (TypeofGround.SEA.getFullNameType().equals(type) || TypeofGround.BIGPOOL.getFullNameType().equals(type)
-                || TypeofGround.PLAIN.getFullNameType().equals(type) || TypeofGround.LITTLEPOOL.getFullNameType().equals(type)
-                || TypeofGround.RIVER.getFullNameType().equals(type) || TypeofGround.OIL.getFullNameType().equals(type)
-                || TypeofGround.ROCKY.getFullNameType().equals(type)) {
+    private void checkTypeObstacle(TypeofGround type, int x, int y) {
+        if (TypeofGround.SEA.equals(type) || TypeofGround.BIGPOOL.equals(type)
+                || TypeofGround.PLAIN.equals(type) || TypeofGround.LITTLEPOOL.equals(type)
+                || TypeofGround.RIVER.equals(type) || TypeofGround.OIL.equals(type)
+                || TypeofGround.ROCKY.equals(type)) {
             map.getMapCells(x, y).setObstacle(true);
         }
     }
@@ -272,10 +272,13 @@ public class MapMenuController {
             return "negative index!";
         }
         String type = matcher.group("type");
+
+        TypeofGround typeofGround = TypeofGround.getTypeOfGroundByName(type);
+        if (typeofGround == null) return "there is not such a type of ground.";
         for (int i = x1; i <= x2; i++) {
             for (int j = y1; j <= y2; j++) {
-                map.getMapCells(i,j).setTypeofGround(type);
-                checkTypeObstacle(type, i, j);
+                map.getMapCells(i,j).setTypeofGround(typeofGround);
+                checkTypeObstacle(typeofGround, i, j);
             }
         }
         map.SavetoJason();
@@ -305,7 +308,7 @@ public class MapMenuController {
             return "direction not valid!";
         if (direction.equals("r"))
             direction = "s";
-        map.getMapCells(x,y).setTypeofGround(TypeofGround.ROCKY.getFullNameType());
+        map.getMapCells(x,y).setTypeofGround(TypeofGround.ROCKY);
         map.getMapCells(x, y).setObstacle(true);
         map.SavetoJason();
         return "dropped rock successful";
@@ -315,10 +318,10 @@ public class MapMenuController {
 
     private boolean checkTypeOfGround(String dropType, int x, int y, String drop) {
         cell = map.getMapCells(x, y);
-        String typeOfGround = map.getMapCells(x,y).getTypeofGround();
+        TypeofGround typeOfGround = map.getMapCells(x,y).getTypeofGround();
         if (dropType.equals("Soldier")) {
-            if (typeOfGround.equals(TypeofGround.SEA.getFullNameType()) ||
-                    typeOfGround.equals(TypeofGround.BIGPOOL.getFullNameType())) {
+            if (typeOfGround.equals(TypeofGround.SEA) ||
+                    typeOfGround.equals(TypeofGround.BIGPOOL)) {
                 return false;
                 // todo to print in the calling method to sout the relevant message
             }
@@ -342,15 +345,15 @@ public class MapMenuController {
                 }
             }
         } else if (dropType.equals("Building") || dropType.equals("Tree")) {
-            if (typeOfGround.equals(TypeofGround.BIGPOOL.getFullNameType()) ||
-                    typeOfGround.equals(TypeofGround.SEA.getFullNameType())
-                    || typeOfGround.equals(TypeofGround.IRON.getFullNameType()) ||
-                    typeOfGround.equals(TypeofGround.RIVER.getFullNameType()) ||
-                    typeOfGround.equals(TypeofGround.OIL.getFullNameType()) ||
-                    typeOfGround.equals(TypeofGround.LOWDEPTHWATER.getFullNameType())
-                    || typeOfGround.equals(TypeofGround.LITTLEPOOL.getFullNameType())
-                    || typeOfGround.equals(TypeofGround.STONEY.getFullNameType())
-                    || typeOfGround.equals(TypeofGround.ROCKY.getFullNameType())) {
+            if (typeOfGround.equals(TypeofGround.BIGPOOL) ||
+                    typeOfGround.equals(TypeofGround.SEA)
+                    || typeOfGround.equals(TypeofGround.IRON) ||
+                    typeOfGround.equals(TypeofGround.RIVER) ||
+                    typeOfGround.equals(TypeofGround.OIL) ||
+                    typeOfGround.equals(TypeofGround.LOWDEPTHWATER)
+                    || typeOfGround.equals(TypeofGround.LITTLEPOOL)
+                    || typeOfGround.equals(TypeofGround.STONEY)
+                    || typeOfGround.equals(TypeofGround.ROCKY)) {
                 return false;
                 // todo to print relevant message in the calling method
             }

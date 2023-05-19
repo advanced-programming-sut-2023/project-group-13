@@ -12,7 +12,7 @@ public enum GameMenuCommands {
 //    PATROL_UNIT("(?=.* -x (?<x>-?\\d+))(?=.* -y (?<y>-?\\d+))^patrol unit( -[xy] \\d+){2}$"),
     PATROL_UNIT("^patrol unit -x1 (?<x1>-?\\d+) -y1 (?<y1>-?\\d+)" +
         " -x2 (?<x2>-?\\d+) -y2 (?<y2>-?\\d+)$"),
-    SET_STATE("^set -x (?<x>-?\\d+) -y (?<y>-?\\d+) -s (?<s>\\S+)$"),
+    SET_STATE("^set -x (?<x>-?\\d+) -y (?<y>-?\\d+) -s (?<mode>\\S+)$"),
     SHOWMAPCOORDINATED("^show map -x (?<x>-?\\d+) -y (?<y>-?\\d+)$"),
     ATTACK("^attack -e (?<xEnemy>-?\\d+) (?<yEnemy>-?\\d+)$"),
     POUR_OIL("^pour oil -d (?<direction>\\S+)$"),

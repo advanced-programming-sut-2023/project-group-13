@@ -9,10 +9,19 @@ public class Stockpile extends Building {
     private int pitchAmount;
     private int hopsAmount;
     private int wheatAmount;
+    private int freeSpace;
+
+    public int getFreeSpace() {
+        return wheatAmount+hopsAmount+pitchAmount+flourAmount+aleAmount+stoneAmount+ironAmount+woodAmount;
+    }
+
+    public void setFreeSpace(int freeSpace) {
+        this.freeSpace = freeSpace;
+    }
 
     public Stockpile(int x, int y, int woodAmount, int ironAmount, int stoneAmount,
                      int aleAmount, int flourAmount, int pitchAmount, int hopsAmount, int wheatAmount) {
-        super(500, "stockpile", BuildingType.STOCKPILE, x, y);
+        super(500, "stockpile", BuildingType.STOCKPILE, x, y, Empire.getCurrentEmpire());
         this.woodAmount = woodAmount;
         this.ironAmount = ironAmount;
         this.stoneAmount = stoneAmount;

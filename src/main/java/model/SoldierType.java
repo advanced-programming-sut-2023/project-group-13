@@ -1,70 +1,70 @@
 package model;
 
 public enum SoldierType {
-    KING(800, 160, 0.2, 3, 1, 0, 0, 0, 0, null, null, false, false, false, "king", false,true),
-    ARCHER(200, 100, 0.15, 1, 10, 4, 12, 0.3, 0, WeaponType.BOW, null, false, false, false, "archer", true,true),
-    CROSSBOW_MAN(250, 120, 0.2, 3, 5, 0, 20, 0.1, 0, WeaponType.CROSSBOW, WeaponType.LEATHER_ARMOR, false, false, false, "crossbow man", true,true),
-    SPEAR_MAN(150, 180, 0.1, 3, 2, 0, 8, 0.1, 2, WeaponType.SPEAR, null, true, true, false, "spear man", false,true),
-    PIKE_MAN(500, 200, 0.3, 2, 1, 0, 20, 0, 0, WeaponType.PIKE, WeaponType.METAL_ARMOR, false, false, false, "pike man", false,true),
-    MACE_MAN(350, 300, 0.2, 3, 1, 0, 20, 0, 0, WeaponType.MACE, WeaponType.LEATHER_ARMOR, true, false, false, "mace man", false,true),
-    SWORDS_MAN(250, 350, 0.27, 1, 2, 0, 40, 0, 3, WeaponType.SWORD, WeaponType.METAL_ARMOR, false, true, false, "swordsman", false,true),
-    KNIGHT(600, 400, 0.35, 4, 4, 0, 120, 0, 0, WeaponType.SWORD, WeaponType.METAL_ARMOR, false, false, false, "knight", false,false),
-    TUNNELER(100, 100, 0.1, 3, 1, 0, 30, 0, 2, null, null, false, true, false, "tunneler", false,true),
-    LADDER_MAN(80, 0, 0.05, 3, 1, 0, 6, 0, 2, null, null, true, false, false, "ladder man", false,true),
-    ENGINEER(80, 0, 0.05, 3, 0, 0, 30, 0, 3, null, null, false, true, false, "engineer", false,true),
-//    OIL_ENGINEER(80, 100, 0.05, 2, 1, 0, 0, 0, 0, WeaponType.OIL, null, false, false, false, "oil engineer", false),
-    //todo to resolve Oil_EnGineer
-    BLACK_MONK(200, 100, 0.15, 2, 1, 0, 10, 0.2, 0, null, null, false, false, false, "black monk", false,true),
+    KING(1200, 160, 3, 1, 0, false, false, false, "king", false,true ,0),
+    ARCHER(200, 100, 1, 10, 12, false, false, false, "archer", true,true ,0),
+    CROSSBOW_MAN(250, 120, 3, 5, 20, false, false, false, "crossbow man", true,true ,0 ),
+    SPEAR_MAN(150, 180, 3, 2, 8, true, true, false, "spear man", false,true ,0 ),
+    PIKE_MAN(500, 200, 2, 1, 20, false, false, false, "pike man", false,true , 0),
+    MACE_MAN(350, 300, 3, 1, 20, true, false, false, "mace man", false,true ,0 ),
+    SWORDS_MAN(250, 350, 1, 2, 40, false, true, false, "swordsman", false,true , 0),
+    KNIGHT(600, 400, 4, 4, 120, false, false, false, "knight", false,false ,0 ),
+    TUNNELER(100, 100, 3, 1, 30, false, true, false, "tunneler", false,true , 0),
+    LADDER_MAN(80, 0, 3, 1, 6, true, false, false, "ladder man", false,true , 0),
+    ENGINEER(80, 0, 3, 0, 30, false, true, false, "engineer", false,true , 0),
+    OIL_ENGINEER(80, 100, 2, 2, 30,  false, false, false,  "oil engineer", false ,  false , 1),
+    BLACK_MONK(200, 100, 2, 1, 10, false, false, false, "black monk", false,true , 0),
 
-    ARCHER_BOW(200, 100, 0.12, 3, 11, 5, 60, 0.3, 0, WeaponType.BOW, null, false, false, true, "archer bow", true, true),
-    SLAVE(50, 40, 0, 3, 1, 0, 5, 0, 4, null, null, false, true, true, "slave", false, true),
-    SLINGER(100, 100, 0.1, 3, 2, 0, 12, 0.2, 0, null, null, false, false, true, "slinger", true, true),
-    ASSASSIN(400, 300, 0.3, 2, 3, 0, 100, 0, 0, null, null, true, false, true, "assassin", false, true),
-    HORSE_ARCHER(300, 120, 0.2, 5, 8, 3, 60, 0.5, 0, WeaponType.BOW, null, false, false, true, "horse archer", true, false),
-    ARABIAN_SWORDSMAN(500, 220, 0.2, 1, 2, 0, 80, 0, 0, WeaponType.SWORD, WeaponType.LEATHER_ARMOR, false, false, true, "arabian swordsman", false, true),
-    FIRE_THROWER(150, 200, 0.1, 4, 2, 0, 70, 0.1, 0, null, null, false, false, true, "fire throwers", false, true),
+    ARCHER_BOW(200, 100, 3, 11, 60, false, false, true, "archer bow", true, true , 0),
+    SLAVE(50, 40, 3, 1, 5, false, true, true, "slave", false, true , 0),
+    SLINGER(100, 100, 3, 2, 12, false, false, true, "slinger", true, true , 0),
+    ASSASSIN(400, 300, 2, 3, 100, true, false, true, "assassin", false, true , 0),
+    HORSE_ARCHER(300, 120, 5, 8, 60, false, false, true, "horse archer", true, false , 0),
+    ARABIAN_SWORDSMAN(500, 220, 1, 2, 80, false, false, true, "arabian swordsman", false, true , 0),
+    FIRE_THROWER(150, 200, 4, 2, 70, false, false, true, "fire throwers", false, true , 0),
+    PORTABLE_SHIELD( 500, 0, 4, 5, 0, true , false , false , "portableShield", false ,  true , 1),
+    BATTERING_RAM(1000, 500, 2000, 2, 150,false , false ,false,"battering ram",false,false,4 ),
+    TREBUCHET(1000, 1000, 400, 10, 150, false,false,false, "trebuchet" , false,false, 3),
+    CATAPULT(1000, 650, 150, 5, 150, false, false,false,"catapult" , false,false, 2),
+    FIRE_BALLISTA(1000, 200, 150, 5, 150, false, false,false, "fireballista" , false,false, 2 ),
+    SIEGE_TOWER(600, 0, 3300, 3, 150, false,false,false, "siegeTower" , false , false , 4 );
 
-  ;
+    ;
 
     private int hp;
     private int SoldierDamage;
-    private double defensePower;
     private int speed;
     private int range;
     private int movementRange;
-    private int secondRange;
     private int moneyCost;
-    private double precision;
-    private int delay;
-    private WeaponType weapon;
-    private WeaponType weapon2;
+
     private boolean canClimb;
-    /*boolean canThrowLadders;*/
+
     private boolean canDigDitch;
     private boolean isArab;
     private boolean isArcherType;
     private String name;
+    private int engineerNeededAmount;
 
+    public int getEngineerNeededAmount() {
+        return engineerNeededAmount;
+    }
 
+    public void setEngineerNeededAmount(int engineerNeededAmount) {
+        this.engineerNeededAmount = engineerNeededAmount;
+    }
 
-
-    SoldierType(int hp, int attackPower, double defensePower, int speed, int range, int secondRange,int moneyCost,
-                double precision, int delay, WeaponType weapon, WeaponType weapon2, boolean canClimb,/* boolean canThrowLadders,*/ boolean canDigDitch, boolean isArab, String name, boolean isArcherType,
-                boolean canBeDroppedOnBuilding) {
+    SoldierType(int hp, int attackPower, int speed, int range, int moneyCost,
+                boolean canClimb, boolean canDigDitch, boolean isArab, String name, boolean isArcherType,
+                boolean canBeDroppedOnBuilding , int engineerNeededAmount ) {
         this.hp = hp;
         this.SoldierDamage = attackPower;
-        this.defensePower = defensePower;
         this.speed = speed;
         this.range = range;
         this.movementRange = this.speed * 2;
-        this.secondRange = secondRange;
         this.moneyCost = moneyCost;
-        this.precision = precision;
-        this.delay = delay;
-        this.weapon = weapon;
-        this.weapon2 = weapon2;
+        this.engineerNeededAmount = engineerNeededAmount;
         this.canClimb = canClimb;
-        /*this.canThrowLadders = canThrowLadders;*/
         this.canDigDitch = canDigDitch;
         this.isArab = isArab;
         this.name = name;
@@ -79,9 +79,6 @@ public enum SoldierType {
         return SoldierDamage;
     }
 
-    public double getDefensePower() {
-        return defensePower;
-    }
 
     public boolean isArcherType() {
         return isArcherType;
@@ -95,25 +92,12 @@ public enum SoldierType {
         return range;
     }
 
-    public int getSecondRange() {
-        return secondRange;
-    }
-
     public int getMoneyCost() {
         return moneyCost;
     }
 
-    public double getPrecision() {
-        return precision;
-    }
 
-    public int getDelay() {
-        return delay;
-    }
 
-    public WeaponType getWeapon() {
-        return weapon;
-    }
 
     public boolean isCanClimb() {
         return canClimb;
@@ -131,9 +115,6 @@ public enum SoldierType {
         return name;
     }
 
-    public WeaponType getWeapon2() {
-        return weapon2;
-    }
 
     public int getMovementRange() {
         return movementRange;

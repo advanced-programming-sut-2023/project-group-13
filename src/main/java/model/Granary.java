@@ -8,7 +8,7 @@ public class Granary extends Building {
     public static int Capacity = 50;
 
     public Granary(int hp, String name , int x , int y, int cheeseAmount, int appleAmount, int meatAmount, int breadAmount ) {
-        super(hp, name, BuildingType.GRANARY,x ,y);
+        super(hp, name, BuildingType.GRANARY,x ,y, Empire.getCurrentEmpire());
         CheeseAmount = cheeseAmount;
         AppleAmount = appleAmount;
         MeatAmount = meatAmount;
@@ -20,7 +20,7 @@ public class Granary extends Building {
     }
 
     public void setCheeseAmount(int cheeseAmount) {
-        CheeseAmount = cheeseAmount;
+        CheeseAmount += cheeseAmount;
     }
 
     public int getAppleAmount() {
@@ -28,7 +28,7 @@ public class Granary extends Building {
     }
 
     public void setAppleAmount(int appleAmount) {
-        AppleAmount = appleAmount;
+        AppleAmount += appleAmount;
     }
 
     public int getMeatAmount() {
@@ -36,7 +36,7 @@ public class Granary extends Building {
     }
 
     public void setMeatAmount(int meatAmount) {
-        MeatAmount = meatAmount;
+        MeatAmount += meatAmount;
     }
 
     public int getBreadAmount() {
@@ -44,6 +44,6 @@ public class Granary extends Building {
     }
 
     public void setBreadAmount(int breadAmount) {
-        BreadAmount = breadAmount;
+        BreadAmount += breadAmount;
     }
 }

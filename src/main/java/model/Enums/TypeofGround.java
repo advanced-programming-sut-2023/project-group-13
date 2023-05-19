@@ -16,7 +16,8 @@ public enum TypeofGround {
     BEACH("Beach","Be"),
     LOWDEPTHWATER("Lowdepthwater","LDW"),
     OIL("OIL","O"),
-    PLAIN("PLAIN","P");
+    PLAIN("PLAIN","P"),
+    DITCH("Ditch" , "D");
 
 
     private String fullNameType;
@@ -32,5 +33,11 @@ public enum TypeofGround {
 
     public String getAbbrevaiteNameType() {
         return abbrevaiteNameType;
+    }
+    public static TypeofGround getTypeOfGroundByName(String name) {
+        for (TypeofGround typeofGround : TypeofGround.values()) {
+            if (typeofGround.getFullNameType().equals(name)) return typeofGround;
+        }
+        return null;
     }
 }

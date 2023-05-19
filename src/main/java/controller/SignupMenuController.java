@@ -66,7 +66,7 @@ public class SignupMenuController {
                 if (player.getEmail().equals(email)) emailCheck = 1;
             }
         if (emailCheck == 1) return "this email already used.";
-        if (SignupMenuCommands.getMatcher(email, SignupMenuCommands.CHECK_EMAIL) == null)
+        if (!SignupMenuCommands.getMatcher(email, SignupMenuCommands.CHECK_EMAIL).find())
             return "Invalid email format.";
 
         System.out.println(SignupMenuCommands.SECURITY_QUESTION.getRegex());
