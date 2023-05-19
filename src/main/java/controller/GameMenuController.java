@@ -37,8 +37,9 @@ public class GameMenuController {
 
     public static String nextTurn() {
         roundNumber++;
+        System.out.println("the current turn is: " + roundNumber);
         setCurrentEmpire(getEmpires().get(roundNumber % getEmpires().size()));
-
+        System.out.println(currentEmpire.getEmpireName() + "is playing now!");
         getPaths().forEach((key, value) -> {
             Iterator<Soldier> iterator = key.iterator();
 
