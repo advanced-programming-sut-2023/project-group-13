@@ -70,6 +70,60 @@ assignees: Arman17Babaei
   3. [X] تمام شده
   </div>
 </details>
+  
+  <details>
+  <summary>پیدا کردن کوتاه مسیر</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
+  
+  <details>
+  <summary>move unit,patrol unit, stop unit</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
+  
+  <details>
+  <summary>وصل کردن پروژه ها با کنترل واحد</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
+  
+  <details>
+  <summary>run a new game</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
+  <details>
+  <summary>تنظیمات کار با فایل و جیسون</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
 
 ## تسک‌های نفر سوم
 
