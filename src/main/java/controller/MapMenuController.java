@@ -138,6 +138,20 @@ public class MapMenuController {
             printMap(TypeofGround.IRON.getFullNameType(), i, x, y, j);
         else if (cell.getTypeofGround().equals(TypeofGround.SEA.getFullNameType()))
             printMap(TypeofGround.SEA.getFullNameType(), i, x, y, j);
+        else if (cell.getTypeofGround().equals(TypeofGround.BEACH.getFullNameType()))
+            printMap(TypeofGround.BEACH.getFullNameType(), i, x, y, j);
+        else if (cell.getTypeofGround().equals(TypeofGround.LITTLEPOOL.getFullNameType()))
+            printMap(TypeofGround.LITTLEPOOL.getFullNameType(), i, x, y, j);
+        else if (cell.getTypeofGround().equals(TypeofGround.BIGPOOL.getFullNameType()))
+            printMap(TypeofGround.BIGPOOL.getFullNameType(), i, x, y, j);
+        else if (cell.getTypeofGround().equals(TypeofGround.LOWDEPTHWATER.getFullNameType()))
+            printMap(TypeofGround.LOWDEPTHWATER.getFullNameType(), i, x, y, j);
+        else if (cell.getTypeofGround().equals(TypeofGround.OIL.getFullNameType()))
+            printMap(TypeofGround.OIL.getFullNameType(), i, x, y, j);
+        else if (cell.getTypeofGround().equals(TypeofGround.PLAIN.getFullNameType()))
+            printMap(TypeofGround.PLAIN.getFullNameType(), i, x, y, j);
+        else if (cell.getTypeofGround().equals(TypeofGround.RIVER.getFullNameType()))
+            printMap(TypeofGround.RIVER.getFullNameType(), i, x, y, j);
 
     }
     //todo to complete this part of the code
@@ -268,10 +282,20 @@ public class MapMenuController {
         int y1 = Integer.parseInt(matcher.group("y1"));
         int x2 = Integer.parseInt(matcher.group("x2"));
         int y2 = Integer.parseInt(matcher.group("y2"));
+        String type = matcher.group("type");
+        boolean isTypeTrue = false;
         if (!checkNegativity(x1, x2, y1, y2)) {
             return "negative index!";
         }
-        String type = matcher.group("type");
+        for (TypeofGround value : TypeofGround.values()) {
+            if (value.getFullNameType().equals(type)) {
+                isTypeTrue = true;
+                break;
+            }
+        }
+        if (!isTypeTrue) {
+            return "there is no ground with this type!";
+        }
         for (int i = x1; i <= x2; i++) {
             for (int j = y1; j <= y2; j++) {
                 map.getMapCells(i,j).setTypeofGround(type);

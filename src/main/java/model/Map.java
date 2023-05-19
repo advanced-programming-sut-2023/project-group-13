@@ -76,7 +76,7 @@ public class Map {
             }
             maps.removeAll(Collections.singleton(mapToRemove));
             maps.add(this);
-            System.out.println(maps.size());
+//            System.out.println(maps.size());
             System.out.println("map updated!");
             SaveAndLoadData.SaveToJson(maps,DataEnumFile.MAPS.getFileName());
         } catch (IOException e) {
