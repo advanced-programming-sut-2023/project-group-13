@@ -32,7 +32,7 @@ public class NewGameMenu {
                 System.out.println(newGameController.deselectPlayers());
             } else if (command.matches("^help$")) {
                 System.out.println("select map:\t\t select map -n <mapName>\n" +
-                        "select players:\t\t select players -s <numberOfPlayers> -n1 <nickName> -n2 <nickName>...\n" +
+                        "select players:\t\t select players -s <numberOfPlayers> -n1 <userName> -n2 <userName>...\n" +
                         "after selceting map and players:\t\t start a new game");
             } else if (command.matches("^back$"))
                 return;

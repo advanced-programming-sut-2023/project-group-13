@@ -618,5 +618,10 @@ public class GameMenuController {
         }
         return "patrol stopped successfully";
     }
+
+    public static Empire getCurrentEmpire() {
+        return currentEmpire;
+    }
+
 }
 

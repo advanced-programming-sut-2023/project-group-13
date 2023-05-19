@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 
 public class GameMenu {
     private GameMenuController gameMenuController = new GameMenuController();
+    private KingdomMenu kingdomMenu = new KingdomMenu();
     public String run() {
         String command;
         Matcher matcher;
@@ -43,7 +44,8 @@ public class GameMenu {
             } else if (command.matches("^next turn$")) {
                 System.out.println(GameMenuController.nextTurn());
             } else if (command.matches("^kingdom menu$")) {
-                //goto kingdom menu
+                System.out.println("entering kingdom menu");
+                kingdomMenu.run();
             } else System.out.println("Invalid command!");
         }
     }

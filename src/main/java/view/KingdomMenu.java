@@ -6,7 +6,7 @@ import model.Enums.KingdomMenuCommands;
 import java.util.regex.Matcher;
 
 public class KingdomMenu {
-    public String run() {
+    public void run() {
         String command;
         Matcher matcher;
         while (true) {
@@ -29,7 +29,7 @@ public class KingdomMenu {
                 System.out.println(KingdomMenuController.showFoodList());
             } else if (command.matches("^back$")) {
                 //go to game menu
-                return "back";
+                 return;
             } else System.out.println("Invalid command!");
         }
     }
