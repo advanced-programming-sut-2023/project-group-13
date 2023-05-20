@@ -33,7 +33,7 @@ public class RunGameMenu {
 //                    loadGameMenu.run();
 //                }
                 else if (command.matches("^\\s*show\\s+all\\s+maps\\s*$")) {
-                    runGameController.ShowAllMaps();
+                    System.out.println(runGameController.ShowAllMaps());
 
                 } else if (command.matches("^\\s*show\\s+all\\s+players\\s*$")) {
                     runGameController.showAllMembers();

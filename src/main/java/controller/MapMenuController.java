@@ -138,6 +138,20 @@ public class MapMenuController {
             printMap(TypeofGround.IRON.getFullNameType(), i, x, y, j);
         else if (cell.getTypeofGround().equals(TypeofGround.SEA))
             printMap(TypeofGround.SEA.getFullNameType(), i, x, y, j);
+        else if (cell.getTypeofGround().equals(TypeofGround.BEACH))
+            printMap(TypeofGround.BEACH.getFullNameType(), i, x, y, j);
+        else if (cell.getTypeofGround().equals(TypeofGround.LITTLEPOOL))
+            printMap(TypeofGround.LITTLEPOOL.getFullNameType(), i, x, y, j);
+        else if (cell.getTypeofGround().equals(TypeofGround.BIGPOOL))
+            printMap(TypeofGround.BIGPOOL.getFullNameType(), i, x, y, j);
+        else if (cell.getTypeofGround().equals(TypeofGround.LOWDEPTHWATER))
+            printMap(TypeofGround.LOWDEPTHWATER.getFullNameType(), i, x, y, j);
+        else if (cell.getTypeofGround().equals(TypeofGround.OIL))
+            printMap(TypeofGround.OIL.getFullNameType(), i, x, y, j);
+        else if (cell.getTypeofGround().equals(TypeofGround.PLAIN))
+            printMap(TypeofGround.PLAIN.getFullNameType(), i, x, y, j);
+        else if (cell.getTypeofGround().equals(TypeofGround.RIVER))
+            printMap(TypeofGround.RIVER.getFullNameType(), i, x, y, j);
 
     }
     //todo to complete this part of the code
@@ -243,22 +257,22 @@ public class MapMenuController {
 
     }
 
-    public String setTextureOfTheSingleBlock(int x, int y, TypeofGround type) {
+    public String setTextureOfTheSingleBlock(int x, int y, String type) {
         if (!checkNegativity(x, y)) {
             return "negative index!";
         }
         checkTypeObstacle(type, x, y);
-        map.getMapCells(x,y).setTypeofGround(type);
+        map.getMapCells(x,y).setTypeofGround(TypeofGround.getTypeOfGroundByName(type));
         map.SavetoJason();
         return "change texture of ground successful";
         // todo to complete this method
     }
 
-    private void checkTypeObstacle(TypeofGround type, int x, int y) {
-        if (TypeofGround.SEA.equals(type) || TypeofGround.BIGPOOL.equals(type)
-                || TypeofGround.PLAIN.equals(type) || TypeofGround.LITTLEPOOL.equals(type)
-                || TypeofGround.RIVER.equals(type) || TypeofGround.OIL.equals(type)
-                || TypeofGround.ROCKY.equals(type)) {
+    private void checkTypeObstacle(String type, int x, int y) {
+        if (TypeofGround.SEA.getFullNameType().equals(type) || TypeofGround.BIGPOOL.getFullNameType().equals(type)
+                || TypeofGround.PLAIN.getFullNameType().equals(type) || TypeofGround.LITTLEPOOL.getFullNameType().equals(type)
+                || TypeofGround.RIVER.getFullNameType().equals(type) || TypeofGround.OIL.getFullNameType().equals(type)
+                || TypeofGround.ROCKY.getFullNameType().equals(type)) {
             map.getMapCells(x, y).setObstacle(true);
         }
     }
@@ -268,17 +282,24 @@ public class MapMenuController {
         int y1 = Integer.parseInt(matcher.group("y1"));
         int x2 = Integer.parseInt(matcher.group("x2"));
         int y2 = Integer.parseInt(matcher.group("y2"));
+        String type = matcher.group("type");
+        boolean isTypeTrue = false;
         if (!checkNegativity(x1, x2, y1, y2)) {
             return "negative index!";
         }
-        String type = matcher.group("type");
-
-        TypeofGround typeofGround = TypeofGround.getTypeOfGroundByName(type);
-        if (typeofGround == null) return "there is not such a type of ground.";
+        for (TypeofGround value : TypeofGround.values()) {
+            if (value.getFullNameType().equals(type)) {
+                isTypeTrue = true;
+                break;
+            }
+        }
+        if (!isTypeTrue) {
+            return "there is no ground with this type!";
+        }
         for (int i = x1; i <= x2; i++) {
             for (int j = y1; j <= y2; j++) {
-                map.getMapCells(i,j).setTypeofGround(typeofGround);
-                checkTypeObstacle(typeofGround, i, j);
+                map.getMapCells(i,j).setTypeofGround(TypeofGround.getTypeOfGroundByName(type));
+                checkTypeObstacle(type, i, j);
             }
         }
         map.SavetoJason();

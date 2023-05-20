@@ -69,6 +69,7 @@ public class SignupMenuController {
         if (!SignupMenuCommands.getMatcher(email, SignupMenuCommands.CHECK_EMAIL).find())
             return "Invalid email format.";
 
+
         System.out.println(SignupMenuCommands.SECURITY_QUESTION.getRegex());
 
         String questionPickAnswer = scanner.nextLine();

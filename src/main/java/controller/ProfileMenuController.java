@@ -28,7 +28,7 @@ public class ProfileMenuController {
                 return "player with this username already exist.";
             case 3:
                 player.setUsername(username);
-                SaveAndLoadData.SaveToJson(Player.players,"");
+                SaveAndLoadData.SaveToJson(Player.players,DataEnumFile.PLAYERS.getFileName());
                 return "username successfully changed.";
             default:
                 return "";
@@ -60,7 +60,6 @@ public class ProfileMenuController {
                         return "answer doesn't match with captcha";
                     }
                     RandomsAndCaptcha.setRealNumber("");
-
                     player.setPassword(newPassword);
                     SaveAndLoadData.SaveToJson(Player.players, DataEnumFile.PLAYERS.getFileName());
                     return "password successfully changed.";
@@ -91,7 +90,7 @@ public class ProfileMenuController {
             case 0:
                 return "nickname filed is empty.";
             case 1:
-                player.setEmail(nickname);
+                player.setNickname(nickname);
                 SaveAndLoadData.SaveToJson(Player.players,DataEnumFile.PLAYERS.getFileName());
                 return "nickname successfully changed.";
             default:
@@ -100,8 +99,10 @@ public class ProfileMenuController {
     }
 
     public static String changeSlogan(String nickname, Player player) {
+        System.out.println(player.getSlogan());
         player.setSlogan(nickname);
         SaveAndLoadData.SaveToJson(Player.players,DataEnumFile.PLAYERS.getFileName());
+        System.out.println(player.getSlogan());
         return "slogan successfully changed.";
     }
 

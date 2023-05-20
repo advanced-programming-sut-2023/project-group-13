@@ -15,10 +15,9 @@ public enum TypeofGround {
     RIVER("River","RI"),
     BEACH("Beach","Be"),
     LOWDEPTHWATER("Lowdepthwater","LDW"),
-    OIL("OIL","O"),
-    PLAIN("PLAIN","P"),
+    OIL("Oil","O"),
+    PLAIN("Plain","P"),
     DITCH("Ditch" , "D");
-
 
     private String fullNameType;
     private String abbrevaiteNameType;

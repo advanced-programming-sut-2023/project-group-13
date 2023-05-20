@@ -99,6 +99,7 @@ public class NewGameController {
         }
         GameMenuController.setPlayersInGame(players);
         GameMenuController.setEmpires(empires);
+        GameMenuController.setCurrentEmpire(empires.get(0));
         return "**game started successfully**";
     }
 

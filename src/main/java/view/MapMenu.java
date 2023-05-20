@@ -49,7 +49,7 @@ public class MapMenu {
             } else if ((matcher = ScannerMatcher.getMatcher(command, CommandsMap.SETTEXTURESINGLEBLOCK.getPattern())) != null) {
                 System.out.println(mapMenuController.setTextureOfTheSingleBlock
                         (Integer.parseInt(matcher.group("x")),Integer.parseInt(matcher.group("y"))
-                        , TypeofGround.getTypeOfGroundByName(matcher.group("type"))));
+                        , matcher.group("type")));
             } else if ((matcher = ScannerMatcher.getMatcher(command, CommandsMap.SETTEXTUREAREA.getPattern())) != null) {
                 System.out.println(mapMenuController.setTextureOfAnArea(matcher));
             } else if ((matcher = ScannerMatcher.getMatcher(command, CommandsMap.CLEARGROUND.getPattern())) != null) {

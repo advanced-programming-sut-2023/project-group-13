@@ -9,5 +9,6 @@ public class MainMenuController {
         System.out.println("run game menu --> run a new game");
         System.out.println("new game menu --> go to it from RunGameMenu menu with command: start a new game");
         System.out.println("game menu --> go to it from NewGameMenu with command: start a new game");
+        System.out.println("kingdom menu --> go to it from game menu with command: kingdom menu");
     }
 }

@@ -97,7 +97,7 @@ public class Empire {
     private double efficiency;
 
     public double getEfficiency() {
-        switch (GameMenuController.currentempire.getFearRate()) {
+        switch (GameMenuController.currentEmpire.getFearRate()) {
             case -5:
                 return 2;
             case -4:

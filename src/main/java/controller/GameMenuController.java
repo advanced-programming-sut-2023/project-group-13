@@ -2,7 +2,6 @@ package controller;
 
 import model.*;
 
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,7 +15,7 @@ import model.Map;
 public class GameMenuController {
     public static Map map;
     public static ArrayList<Player> playersInGame = new ArrayList<>();
-    public static Empire currentempire;
+    public static Empire currentEmpire;
     private static MapMenuController mapMenuController = new MapMenuController();
     public static HashMap<ArrayList<Soldier>, List<Cell>> paths = new HashMap<ArrayList<Soldier>, List<Cell>>();
     public static HashMap<ArrayList<Soldier>, List<Cell>> pathsPatrol = new HashMap<ArrayList<Soldier>, List<Cell>>();
@@ -38,19 +37,27 @@ public class GameMenuController {
     private static ArrayList<Soldier> select;
 
 
-    public String nextTurn() {
+    public static String nextTurn() {
+
+        roundNumber++;
+        System.out.println("the current turn is: " + roundNumber);
+
+        setCurrentEmpire(getEmpires().get(roundNumber % getEmpires().size()));
+
+        System.out.println(currentEmpire.getEmpireName() + "is playing now!");
+
         calculateTax();
         calculateFood();
         calculateArmouryThings();
         calculateStockpileThings();
-        currentempire.setTotalGoldAmount(currentempire.getTotalGoldAmount() + KingdomMenuController.calculateTax());
+        currentEmpire.setTotalGoldAmount(currentEmpire.getTotalGoldAmount() + KingdomMenuController.calculateTax());
 
-        currentempire.setPopularity(currentempire.getPopularity() + currentempire.getInnPopularity() +
-                currentempire.getTaxPopularity() + currentempire.getReligionPopularity()
-                + currentempire.getFoodPopularity());
-        if (currentempire.getPopularity() > 100) currentempire.setPopularity(100);
+        currentEmpire.setPopularity(currentEmpire.getPopularity() + currentEmpire.getInnPopularity() +
+                currentEmpire.getTaxPopularity() + currentEmpire.getReligionPopularity()
+                + currentEmpire.getFoodPopularity());
+        if (currentEmpire.getPopularity() > 100) currentEmpire.setPopularity(100);
         setCurrentEmpire(getEmpires().get(roundNumber % getEmpires().size()));
-        Empire.setCurrentEmpire(currentempire);
+        Empire.setCurrentEmpire(currentEmpire);
         getPaths().forEach((key, value) -> {
             Iterator<Soldier> iterator = key.iterator();
 
@@ -67,6 +74,7 @@ public class GameMenuController {
                 map.getMapCells(soldier.getX(), soldier.getY()).removeTroop(soldier);
 
 
+
                 if (soldier.getTotalMove() - 1 < value.size()) {
                     Cell cell = value.get(soldier.getTotalMove() - 1);
                     cell.moveTroop(soldier);
@@ -77,11 +85,11 @@ public class GameMenuController {
                 if (soldier.getX() == value.get(value.size() - 1).getX()
                         && soldier.getY() == value.get(value.size() - 1).getY()) {
                     if (soldier.isPatrol() && soldier.getX() == soldier.getPatrol_x_start()
-                            && soldier.getY() == soldier.getPatrol_y_start()
-                            && !soldier.isStopPatrol()) {
+                    && soldier.getY() == soldier.getPatrol_y_start()
+                    && !soldier.isStopPatrol()) {
                         setSelect_x(soldier.getPatrol_x_start());
                         setSelect_y(soldier.getPatrol_y_start());
-                        moveElements(soldier.getPatrol_x_end(), soldier.getPatrol_y_end(), selectedSoldiersPatrol);
+                        moveElemets(soldier.getPatrol_x_end(), soldier.getPatrol_y_end(), selectedSoldiersPatrol);
                         int temp_x = soldier.getPatrol_x_start();
                         int temp_y = soldier.getPatrol_y_start();
                         soldier.setPatrol_x_start(soldier.getPatrol_x_end());
@@ -93,30 +101,25 @@ public class GameMenuController {
                     soldier.reSetTotalMove(0);
                     iterator.remove();
                 }
-
             }
 
         });
         paths.putAll(pathsPatrol);
         selectedSoldiers.clear();
-        selectedBuilding = null;
-        roundNumber++;
-        Empire.setCurrentEmpire(currentempire);
-
-        return "moved to the next turn: " + currentempire.getPlayer().getNickname() + "round: " + roundNumber;
+        return "moved to the next turn";
     }
 
     public static void calculateFood() {
-        for (Building building : currentempire.getBuildings()) {
+        for (Building building : currentEmpire.getBuildings()) {
             String name = building.getName();
             if (!name.equalsIgnoreCase("Apple Orchard") && !name.equalsIgnoreCase("Hunting Post") &&
                     !name.equalsIgnoreCase("Bakery") && !name.equalsIgnoreCase("Dairy Farm")) {
                 continue;
             }
-            double rate = currentempire.getEfficiency();
+            double rate = currentEmpire.getEfficiency();
             int productEachRate = (int) (building.getBuildingType().getProduceAmount() * rate);
 
-            for (Granary granary : currentempire.getGranaries()) {
+            for (Granary granary : currentEmpire.getGranaries()) {
                 int totalFood = granary.getAppleAmount() + granary.getCheeseAmount() + granary.getBreadAmount() + granary.getMeatAmount();
                 if (totalFood < 50 - productEachRate * rate) {
                     switch (name) {
@@ -128,8 +131,8 @@ public class GameMenuController {
                             granary.setMeatAmount(productEachRate);
                             break;
                         case "bakery":
-                            if (currentempire.getStockpiles().get(0).getFlourAmount() >= 1) {
-                                currentempire.getStockpiles().get(0).setFlourAmount(-1);
+                            if (currentEmpire.getStockpiles().get(0).getFlourAmount() >= 1) {
+                                currentEmpire.getStockpiles().get(0).setFlourAmount(-1);
                                 granary.setBreadAmount(productEachRate);
                                 break;
                             }
@@ -145,55 +148,56 @@ public class GameMenuController {
 
 
     public static void calculateTax() {
-        currentempire.setTotalGoldAmount(currentempire.getTotalGoldAmount() + currentempire.getTaxRate() * currentempire.getAllPeopleAmount());
-        if (currentempire.getTotalGoldAmount() >= 0) {
-            currentempire.setTaxPopularity(0);
-            currentempire.setTaxPopularity(0);
+        CurrentEmpire.setTotalGoldAmount(CurrentEmpire.getTotalGoldAmount() + CurrentEmpire.getTaxRate() * CurrentEmpire.getAllPeopleAmount());
+        if (CurrentEmpire.getTotalGoldAmount() >= 0) {
+            CurrentEmpire.setTaxPopularity(0);
+            CurrentEmpire.setTaxPopularity(0);
         }
 
     }
 
     public static void calculateArmouryThings() {
-        for (Building building : currentempire.getBuildings()) {
+        for (Building building : currentEmpire.getBuildings()) {
             if (!building.getBuildingType().equals(BuildingType.FLETCHER) && !building.getBuildingType().equals(BuildingType.BLACKSMITH)
                     && !building.getBuildingType().equals(BuildingType.POLETURNER) && !building.getBuildingType().equals(BuildingType.ARMORER) && !building.getBuildingType().equals(BuildingType.DIARY_FARMER)) {
                 continue;
+
             }
-            int rate = (int) (currentempire.getEfficiency() * building.getBuildingType().getProduceAmount());
-            if (currentempire.getArmouries().get(0).getTotalWeaponAmount() + rate < 50) {
+            int rate = (int) (currentEmpire.getEfficiency() * building.getBuildingType().getProduceAmount());
+            if (currentEmpire.getArmouries().get(0).getTotalWeaponAmount() + rate < 50) {
                 continue;
             }
             switch (building.getBuildingType().getName()) {
                 case "fletcher": {
-                    if (currentempire.getStockpiles().get(0).getWoodAmount() >= rate) {
-                        currentempire.getStockpiles().get(0).setWoodAmount(currentempire.getStockpiles().get(0).getWoodAmount() - rate);
-                        currentempire.getArmouries().get(0).addBowAmount(rate);
-                        currentempire.getArmouries().get(0).addCrossBowAmount(rate);
+                    if (currentEmpire.getStockpiles().get(0).getWoodAmount() >= rate) {
+                        currentEmpire.getStockpiles().get(0).setWoodAmount(currentEmpire.getStockpiles().get(0).getWoodAmount() - rate);
+                        currentEmpire.getArmouries().get(0).addBowAmount(rate);
+                        currentEmpire.getArmouries().get(0).addCrossBowAmount(rate);
                     }
                 }
                 case "dairyfarm": {
-                    currentempire.getArmouries().get(0).addLeatherArmourAmount(rate);
+                    currentEmpire.getArmouries().get(0).addLeatherArmourAmount(rate);
                 }
                 case "blacksmith": {
-                    if (currentempire.getStockpiles().get(0).getIronAmount() >= rate) {
-                        currentempire.getStockpiles().get(0).setIronAmount(currentempire.getStockpiles().get(0).getIronAmount() - rate);
-                        currentempire.getArmouries().get(0).addSwordAmount(rate);
-                        currentempire.getArmouries().get(0).addMaceAmount(rate);
+                    if (currentEmpire.getStockpiles().get(0).getIronAmount() >= rate) {
+                        currentEmpire.getStockpiles().get(0).setIronAmount(currentEmpire.getStockpiles().get(0).getIronAmount() - rate);
+                        currentEmpire.getArmouries().get(0).addSwordAmount(rate);
+                        currentEmpire.getArmouries().get(0).addMaceAmount(rate);
                     }
                 }
 
                 case "poleturner": {
-                    if (currentempire.getStockpiles().get(0).getWoodAmount() >= rate) {
-                        currentempire.getStockpiles().get(0).setWoodAmount(currentempire.getStockpiles().get(0).getWoodAmount() - rate);
-                        currentempire.getArmouries().get(0).addPikeAmount(rate);
-                        currentempire.getArmouries().get(0).addSpearAmount(rate);
+                    if (currentEmpire.getStockpiles().get(0).getWoodAmount() >= rate) {
+                        currentEmpire.getStockpiles().get(0).setWoodAmount(currentEmpire.getStockpiles().get(0).getWoodAmount() - rate);
+                        currentEmpire.getArmouries().get(0).addPikeAmount(rate);
+                        currentEmpire.getArmouries().get(0).addSpearAmount(rate);
                     }
                 }
 
                 case "armourer": {
-                    if (currentempire.getStockpiles().get(0).getIronAmount() >= rate) {
-                        currentempire.getStockpiles().get(0).setIronAmount(currentempire.getStockpiles().get(0).getIronAmount() - rate);
-                        currentempire.getArmouries().get(0).addMetalArmourAmount(rate);
+                    if (currentEmpire.getStockpiles().get(0).getIronAmount() >= rate) {
+                        currentEmpire.getStockpiles().get(0).setIronAmount(currentEmpire.getStockpiles().get(0).getIronAmount() - rate);
+                        currentEmpire.getArmouries().get(0).addMetalArmourAmount(rate);
                     }
 
                 }
@@ -205,67 +209,67 @@ public class GameMenuController {
     public static void calculateStockpileThings() {
         int oxTethers = 0;
         int quarry = 0;
-        for (Building building : currentempire.getBuildings()) {
-            double rate = currentempire.getEfficiency();
+        for (Building building : currentEmpire.getBuildings()) {
+            double rate = currentEmpire.getEfficiency();
             int produce = building.getBuildingType().getProduceAmount();
             int total = (int) (rate * produce);
             switch (building.getBuildingType().getName()) {
                 case "Mill": {
-                    if (currentempire.getStockpiles().get(0).getWoodAmount() < rate) {
+                    if (currentEmpire.getStockpiles().get(0).getWoodAmount() < rate) {
                         continue;
                     }
 
-                    currentempire.getStockpiles().get(0).setFlourAmount(currentempire.getStockpiles().get(0).getFlourAmount() + total);
-                    currentempire.getStockpiles().get(0).setWheatAmount(currentempire.getStockpiles().get(0).getWheatAmount() - total);
+                    currentEmpire.getStockpiles().get(0).setFlourAmount(currentEmpire.getStockpiles().get(0).getFlourAmount() + total);
+                    currentEmpire.getStockpiles().get(0).setWheatAmount(currentEmpire.getStockpiles().get(0).getWheatAmount() - total);
                 }
                 case "IronMine": {
-                    if (currentempire.getStockpiles().get(0).getFreeSpace() < total) {
+                    if (currentEmpire.getStockpiles().get(0).getFreeSpace() < total) {
                         continue;
                     }
-                    currentempire.getStockpiles().get(0).setIronAmount(currentempire.getStockpiles().get(0).getIronAmount() + total);
+                    currentEmpire.getStockpiles().get(0).setIronAmount(currentEmpire.getStockpiles().get(0).getIronAmount() + total);
                 }
                 case "PitchRig" : {
-                    if (currentempire.getStockpiles().get(0).getFreeSpace() < total) {
+                    if (currentEmpire.getStockpiles().get(0).getFreeSpace() < total) {
                         continue;
                     }
-                    currentempire.getStockpiles().get(0).setPitchAmount(currentempire.getStockpiles().get(0).getPitchAmount() + total);
+                    currentEmpire.getStockpiles().get(0).setPitchAmount(currentEmpire.getStockpiles().get(0).getPitchAmount() + total);
                 }
                 case "Woodcutter" :{
-                    if (currentempire.getStockpiles().get(0).getFreeSpace() < total) {
+                    if (currentEmpire.getStockpiles().get(0).getFreeSpace() < total) {
                         continue;
                     }
-                    currentempire.getStockpiles().get(0).setWoodAmount(currentempire.getStockpiles().get(0).getWoodAmount() + total);
+                    currentEmpire.getStockpiles().get(0).setWoodAmount(currentEmpire.getStockpiles().get(0).getWoodAmount() + total);
                 }
                 case "HopsFarm" : {
-                    if (currentempire.getStockpiles().get(0).getFreeSpace() < total) {
+                    if (currentEmpire.getStockpiles().get(0).getFreeSpace() < total) {
                         continue;
                     }
-                    currentempire.getStockpiles().get(0).setHopsAmount(currentempire.getStockpiles().get(0).getHopsAmount()+ total);
+                    currentEmpire.getStockpiles().get(0).setHopsAmount(currentEmpire.getStockpiles().get(0).getHopsAmount()+ total);
                 }
                 case "WheatFarm" : {
-                    if (currentempire.getStockpiles().get(0).getFreeSpace() < total) {
+                    if (currentEmpire.getStockpiles().get(0).getFreeSpace() < total) {
                         continue;
                     }
-                    currentempire.getStockpiles().get(0).setWheatAmount(currentempire.getStockpiles().get(0).getWheatAmount()+ total);
+                    currentEmpire.getStockpiles().get(0).setWheatAmount(currentEmpire.getStockpiles().get(0).getWheatAmount()+ total);
                 }
                 case "Brewery" : {
-                    if (currentempire.getStockpiles().get(0).getHopsAmount() < total) {
+                    if (currentEmpire.getStockpiles().get(0).getHopsAmount() < total) {
                         continue;
                     }
-                    if (currentempire.getStockpiles().get(0).getFreeSpace() < produce * (rate - 1)) {
+                    if (currentEmpire.getStockpiles().get(0).getFreeSpace() < produce * (rate - 1)) {
                         continue;
                     }
-                    currentempire.getStockpiles().get(0).setAleAmount(currentempire.getStockpiles().get(0).getAleAmount()+ total);
-                    currentempire.getStockpiles().get(0).setHopsAmount( currentempire.getStockpiles().get(0).getHopsAmount() -total);
+                    currentEmpire.getStockpiles().get(0).setAleAmount(currentEmpire.getStockpiles().get(0).getAleAmount()+ total);
+                    currentEmpire.getStockpiles().get(0).setHopsAmount( currentEmpire.getStockpiles().get(0).getHopsAmount() -total);
                 }
                 case "Quarry" : {
                     quarry++;
                 }
             }
         }
-        int productOfAllQuarries = (int) (quarry * currentempire.getEfficiency() * BuildingType.QUARRY.getProduceAmount());
+        int productOfAllQuarries = (int) (quarry * currentEmpire.getEfficiency() * BuildingType.QUARRY.getProduceAmount());
 
-        currentempire.getStockpiles().get(0).setStoneAmount(currentempire.getStockpiles().get(0).getStoneAmount() + productOfAllQuarries);
+        currentEmpire.getStockpiles().get(0).setStoneAmount(currentEmpire.getStockpiles().get(0).getStoneAmount() + productOfAllQuarries);
 
     }
 
@@ -287,9 +291,9 @@ public class GameMenuController {
             return "please select <<engineers guild>> building";
         if (buildingType != BuildingType.BARRACKS && !soldierType.isArab() && soldierType != SoldierType.BLACK_MONK && soldierType != SoldierType.ENGINEER && soldierType != SoldierType.TUNNELER)
             return "please select <<barracks>> building.";
-        if (soldierType.getMoneyCost() * number > currentempire.getTotalGoldAmount())
+        if (soldierType.getMoneyCost() * number > currentEmpire.getTotalGoldAmount())
             return "not enough amount of money.";
-        if (number > currentempire.getNoneWorkerAmount())
+        if (number > currentEmpire.getNoneWorkerAmount())
             return "not enough amount of none worker people";
 
         switch (soldierType.getName()) {
@@ -343,8 +347,8 @@ public class GameMenuController {
                 removeWeaponFromArmouries("metalArmor", -1 * number);
                 removeHorsesFromStables(-1 * number);
                 Soldier soldier = new Soldier(soldierType.getHp(), soldierType.getName(),
-                        soldierType, currentempire, selectedBuilding.getX() + 1, selectedBuilding.getY());
-                currentempire.getSoldiers().add(soldier);
+                        soldierType, currentEmpire, selectedBuilding.getX() + 1, selectedBuilding.getY());
+                currentEmpire.getSoldiers().add(soldier);
                 map.getMapCells(select_x_building + 1, select_y_building).getSoldiers().add(soldier);
 
             default:
@@ -363,11 +367,11 @@ public class GameMenuController {
         if (!engineer) return "please only select engineers.";
         SoldierType soldierType = SoldierType.getSoldierTypeByString(name);
         if (soldierType == null) return "Invalid type.";
-        if (soldierType.getMoneyCost() > currentempire.getTotalGoldAmount()) return "not enough gold amount.";
+        if (soldierType.getMoneyCost() > currentEmpire.getTotalGoldAmount()) return "not enough gold amount.";
         if (soldierType.getEngineerNeededAmount() > selectedSoldiers.size()) return "not enough engineer.";
-        currentempire.setTotalGoldAmount(currentempire.getTotalGoldAmount() - soldierType.getMoneyCost());
-        Soldier soldier = new Soldier(soldierType.getHp(), soldierType.getName(), soldierType, currentempire, select_x, select_y);
-        currentempire.getSoldiers().add(soldier);
+        currentEmpire.setTotalGoldAmount(currentEmpire.getTotalGoldAmount() - soldierType.getMoneyCost());
+        Soldier soldier = new Soldier(soldierType.getHp(), soldierType.getName(), soldierType, currentEmpire, select_x, select_y);
+        currentEmpire.getSoldiers().add(soldier);
         for (int i = map.getMapCells(select_x, select_y).getSoldiers().size(); i > map.getMapCells(select_x, select_y).getSoldiers().size() - soldierType.getEngineerNeededAmount(); i--) {
             map.getMapCells(select_x, select_y).getSoldiers().remove(i);
         }
@@ -389,7 +393,7 @@ public class GameMenuController {
         if (calculateDistance(x1, y1, x2, y2) - 1 > selectedSoldiers.get(0).getSoldierType().getRange())
             return "can't attack , enemy is so far.";
         for (Soldier soldier : map.getMapCells(x2, y2).getSoldiers()) {
-            if (!soldier.getOwner().equals(currentempire)) enemy = true;
+            if (!soldier.getOwner().equals(currentEmpire)) enemy = true;
         }
         if (!enemy) return "There is no enemy at this cell.";
         for (Soldier soldier : selectedSoldiers) {
@@ -409,8 +413,7 @@ public class GameMenuController {
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
         // emad size map ro mikham
-        if (x < 0 || y < 0 || x > NewGameController.getCurrent_map().getSizeOfTheMap() - 1 ||
-                y > NewGameController.getCurrent_map().getSizeOfTheMap() - 1) {
+        if (x < 0 || y < 0 || x > NewGameController.getCurrent_map().getSizeOfTheMap() - 1 || y > NewGameController.getCurrent_map().getSizeOfTheMap() - 1) {
             return false;
         }
         return true;
@@ -423,7 +426,7 @@ public class GameMenuController {
 
     public static int getWeaponAmount(String name) {
         int amount = 0;
-        for (Armoury armoury : currentempire.getArmouries()) {
+        for (Armoury armoury : currentEmpire.getArmouries()) {
             if (name.equals("mace")) {
                 amount += armoury.getMaceAmount();
             } else if (name.equals("bow")) {
@@ -447,7 +450,7 @@ public class GameMenuController {
 
     public static void addWeaponToArmouries(String name, int amount) {
 
-        for (Armoury armoury : currentempire.getArmouries()) {
+        for (Armoury armoury : currentEmpire.getArmouries()) {
             if (armoury.getCapacity() >= armoury.getTotalWeaponAmount() + amount) {
                 if (name.equals("mace")) {
                     armoury.addMaceAmount(amount);
@@ -496,7 +499,7 @@ public class GameMenuController {
 
     public static void removeWeaponFromArmouries(String name, int amount) {
         if (getWeaponAmount(name) < amount) return;
-        for (Armoury armoury : currentempire.getArmouries()) {
+        for (Armoury armoury : currentEmpire.getArmouries()) {
             if (armoury.getTotalWeaponAmount() >= amount) {
                 if (name.equals("mace")) {
                     armoury.addMaceAmount(-amount);
@@ -571,9 +574,9 @@ public class GameMenuController {
 //            // after the soldiers are stopped you
 //            // have to make it false to move them again
 //        }
-//
+
 //        List<Cell> path = AstarShortestPath.findShortestPath(map, map.getMapCells(getSelect_x(), getSelect_y()), map.getMapCells(x, y));
-        result = moveElements(x, y, selectedSoldiers);
+       result = moveElemets(x, y, selectedSoldiers);
         if (getPath().isEmpty()) {
             return "No path found.";
         } else {
@@ -606,7 +609,7 @@ public class GameMenuController {
         return "moved unit successfully";
     }
 
-    public static int moveElements(int x, int y, ArrayList<Soldier> selectedSoldiers) {
+    public static int moveElemets(int x, int y, ArrayList<Soldier> selectedSoldiers) {
 
         for (Soldier soldier : selectedSoldiers) {
             soldier.setStop(false);
@@ -617,12 +620,12 @@ public class GameMenuController {
         Apath = new ArrayList<>(path);
         select = new ArrayList<>(selectedSoldiers);
         if (path.size() > selectedSoldiers.get(0).getSoldierType().getMovementRange()) {
-
-            System.out.println("Shortest path:");
-
-            for (Cell cell : Apath) {
-                System.out.println("(" + cell.getX() + ", " + cell.getY() + ")");
-            }
+//
+//            System.out.println("Shortest path:");
+//
+//            for (Cell cell : Apath) {
+//                System.out.println("(" + cell.getX() + ", " + cell.getY() + ")");
+//            }
 
             if (!selectedSoldiers.get(0).isPatrol()) {
                 selectedSoldiers.clear();
@@ -635,7 +638,6 @@ public class GameMenuController {
         for (Soldier soldier : selectedSoldiers) {
             map.getMapCells(getSelect_x(), getSelect_y()).removeTroop(soldier);
         }
-
 
         for (Soldier soldier : selectedSoldiers) {
             path.get(path.size() - 1).moveTroop(soldier);
@@ -665,8 +667,8 @@ public class GameMenuController {
             soldier.setPatrol_y_end(y2);
         }
         selectedSoldiersPatrol = new ArrayList<>(selectedSoldiers);
-        moveElements(x1, y1, selectedSoldiersPatrol);
-        paths.put(select, Apath);
+        moveElemets(x1, y1, selectedSoldiersPatrol);
+        paths.put(select,Apath);
         return "patrol of units started";
     }
 
@@ -692,7 +694,7 @@ public class GameMenuController {
                         setSelect_y(y);
                     }
                 }
-                if (selectedSoldiers.isEmpty()) return "There was no unit with this type at this cell.";
+                if (selectedSoldiers.isEmpty()) return "there was no unit with this type at this cell.";
             } else return "Invalid unit type.";
         } else {
             selectedSoldiers.addAll(map.getMapCells(x, y).getSoldiers());
@@ -738,15 +740,15 @@ public class GameMenuController {
         if (amountOfThingsInStockpile("stone") < (int) (rate * hpNeededToBeRepaired)) {
             return "not enough stone to repair this building";
         }
-        int currentStone = currentempire.getStockpiles().get(0).getStoneAmount();
-        currentempire.getStockpiles().get(0).setStoneAmount(currentStone - (int) (rate * hpNeededToBeRepaired));
+        int currentStone = currentEmpire.getStockpiles().get(0).getStoneAmount();
+        currentEmpire.getStockpiles().get(0).setStoneAmount(currentStone - (int) (rate * hpNeededToBeRepaired));
         selectedBuilding.setHp(selectedBuilding.getBuildingType().getHp());
         return "successfully done.";
     }
 
     public static int amountOfThingsInStockpile(String name) {
         int amount = 0;
-        for (Armoury armoury : currentempire.getArmouries()) {
+        for (Armoury armoury : currentEmpire.getArmouries()) {
             if (name.equals("wood")) {
                 amount += armoury.getMaceAmount();
             } else if (name.equalsIgnoreCase("stone")) {
@@ -770,7 +772,7 @@ public class GameMenuController {
 
     public static int addToStockpile(String name) {
         int amount = 0;
-        for (Armoury armoury : currentempire.getArmouries()) {
+        for (Armoury armoury : currentEmpire.getArmouries()) {
             if (name.equals("wood")) {
                 amount += armoury.getMaceAmount();
             } else if (name.equalsIgnoreCase("stone")) {
@@ -802,7 +804,7 @@ public class GameMenuController {
             select_y_building = y;
             BuildingType buildingType = BuildingType.getBuildingTypeByName(matcher.group("type"));
             if (buildingType == null) return "there is not such a building type.";
-            if (buildingType.getGoldPrice() > currentempire.getTotalGoldAmount())
+            if (buildingType.getGoldPrice() > currentEmpire.getTotalGoldAmount())
                 return "you need more gold to build this building.";
             Cell cell = map.getMapCells(x, y);
             if (cell.isHasTreeInCell()) return "there is tree in this cell";
@@ -827,32 +829,32 @@ public class GameMenuController {
                     return "Invalid type of ground.";
                 }
             }
-            if (currentempire.getNoneWorkerAmount() < buildingType.getWorkerNeededAmount())
+            if (currentEmpire.getNoneWorkerAmount() < buildingType.getWorkerNeededAmount())
                 return "not enough worker to run this building.";
 
             switch (buildingType.getResourcesPriceType().getResourceName()) {
                 case "wood":
-                    int currentWood = currentempire.getStockpiles().get(0).getWoodAmount();
+                    int currentWood = currentEmpire.getStockpiles().get(0).getWoodAmount();
                     if (currentWood < buildingType.getResourcePriceAmount()) return "not enough amount of wood.";
-                    currentempire.getStockpiles().get(0).setWoodAmount(currentWood - buildingType.getResourcePriceAmount());
+                    currentEmpire.getStockpiles().get(0).setWoodAmount(currentWood - buildingType.getResourcePriceAmount());
                 case "iron":
-                    int currentIron = currentempire.getStockpiles().get(0).getIronAmount();
+                    int currentIron = currentEmpire.getStockpiles().get(0).getIronAmount();
                     if (currentIron < buildingType.getResourcePriceAmount()) return "not enough amount of iron.";
-                    currentempire.getStockpiles().get(0).setIronAmount(currentIron - buildingType.getResourcePriceAmount());
+                    currentEmpire.getStockpiles().get(0).setIronAmount(currentIron - buildingType.getResourcePriceAmount());
                 case "stone":
-                    int currentStone = currentempire.getStockpiles().get(0).getStoneAmount();
+                    int currentStone = currentEmpire.getStockpiles().get(0).getStoneAmount();
                     if (currentStone < buildingType.getResourcePriceAmount()) return "not enough amount of stone.";
-                    currentempire.getStockpiles().get(0).setStoneAmount(currentStone - buildingType.getResourcePriceAmount());
+                    currentEmpire.getStockpiles().get(0).setStoneAmount(currentStone - buildingType.getResourcePriceAmount());
                 case "pitch":
-                    int currentPitch = currentempire.getStockpiles().get(0).getPitchAmount();
+                    int currentPitch = currentEmpire.getStockpiles().get(0).getPitchAmount();
                     if (currentPitch < buildingType.getResourcePriceAmount()) return "not enough amount of pitch.";
-                    currentempire.getStockpiles().get(0).setPitchAmount(currentPitch - buildingType.getResourcePriceAmount());
+                    currentEmpire.getStockpiles().get(0).setPitchAmount(currentPitch - buildingType.getResourcePriceAmount());
 
             }
-            currentempire.setNoneWorkerAmount(currentempire.getNoneWorkerAmount() - buildingType.getWorkerNeededAmount());
-            currentempire.setWorkerAmount(currentempire.getWorkerAmount() + buildingType.getWorkerNeededAmount());
+            currentEmpire.setNoneWorkerAmount(currentEmpire.getNoneWorkerAmount() - buildingType.getWorkerNeededAmount());
+            currentEmpire.setWorkerAmount(currentEmpire.getWorkerAmount() + buildingType.getWorkerNeededAmount());
             Building building = new Building(buildingType.getHp(), buildingType.getName(), buildingType, x, y, Empire.getCurrentEmpire());
-            currentempire.getBuildings().add(building);
+            currentEmpire.getBuildings().add(building);
             map.getMapCells(x, y).addBuilding(building);
 
             return "successfully done.";
@@ -878,7 +880,7 @@ public class GameMenuController {
 
     public static int getHorseAmount() {
         int amount = 0;
-        for (Stable stable : currentempire.getStables()) {
+        for (Stable stable : currentEmpire.getStables()) {
             amount += stable.getCurrentNumberOfHorses();
         }
         return amount;
@@ -886,7 +888,7 @@ public class GameMenuController {
 
     public static void addHorsesToStables(int amount) {
 
-        for (Stable stable : currentempire.getStables()) {
+        for (Stable stable : currentEmpire.getStables()) {
             if (stable.getCapacity() >= stable.getCurrentNumberOfHorses() + amount) {
                 stable.addCurrentNumberOfHorses(amount);
                 break;
@@ -903,7 +905,7 @@ public class GameMenuController {
 
     public static void removeHorsesFromStables(int amount) {
 
-        for (Stable stable : currentempire.getStables()) {
+        for (Stable stable : currentEmpire.getStables()) {
             if (stable.getCurrentNumberOfHorses() >= amount) {
                 stable.addCurrentNumberOfHorses(amount);
                 break;
@@ -923,9 +925,9 @@ public class GameMenuController {
         }
         for (Soldier soldier : selectedSoldiers) {
             map.getMapCells(select_x, select_y).getSoldiers().remove(soldier);
-            currentempire.getSoldiers().remove(soldier);
+            currentEmpire.getSoldiers().remove(soldier);
         }
-        currentempire.setNoneWorkerAmount(selectedSoldiers.size());
+        currentEmpire.setNoneWorkerAmount(selectedSoldiers.size());
         selectedSoldiers.clear();
         return "success";
     }
@@ -950,7 +952,7 @@ public class GameMenuController {
     }
 
     public static void setCurrentEmpire(Empire currentEmpire) {
-        GameMenuController.currentempire = currentEmpire;
+        GameMenuController.currentEmpire = currentEmpire;
     }
 
     public static HashMap<ArrayList<Soldier>, List<Cell>> getPaths() {
@@ -1021,6 +1023,9 @@ public class GameMenuController {
             if (empire.getPlayer().getUsername().equals(name)) return empire;
         }
         return null;
+    }
+    public static Empire getCurrentEmpire() {
+        return currentEmpire;
     }
 
 }
