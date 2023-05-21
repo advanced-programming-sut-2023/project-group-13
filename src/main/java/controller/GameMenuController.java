@@ -2,10 +2,7 @@ package controller;
 
 import model.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 
 import model.Empire;
@@ -13,6 +10,8 @@ import model.Enums.TypeofGround;
 import model.Map;
 
 public class GameMenuController {
+    public static int highScoreForEmpires = 500;
+    public static int rank = 1;
     public static Map map;
     public static ArrayList<Player> playersInGame = new ArrayList<>();
     public static Empire currentEmpire;
@@ -45,7 +44,7 @@ public class GameMenuController {
         setCurrentEmpire(getEmpires().get(roundNumber % getEmpires().size()));
 
         System.out.println(currentEmpire.getEmpireName() + "is playing now!");
-
+        endGame();
         calculateTax();
         calculateFood();
         calculateArmouryThings();
@@ -56,8 +55,7 @@ public class GameMenuController {
                 currentEmpire.getTaxPopularity() + currentEmpire.getReligionPopularity()
                 + currentEmpire.getFoodPopularity());
         if (currentEmpire.getPopularity() > 100) currentEmpire.setPopularity(100);
-        setCurrentEmpire(getEmpires().get(roundNumber % getEmpires().size()));
-        Empire.setCurrentEmpire(currentEmpire);
+
         getPaths().forEach((key, value) -> {
             Iterator<Soldier> iterator = key.iterator();
 
@@ -74,7 +72,6 @@ public class GameMenuController {
                 map.getMapCells(soldier.getX(), soldier.getY()).removeTroop(soldier);
 
 
-
                 if (soldier.getTotalMove() - 1 < value.size()) {
                     Cell cell = value.get(soldier.getTotalMove() - 1);
                     cell.moveTroop(soldier);
@@ -85,8 +82,8 @@ public class GameMenuController {
                 if (soldier.getX() == value.get(value.size() - 1).getX()
                         && soldier.getY() == value.get(value.size() - 1).getY()) {
                     if (soldier.isPatrol() && soldier.getX() == soldier.getPatrol_x_start()
-                    && soldier.getY() == soldier.getPatrol_y_start()
-                    && !soldier.isStopPatrol()) {
+                            && soldier.getY() == soldier.getPatrol_y_start()
+                            && !soldier.isStopPatrol()) {
                         setSelect_x(soldier.getPatrol_x_start());
                         setSelect_y(soldier.getPatrol_y_start());
                         moveElemets(soldier.getPatrol_x_end(), soldier.getPatrol_y_end(), selectedSoldiersPatrol);
@@ -228,41 +225,41 @@ public class GameMenuController {
                     }
                     currentEmpire.getStockpiles().get(0).setIronAmount(currentEmpire.getStockpiles().get(0).getIronAmount() + total);
                 }
-                case "PitchRig" : {
+                case "PitchRig": {
                     if (currentEmpire.getStockpiles().get(0).getFreeSpace() < total) {
                         continue;
                     }
                     currentEmpire.getStockpiles().get(0).setPitchAmount(currentEmpire.getStockpiles().get(0).getPitchAmount() + total);
                 }
-                case "Woodcutter" :{
+                case "Woodcutter": {
                     if (currentEmpire.getStockpiles().get(0).getFreeSpace() < total) {
                         continue;
                     }
                     currentEmpire.getStockpiles().get(0).setWoodAmount(currentEmpire.getStockpiles().get(0).getWoodAmount() + total);
                 }
-                case "HopsFarm" : {
+                case "HopsFarm": {
                     if (currentEmpire.getStockpiles().get(0).getFreeSpace() < total) {
                         continue;
                     }
-                    currentEmpire.getStockpiles().get(0).setHopsAmount(currentEmpire.getStockpiles().get(0).getHopsAmount()+ total);
+                    currentEmpire.getStockpiles().get(0).setHopsAmount(currentEmpire.getStockpiles().get(0).getHopsAmount() + total);
                 }
-                case "WheatFarm" : {
+                case "WheatFarm": {
                     if (currentEmpire.getStockpiles().get(0).getFreeSpace() < total) {
                         continue;
                     }
-                    currentEmpire.getStockpiles().get(0).setWheatAmount(currentEmpire.getStockpiles().get(0).getWheatAmount()+ total);
+                    currentEmpire.getStockpiles().get(0).setWheatAmount(currentEmpire.getStockpiles().get(0).getWheatAmount() + total);
                 }
-                case "Brewery" : {
+                case "Brewery": {
                     if (currentEmpire.getStockpiles().get(0).getHopsAmount() < total) {
                         continue;
                     }
                     if (currentEmpire.getStockpiles().get(0).getFreeSpace() < produce * (rate - 1)) {
                         continue;
                     }
-                    currentEmpire.getStockpiles().get(0).setAleAmount(currentEmpire.getStockpiles().get(0).getAleAmount()+ total);
-                    currentEmpire.getStockpiles().get(0).setHopsAmount( currentEmpire.getStockpiles().get(0).getHopsAmount() -total);
+                    currentEmpire.getStockpiles().get(0).setAleAmount(currentEmpire.getStockpiles().get(0).getAleAmount() + total);
+                    currentEmpire.getStockpiles().get(0).setHopsAmount(currentEmpire.getStockpiles().get(0).getHopsAmount() - total);
                 }
-                case "Quarry" : {
+                case "Quarry": {
                     quarry++;
                 }
             }
@@ -576,7 +573,7 @@ public class GameMenuController {
 //        }
 
 //        List<Cell> path = AstarShortestPath.findShortestPath(map, map.getMapCells(getSelect_x(), getSelect_y()), map.getMapCells(x, y));
-       result = moveElemets(x, y, selectedSoldiers);
+        result = moveElemets(x, y, selectedSoldiers);
         if (getPath().isEmpty()) {
             return "No path found.";
         } else {
@@ -668,7 +665,7 @@ public class GameMenuController {
         }
         selectedSoldiersPatrol = new ArrayList<>(selectedSoldiers);
         moveElemets(x1, y1, selectedSoldiersPatrol);
-        paths.put(select,Apath);
+        paths.put(select, Apath);
         return "patrol of units started";
     }
 
@@ -1011,22 +1008,153 @@ public class GameMenuController {
         return Math.abs(x1 - x2) + Math.abs(y2 - y1);
     }
 
-    public String digTunnel() {
-        return "";
-    }
-
-    public String pourOil() {
-        return "";
-    }
     public static Empire getEmpireByUserName(String name) {
         for (Empire empire : empires) {
             if (empire.getPlayer().getUsername().equals(name)) return empire;
         }
         return null;
     }
+
     public static Empire getCurrentEmpire() {
         return currentEmpire;
     }
 
+    public String tunnel(int x, int y) {
+        boolean tunneler = true;
+        if (selectedSoldiers.size() == 0) return "select a unit first.";
+        for (Soldier soldier : selectedSoldiers) {
+            if (!soldier.getSoldierType().getName().equalsIgnoreCase("tunneler")) tunneler = false;
+        }
+        if (!tunneler) return "only select <<tunneler>> units.";
+        if (checkNegativity(x, y)) return "Invalid cordination.";
+        Building building = map.getMapCells(x, y).getBuilding();
+        if (building == null) return "There is no building at this cell.";
+        if (building.getEmpire().equals(currentEmpire)) return "you cant attack your own buildings.";
+        BuildingType buildingType1 = building.getBuildingType();
+        String name = buildingType1.getName();
+
+        if (!name.equalsIgnoreCase("round tower") && !name.equalsIgnoreCase("wall") && !name.equalsIgnoreCase("stair") && !name.equalsIgnoreCase("square tower") && !name.equalsIgnoreCase("defense turret") &&
+                !name.equalsIgnoreCase("perimeter tower") && !name.equalsIgnoreCase("lookout tower")
+                && !name.equalsIgnoreCase("big stone gatehouse") && !name.equalsIgnoreCase("small stone gatehouse"))
+            return "you cant attack this building.";
+
+        //move to x and y for emad
+        building.setHp(-SoldierType.TUNNELER.getSoldierDamage());
+
+        return "successfully done.";
+    }
+
+    public String digMoat(int x, int y) {
+        boolean digger = true;
+        if (selectedSoldiers.size() == 0) return "select a unit first.";
+        for (Soldier soldier : selectedSoldiers) {
+            if (!soldier.getSoldierType().isCanDigDitch()) digger = false;
+        }
+        if (!digger) return "only select units which can dig.";
+        if (!checkNegativity(x, y)) return "Invalid cordination.";
+
+        if (map.getMapCells(x, y).getTypeofGround().equals(TypeofGround.BEACH) ||
+                map.getMapCells(x, y).getTypeofGround().equals(TypeofGround.SANDY) || map.getMapCells(x, y).getTypeofGround().equals(TypeofGround.EARTH)
+                || map.getMapCells(x, y).getTypeofGround().equals(TypeofGround.DENSEMEADOW) ||
+                map.getMapCells(x, y).getTypeofGround().equals(TypeofGround.MEADOW)) {
+            //move to x and y for emad
+            map.getMapCells(x, y).setTypeofGround(TypeofGround.DITCH);
+            return "successfully done.";
+        } else return "Invalid type of ground.";
+    }
+
+    public String fillMoat(int x, int y) {
+        boolean digger = true;
+        if (selectedSoldiers.size() == 0) return "select a unit first.";
+        for (Soldier soldier : selectedSoldiers) {
+            if (!soldier.getSoldierType().isCanDigDitch()) digger = false;
+        }
+        if (!digger) return "only select units which can dig.";
+        if (!checkNegativity(x, y)) return "Invalid cordination.";
+        // move for emad
+        map.getMapCells(x, y).setTypeofGround(TypeofGround.EARTH);
+        return "successfully done.";
+    }
+
+    public String pourOil(String cordination) {
+        boolean engineer = true;
+        if (selectedSoldiers.size() == 0) return "select a unit first.";
+        for (Soldier soldier : selectedSoldiers) {
+            if (!soldier.getSoldierType().equals(SoldierType.ENGINEER)) engineer = false;
+        }
+        if (!engineer) return "only select oil engineers.";
+        switch (cordination) {
+            case "left":
+                if (map.getMapCells(select_x, select_y - 1).getSoldiers().size() == 0)
+                    return "There is no unit at this cell.";
+                for (Soldier soldier : map.getMapCells(select_x, select_y - 1).getSoldiers()) {
+                    soldier.setHp(-selectedSoldiers.get(0).getSoldierType().getSoldierDamage());
+                }
+            case "right":
+                if (map.getMapCells(select_x, select_y + 1).getSoldiers().size() == 0)
+                    return "There is no unit at this cell.";
+                for (Soldier soldier : map.getMapCells(select_x, select_y + 1).getSoldiers()) {
+                    soldier.setHp(-selectedSoldiers.get(0).getSoldierType().getSoldierDamage());
+                }
+            case "top":
+                if (map.getMapCells(select_x - 1, select_y).getSoldiers().size() == 0)
+                    return "There is no unit at this cell.";
+                for (Soldier soldier : map.getMapCells(select_x - 1, select_y).getSoldiers()) {
+                    soldier.setHp(-selectedSoldiers.get(0).getSoldierType().getSoldierDamage());
+                }
+            case "down":
+                if (map.getMapCells(select_x + 1, select_y).getSoldiers().size() == 0)
+                    return "There is no unit at this cell.";
+                for (Soldier soldier : map.getMapCells(select_x, select_y + 1).getSoldiers()) {
+                    soldier.setHp(-selectedSoldiers.get(0).getSoldierType().getSoldierDamage());
+                }
+
+        }
+        return "successfully done.";
+    }
+
+    public static void endGame() {
+        int[] empireId = new int[empires.size()];
+        for (Integer x : empireId) {
+            x = 0;
+        }
+        for (int i = 0; i < empires.size(); i++) {
+            for (Soldier soldier : empires.get(i).getSoldiers()) {
+                if (soldier.getSoldierType().equals(SoldierType.KING) && soldier.getHp() <= 0) {
+                    empireId[i] = 1;
+                }
+            }
+        }
+        for (int i = 0; i < empireId.length; i++) {
+            if (empireId[i] == 1) {
+                rank += 1;
+                empires.get(i).getPlayer().setHighScore(rank * highScoreForEmpires);
+                for (int j = 0; j < map.getSizeOfTheMap(); j++) {
+                    for (int k = 0; k < map.getSizeOfTheMap(); k++) {
+                        if (map.getMapCells( j , k).getSoldiers().size() == 0) continue;
+                        int length = map.getMapCells( j , k).getSoldiers().size();
+                        for (int l = length  -1 ; l >= 0; l++) {
+                            if (map.getMapCells( j , k).getSoldiers().get(l).getOwner().equals(empires.get(i)))
+                                map.getMapCells( j , k).getSoldiers().remove(l);
+                        }
+
+                    }
+
+                }
+                for (int j = 0; j < map.getSizeOfTheMap(); j++) {
+                    for (int k = 0; k < map.getSizeOfTheMap(); k++) {
+                        if (map.getMapCells( j , k).getBuilding()!= null ) {
+                            if (map.getMapCells( j , k).getBuilding().getEmpire().equals(empires.get(i))) map.getMapCells( j , k).addBuilding(null);
+                    }
+                }
+            }
+            empires.remove(i);
+                System.out.println("Dead Empire: " + empires.get(i).getPlayer().getNickname());
+        }
+    }
+
 }
+}
+
+
 

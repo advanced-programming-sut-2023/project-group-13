@@ -125,7 +125,7 @@ public class Player {
     }
 
     public void setHighScore(int highScore) {
-        this.highScore = highScore;
+        this.highScore += highScore;
     }
 
     public Boolean getLoggedIn() {

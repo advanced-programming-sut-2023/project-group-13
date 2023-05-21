@@ -46,6 +46,14 @@ public enum SoldierType {
     private String name;
     private int engineerNeededAmount;
 
+    public void setCanClimb(boolean canClimb) {
+        this.canClimb = canClimb;
+    }
+
+    public void setCanDigDitch(boolean canDigDitch) {
+        this.canDigDitch = canDigDitch;
+    }
+
     public int getEngineerNeededAmount() {
         return engineerNeededAmount;
     }

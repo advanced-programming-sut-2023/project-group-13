@@ -9,6 +9,13 @@ public class Building {
     private int y;
     private Empire empire;
 
+    public Empire getEmpire() {
+        return empire;
+    }
+
+    public void setEmpire(Empire empire) {
+        this.empire = empire;
+    }
 
     public Building(int hp, String name, BuildingType buildingType, int x, int y, Empire empire) {
         this.hp = hp;
@@ -56,7 +63,7 @@ public class Building {
     }
 
     public void setHp(int hp) {
-        this.hp = hp;
+        this.hp += hp;
     }
 
     public void setName(String name) {

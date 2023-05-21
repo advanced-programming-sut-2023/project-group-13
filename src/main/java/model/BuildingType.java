@@ -4,7 +4,6 @@ public enum BuildingType {
     TREE(0, 100, 0, 1, null, 0, 0, 0, false, "tree"),
     SMALL_STONE_GATEHOUSE(0, 1000, 0, 3, null, 0, 0, 0, true, "small stone gatehouse"),
     BIG_STONE_GATEHOUSE(0, 2000, 0, 5, ResourcesType.STONE, 20, 0, 0, true, "big stone gatehouse"),
-    KEEP(0, 0, 0, 7, null, 0, 0, 0, true, "keep"),
     DRAWBRIDGE(0, 0, 0, 1, ResourcesType.WOOD, 10, 0, 0, true, "drawbridge"),
     LOOKOUT_TOWER(0, 1300, 0, 3, ResourcesType.STONE, 10, 0, 0, true, "lookout tower"),
     PERIMETER_TOWER(0, 1000, 0, 3, ResourcesType.STONE, 10, 0, 0, true, "perimeter tower"),
@@ -31,25 +30,24 @@ public enum BuildingType {
     BLACKSMITH(1, 300, 100, 3, ResourcesType.WOOD, 20, 1, 0, false, "blacksmith"),
     FLETCHER(1, 300, 100, 3, ResourcesType.WOOD, 20, 1, 0, false, "fletcher"),
     POLETURNER(1, 300, 100, 3, ResourcesType.WOOD, 10, 1, 0, false, "poleturner"),
-    OIL_SMELTER(0, 300, 100, 3, ResourcesType.IRON, 10, 0, 1, false, "oil smelter"),
     PITCH_DITCH(10, 300, 0, 3, ResourcesType.PITCH, 10, 0, 0, true, "pitch ditch"),
     CAGED_WAR_DOGS(0, 100, 100, 3, ResourcesType.WOOD, 10, 0, 0, false, "caged war dogs"),
     SIEGE_TENT(0, 100, 0, 1, null, 0, 0, 1, false, "siege tent"),
     STABLE(4, 300, 400, 3, ResourcesType.WOOD, 20, 0, 0, false, "stable"),
-    APPLE_ORCHARD(20, 100, 0, 3, ResourcesType.WOOD, 5, 1, 0, false, "apple orchard"), //bagh sib
-    DIARY_FARMER(20, 100, 0, 3, ResourcesType.WOOD, 10, 1, 0, false, "diary farmer"), //labani
-    HOPS_FARMER(20, 100, 0, 3, ResourcesType.WOOD, 15, 1, 0, false, "hops farmer"), //mazrae jo
+    APPLE_ORCHARD(20, 100, 0, 3, ResourcesType.WOOD, 5, 1, 0, false, "apple orchard"),
+    DIARY_FARMER(20, 100, 0, 3, ResourcesType.WOOD, 10, 1, 0, false, "diary farmer"),
+    HOPS_FARMER(20, 100, 0, 3, ResourcesType.WOOD, 15, 1, 0, false, "hops farmer"),
     HUNTERS_POST(20, 300, 0, 3, ResourcesType.WOOD, 5, 1, 0, false, "hunter post"),
     WHEAT_FARMER(20, 300, 0, 3, ResourcesType.WOOD, 15, 1, 0, false, "wheat farmer"),
     BAKERY(10, 300, 0, 3, ResourcesType.WOOD, 10, 1, 0, false, "bakery"),
-    BREWER(10, 300, 0, 3, ResourcesType.WOOD, 10, 1, 0, false, "brewer"), //abjo sazi
-    GRANARY(0, 500, 0, 1, ResourcesType.WOOD, 5, 0, 0, false, "granary"), //anbar ghaza
+    BREWER(10, 300, 0, 3, ResourcesType.WOOD, 10, 1, 0, false, "brewer"),
+    GRANARY(0, 500, 0, 1, ResourcesType.WOOD, 5, 0, 0, false, "granary"),
     MAIN_CASTLE(0, 40000, 0, 7, null, 0, 0, 0, true, "main castle"),
-    // STAIR and WALL are temporary and need to be fixed !!! todo
     STAIR(0, 100, 0, 1, null, 0, 0, 0, false, "stair"),
     WALL(0, 100, 0, 1, null, 0, 0, 0, false, "wall"),
-    BRIDGE(0, 1, 0, 1, null, 0, 0, 0, true, "bridge");
-
+    BRIDGE(0, 1, 0, 1, null, 0, 0, 0, true, "bridge"),
+    OIL_SMELTER(0,500 , 100 , 1, ResourcesType.IRON   , 10 ,0 , 1 , false ,"oil smelter"),
+    ;
     private int size;
     private int hp;
     private int goldPrice;
