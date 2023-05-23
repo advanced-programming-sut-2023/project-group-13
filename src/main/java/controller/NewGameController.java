@@ -91,7 +91,9 @@ public class NewGameController {
             GroundColor color = colors[i % colors.length];
             /* it ensures that if the users are more than colors
             the colors repeat again in order which is not necessary in our game*/
-            empires.add(new Empire(player, color));
+//            empires.add(new Empire(player, color));
+            empires.add(new Empire(player, color, new Building(BuildingType.MAIN_CASTLE.getHp(),
+                    BuildingType.MAIN_CASTLE.getName(), BuildingType.MAIN_CASTLE, x, y),player.getNickname()));
             empires.get(empires.size()-1).getBuildings().add(new Building( BuildingType.MAIN_CASTLE.getHp(),
                     BuildingType.MAIN_CASTLE.getName(), BuildingType.MAIN_CASTLE, x, y,empires.get(empires.size()-1)));
             x += increase_coordinateSet;
