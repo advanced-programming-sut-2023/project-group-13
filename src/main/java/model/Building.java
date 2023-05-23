@@ -26,6 +26,14 @@ public class Building {
         this.empire = empire;
     }
 
+    public Building(int hp, String name, BuildingType buildingType, int x, int y) {
+        this.hp = hp;
+        this.name = name;
+        this.buildingType = buildingType;
+        this.x = x;
+        this.y = y;
+    }
+
     public Building(int hp, String name, TreeType treeType, int x, int y) {
         this.hp = hp;
         this.name = name;

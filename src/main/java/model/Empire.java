@@ -125,7 +125,7 @@ public class Empire {
     }
 
 
-    public Empire(Player player, GroundColor groundColor) {
+    public Empire(Player player, GroundColor groundColor, Building building) {
         this.player = player;
         this.groundColor = groundColor;
         this.lord = new Soldier(SoldierType.KING.getHp(), player.getNickname(), SoldierType.KING, this, kingPit.getX(), kingPit.getY());
