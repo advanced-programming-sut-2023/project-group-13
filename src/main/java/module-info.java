@@ -11,4 +11,5 @@ module Signup {
     exports view;
     exports viewG.menus;
     exports viewG.GUIController;
+    exports model.Enums;
 }

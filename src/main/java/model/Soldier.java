@@ -37,6 +37,10 @@ public class Soldier extends People {
     private int x;
     private int y;
 
+    private SoldierColor soldierColor;
+
+    //todo add the color to each soldier later on
+
     public SoldierType getSoldierType() {
         return soldierType;
     }

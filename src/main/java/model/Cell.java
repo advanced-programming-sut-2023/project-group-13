@@ -134,6 +134,7 @@ public class Cell implements Comparable<Cell> {
         return soldier;
     }
 
+
     public int getX() {
         return x;
     }
