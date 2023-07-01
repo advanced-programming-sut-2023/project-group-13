@@ -2,6 +2,7 @@ package model.Enums;
 
 public enum TypeofGround {
     EARTH("Earth","E","/images/game/map/textures/earth.png"),
+    //todo put the photo of Earth for another type of ground
     SANDY("Sandy","Sa","/images/game/map/textures/earthAndSand.png"),
     ROCKY("Rocky","R","/images/game/map/textures/rockTexture/0.png"),
     STONEY("Stoney","St","/images/game/map/textures/boulder/0.png"),

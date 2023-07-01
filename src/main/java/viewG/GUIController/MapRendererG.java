@@ -4,6 +4,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,6 +16,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Cell;
@@ -76,6 +78,8 @@ public class MapRendererG extends Application {
     private int cellRow;
     private int cellCol;
 
+    private ImageView miniMapImageView;
+
     @Override
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
@@ -99,12 +103,22 @@ public class MapRendererG extends Application {
         Image desertImage = new Image(MapRendererG.class.getResource(Paths.DESERT_BACKGROUND.getPath()).toExternalForm());
         Image castleImage = new Image(MapRendererG.class.getResource("/images/game/map/buildings/castleBuildings.png").toExternalForm());
 
+        miniMapImageView = new ImageView();
+        miniMapImageView.setPreserveRatio(true);
 
-        HBox bar = new HBox();
-        Image barImage = new Image(MapRendererG.class.getResource("/images/game/bar/window.png").toExternalForm());
+
+        Pane bar = new Pane();
+        Image barImage = new Image(MapRendererG.class.getResource("/images/game/bar/bar.png").toExternalForm());
         ImageView barImageView = new ImageView(barImage);
         barImageView.setFitWidth(1540);
-        bar.getChildren().add(barImageView);
+        barImageView.setLayoutY(100);
+//        bar.getChildren().add(barImageView);
+        bar.getChildren().addAll(barImageView,miniMapImageView);
+        miniMapImageView.setLayoutX(1050);
+        miniMapImageView.setLayoutY(165);
+
+
+
         bar.setMouseTransparent(true);
 
 
@@ -142,6 +156,7 @@ public class MapRendererG extends Application {
         moveMaP();
         chooseTile(selectImageTransparent,selectImageWhite);
         chooseMultipleTiles();
+        updateMiniMap();
 
         scene = new Scene(root);
         stage.setScene(scene);
@@ -267,6 +282,9 @@ public class MapRendererG extends Application {
                         for (int smallerCol = 0; smallerCol < 8; smallerCol++) {
                             cellRow = (row - 2) * 8 + smallerRow;
                             cellCol = (col - 2) * 8 + smallerCol;
+                            if (map[cellRow][cellCol].getTypeofGround().getFullNameType().equals("Earth")) {
+                                continue;
+                            }
                             this.imageView = new ImageView();
                             this.imageView.setImage(LoadImages.getTileImages().get(map[cellRow][cellCol].getTypeofGround()));
 
@@ -417,6 +435,23 @@ public class MapRendererG extends Application {
 
         backGroundPane.setTranslateX(backGroundPane.getTranslateX() + dx);
         backGroundPane.setTranslateY(backGroundPane.getTranslateY() + dy);
+        
+//        updateMiniMap();
+    }
+
+    private void updateMiniMap() {
+        Image snapshot = backGroundPane.snapshot(null,null);
+
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+
+        double miniMapWidth = screenBounds.getWidth() / 4 ;
+        double miniMapHeight = screenBounds.getHeight() / 4 - 65;
+
+        // Resize the snapshot to the desired dimensions
+
+        miniMapImageView.setImage(snapshot);
+        miniMapImageView.setFitWidth(miniMapWidth);
+        miniMapImageView.setFitHeight(miniMapHeight);
     }
 
     public static void main(String[] args) {
