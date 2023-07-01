@@ -12,6 +12,8 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -19,6 +21,8 @@ import model.Cell;
 import model.Enums.LoadImages;
 import model.Enums.Paths;
 import model.Map;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class MapRendererG extends Application {
@@ -90,6 +94,8 @@ public class MapRendererG extends Application {
         bigPane.setPrefSize(cellSize * numColumns, cellSize * numRows);
         centralPane.setPrefSize(cellSize * (numColumns - 3), cellSize * (numRows - 3));
 
+
+
         Image desertImage = new Image(MapRendererG.class.getResource(Paths.DESERT_BACKGROUND.getPath()).toExternalForm());
         Image castleImage = new Image(MapRendererG.class.getResource("/images/game/map/buildings/castleBuildings.png").toExternalForm());
 
@@ -102,13 +108,23 @@ public class MapRendererG extends Application {
         bar.setMouseTransparent(true);
 
 
-        WritableImage selectImage = new WritableImage(35, 35);
-        PixelWriter pixelWriter = selectImage.getPixelWriter();
+        WritableImage selectImageWhite = new WritableImage(35, 35);
+        PixelWriter pixelWriterWhite = selectImageWhite.getPixelWriter();
 
         // Set all pixels to partially transparent white
         for (int x = 0; x < 35; x++) {
             for (int y = 0; y < 35  ; y++) {
-                pixelWriter.setColor(x, y, javafx.scene.paint.Color.rgb(255, 255, 255, 0.5));
+                pixelWriterWhite.setColor(x, y, javafx.scene.paint.Color.rgb(255, 255, 255, 0.5));
+            }
+        }
+
+        WritableImage selectImageTransparent = new WritableImage(35, 35);
+        PixelWriter pixelWriterTransparent = selectImageTransparent.getPixelWriter();
+
+        // Set all pixels to partially transparent white
+        for (int x = 0; x < 35; x++) {
+            for (int y = 0; y < 35  ; y++) {
+                pixelWriterTransparent.setColor(x, y, Color.TRANSPARENT);
             }
         }
 
@@ -118,12 +134,14 @@ public class MapRendererG extends Application {
         root.setCenter(backGroundPane);
         root.setBottom(bar);
 
-        initMap(desertImage,selectImage);
+        initMap(desertImage);
         zoomFeature();
 
         backGroundPane.getChildren().add(bigPane);
 
         moveMaP();
+        chooseTile(selectImageTransparent,selectImageWhite);
+        chooseMultipleTiles();
 
         scene = new Scene(root);
         stage.setScene(scene);
@@ -131,7 +149,93 @@ public class MapRendererG extends Application {
         stage.show();
     }
 
-    private void initMap(Image desertImage, WritableImage selectImage) {
+    private void chooseMultipleTiles() {
+        Rectangle window = new Rectangle();
+
+        AtomicReference<Double> initialMouseX = new AtomicReference<>((double) 0);
+        AtomicReference<Double> initialMouseY = new AtomicReference<>((double) 0);
+
+        centralPane.setOnMousePressed(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                window.setFill(Color.TRANSPARENT); // Make the rectangle transparent
+                window.setStroke(Color.BLACK); // Add a border to the rectangle
+
+                initialMouseX.set(event.getX());
+                initialMouseY.set(event.getY());
+
+                // Set the initial position and dimensions of the window
+                window.setX(initialMouseX.get());
+                window.setY(initialMouseY.get());
+                window.setWidth(0);
+                window.setHeight(0);
+
+                // Make the window visible
+                window.setVisible(true);
+            }
+        });
+
+        centralPane.setOnMouseDragged(event -> {
+            if (event.getButton() == MouseButton.PRIMARY){
+            double mouseX = event.getX();
+            double mouseY = event.getY();
+
+            // Calculate the new position and dimensions of the window
+            double windowX = Math.min(mouseX, initialMouseX.get());
+            double windowY = Math.min(mouseY, initialMouseY.get());
+            double windowWidth = Math.abs(mouseX - initialMouseX.get());
+            double windowHeight = Math.abs(mouseY - initialMouseY.get());
+
+            // Update the position and dimensions of the window
+            window.setX(windowX);
+            window.setY(windowY);
+            window.setWidth(windowWidth);
+            window.setHeight(windowHeight);
+            }
+        });
+
+
+        centralPane.setOnMouseReleased(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                // Perform actions based on the selected window
+                // For example, you can retrieve the bounds of the selected window using:
+//            double windowX = window.getX();
+//            double windowY = window.getY();
+//            double windowWidth = window.getWidth();
+//            double windowHeight = window.getHeight();
+
+                // Hide the window
+//            window.setVisible(false);
+                window.setFill(javafx.scene.paint.Color.rgb(255, 255, 255, 0.5));
+                window.setStroke(Color.TRANSPARENT);
+            }
+        });
+
+        centralPane.getChildren().add(window);
+
+
+    }
+
+    ImageView selectImageView = new ImageView();
+    private void chooseTile(WritableImage selectImageTransparent, WritableImage selectImageWhite) {
+        centralPane.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.SECONDARY) {
+
+                double x = event.getX();
+                double y = event.getY();
+//            System.out.println("x = " + x + ", y = " + y);
+                double x_coordinate = x / 35;
+                double y_coordinate = y / 35;
+                selectImageView.setImage(selectImageWhite);
+                selectImageView.setLayoutX(x - 15);
+                selectImageView.setLayoutY(y - 15);
+            } else if (event.getButton() == MouseButton.PRIMARY) {
+                selectImageView.setImage(selectImageTransparent);
+            }
+        });
+        centralPane.getChildren().add(selectImageView);
+    }
+
+    private void initMap(Image desertImage) {
 
         double targetWidth = 300;   // Desired width of the resized image
         double targetHeight = 300;  // Desired height of the resized image
@@ -172,30 +276,6 @@ public class MapRendererG extends Application {
                             imageView.setLayoutX(cellCol * 35);
                             imageView.setLayoutY(cellRow * 35);
 
-                            this.imageView.setOnMouseClicked(event -> {
-                                ImageView chooseImageView = new ImageView();
-                                if (event.getButton() == MouseButton.PRIMARY) {
-                                    System.out.println("the cell col is: " + cellCol);
-                                    System.out.println("the cell row is: " + cellRow);
-//                                    System.out.println("the mouse is clicked with right click");
-                                    chooseImageView.setImage(selectImage);
-                                    chooseImageView.setLayoutX(cellCol * 35);
-                                    chooseImageView.setLayoutY(cellRow * 35);
-//                                    System.out.println("the x coordinate is: " + cellCol * 35);
-//                                    System.out.println("the y coordinate is: " + cellRow * 35);
-                                    centralPane.getChildren().add(chooseImageView);
-                                } else if (event.getButton() == MouseButton.SECONDARY) {
-                                    centralPane.getChildren().remove(chooseImageView);
-                                }
-                            });
-//                            if (loadBuildingsOfMap()) {
-//                                buildingImageView = new ImageView();
-//                                this.buildingImageView.setImage(LoadImages.getBuildingImages().get(map[cellRow][cellCol].getBuilding().getBuildingType()));
-//                                this.buildingImageView.setFitWidth(250);
-//                                this.buildingImageView.setFitHeight(250);
-//                                this.buildingImageView.setLayoutX(cellCol * 35);
-//                                this.buildingImageView.setLayoutY(cellRow * 35);
-//                                centralPane.getChildren().add(this.buildingImageView);
 //
 //                            } else if (loadTreesOfMap()) {
 //                                treeImageView = new ImageView();
