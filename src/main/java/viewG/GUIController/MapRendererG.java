@@ -6,6 +6,7 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
@@ -80,6 +81,10 @@ public class MapRendererG extends Application {
 
     private ImageView miniMapImageView;
 
+    private static final double BRIGHTNESS_DELTA = 0.2;
+
+
+
     @Override
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
@@ -114,7 +119,7 @@ public class MapRendererG extends Application {
         barImageView.setLayoutY(100);
 //        bar.getChildren().add(barImageView);
         bar.getChildren().addAll(barImageView,miniMapImageView);
-        miniMapImageView.setLayoutX(1050);
+        miniMapImageView.setLayoutX(1040);
         miniMapImageView.setLayoutY(165);
 
 
@@ -150,6 +155,7 @@ public class MapRendererG extends Application {
 
         initMap(desertImage);
         zoomFeature();
+        hoverFeature();
 
         backGroundPane.getChildren().add(bigPane);
 
@@ -162,6 +168,20 @@ public class MapRendererG extends Application {
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
+    }
+
+    private void hoverFeature() {
+        ColorAdjust colorAdjust = new ColorAdjust();
+        this.imageView.setEffect(colorAdjust);
+
+        // Add event handlers for hover effect
+        this.imageView.setOnMouseEntered(event -> {
+            colorAdjust.setBrightness(colorAdjust.getBrightness() + BRIGHTNESS_DELTA);
+        });
+
+        this.imageView.setOnMouseExited(event -> {
+            colorAdjust.setBrightness(colorAdjust.getBrightness() - BRIGHTNESS_DELTA);
+        });
     }
 
     private void chooseMultipleTiles() {
@@ -293,6 +313,7 @@ public class MapRendererG extends Application {
                             centralPane.getChildren().add(this.imageView);
                             imageView.setLayoutX(cellCol * 35);
                             imageView.setLayoutY(cellRow * 35);
+                            hoverFeature();
 
 //
 //                            } else if (loadTreesOfMap()) {
@@ -324,6 +345,7 @@ public class MapRendererG extends Application {
                                 this.buildingImageView.setLayoutX(cellCol * 35);
                                 this.buildingImageView.setLayoutY(cellRow * 35);
                                 centralPane.getChildren().add(this.buildingImageView);
+//                                hoverFeature();
 
                             } else if (loadTreesOfMap()) {
                                 treeImageView = new ImageView();
@@ -444,14 +466,16 @@ public class MapRendererG extends Application {
 
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 
-        double miniMapWidth = screenBounds.getWidth() / 4 ;
-        double miniMapHeight = screenBounds.getHeight() / 4 - 65;
+//        double miniMapWidth = screenBounds.getWidth() / 4 ;
+//        double miniMapHeight = screenBounds.getHeight() / 4 - 65;
 
         // Resize the snapshot to the desired dimensions
 
         miniMapImageView.setImage(snapshot);
-        miniMapImageView.setFitWidth(miniMapWidth);
-        miniMapImageView.setFitHeight(miniMapHeight);
+        miniMapImageView.setFitWidth(165);
+        miniMapImageView.setFitHeight(165);
+        // todo later on add the present point to the miniMap
+        // todo later on update the map when you drop a building
     }
 
     public static void main(String[] args) {
