@@ -16,7 +16,7 @@ module Signup {
         exports model.Enums.Images;
 
         opens controller to javafx.fxml;
-        opens model to javafx.fxml;
+//        opens model to javafx.fxml;
 //        opens model to javafx.fxml, com.google.gson;
         exports view.controller;
         opens view.controller to javafx.fxml;
