@@ -21,7 +21,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Cell;
-import model.Enums.LoadImages;
+import model.Enums.Images.IconPath;
+import model.Enums.Images.LoadImages;
 import model.Enums.Paths;
 import model.Map;
 
@@ -34,9 +35,9 @@ public class MapRendererG extends Application {
     private Stage primaryStage;
 
     private BorderPane root;
-    private ImageView imageView;
-    private ImageView buildingImageView;
-    private ImageView treeImageView;
+    private static ImageView imageView;
+    private static ImageView buildingImageView;
+    private static ImageView treeImageView;
 
     private static double ScrollSpeed = 10; // Speed of map movement in pixels
 
@@ -83,6 +84,14 @@ public class MapRendererG extends Application {
 
     private static final double BRIGHTNESS_DELTA = 0.2;
 
+    private Pane buttomBar;
+
+    private int iconBuildingBarFitWidth = 70;
+    private int iconBuildingBarFitHeight = 70;
+
+    private int iconSmallerBarFitWidth = 30;
+    private int iconSmallerBarFitHeight = 30;
+
 
 
     @Override
@@ -108,24 +117,8 @@ public class MapRendererG extends Application {
         Image desertImage = new Image(MapRendererG.class.getResource(Paths.DESERT_BACKGROUND.getPath()).toExternalForm());
         Image castleImage = new Image(MapRendererG.class.getResource("/images/game/map/buildings/castleBuildings.png").toExternalForm());
 
-        miniMapImageView = new ImageView();
-        miniMapImageView.setPreserveRatio(true);
-
-
-        Pane bar = new Pane();
-        Image barImage = new Image(MapRendererG.class.getResource("/images/game/bar/bar.png").toExternalForm());
-        ImageView barImageView = new ImageView(barImage);
-        barImageView.setFitWidth(1540);
-        barImageView.setLayoutY(100);
-//        bar.getChildren().add(barImageView);
-        bar.getChildren().addAll(barImageView,miniMapImageView);
-        miniMapImageView.setLayoutX(1040);
-        miniMapImageView.setLayoutY(165);
-
-
-
-        bar.setMouseTransparent(true);
-
+        addMiniMap();
+        handleButtomBar();
 
         WritableImage selectImageWhite = new WritableImage(35, 35);
         PixelWriter pixelWriterWhite = selectImageWhite.getPixelWriter();
@@ -147,15 +140,11 @@ public class MapRendererG extends Application {
             }
         }
 
-
-
-
         root.setCenter(backGroundPane);
-        root.setBottom(bar);
+        root.setBottom(buttomBar);
 
         initMap(desertImage);
         zoomFeature();
-        hoverFeature();
 
         backGroundPane.getChildren().add(bigPane);
 
@@ -170,16 +159,166 @@ public class MapRendererG extends Application {
         stage.show();
     }
 
+    private void addMiniMap() {
+        miniMapImageView = new ImageView();
+        miniMapImageView.setPreserveRatio(true);
+    }
+
+    private void handleButtomBar() {
+
+        buttomBar = new Pane();
+        Image barImage = new Image(MapRendererG.class.getResource("/images/game/bar/bar.png").toExternalForm());
+        ImageView barImageView = new ImageView(barImage);
+        barImageView.setFitWidth(1540);
+        barImageView.setLayoutY(100);
+        buttomBar.getChildren().addAll(barImageView,miniMapImageView);
+        miniMapImageView.setLayoutX(1040);
+        miniMapImageView.setLayoutY(165);
+//        buttomBar.setMouseTransparent(true);
+
+        addBuidlingTypeIcons();
+        addBarBuildingIcons();
+        addOtherIconsOfTheRightMainBar();
+        addOtherIconsOfTheButtomRightBar();
+    }
+
+    private void addOtherIconsOfTheButtomRightBar() {
+        int baseLayoutX = 830;
+        int baseLayoutY = 295;
+        int incrementSpacingIcon = 45;
+
+        ImageView[] iconsOfButtomRightMainBar = {
+                IconPath.RIGHT_BOTTOM_TALK_TO_ALLIES.getImageView()
+                , IconPath.RIGHT_BOTTOM_ORDER_OF_MERIT_ICON.getImageView()
+        };
+
+        int layoutX = baseLayoutX + incrementSpacingIcon;
+        for (ImageView icon : iconsOfButtomRightMainBar) {
+            imageView = icon;
+            icon.setLayoutX(layoutX);
+            icon.setLayoutY(baseLayoutY);
+            hoverFeature();
+            layoutX += incrementSpacingIcon;
+        }
+
+        buttomBar.getChildren().addAll(iconsOfButtomRightMainBar);
+    }
+
+    private void addOtherIconsOfTheRightMainBar() {
+        int baseLayoutX = 830;
+        int baseLayoutY = 200;
+        int incrementSpacingIcon = 45;
+
+        ImageView[] iconsOfRightMainBar = {
+                IconPath.RIGHT_TOWERS_ICON.getImageView(),
+                IconPath.RIGHT_MILITARY_ICON.getImageView(),
+        };
+        int layoutX = baseLayoutX + incrementSpacingIcon;
+        for (ImageView icon : iconsOfRightMainBar) {
+            icon.setLayoutX(layoutX);
+            icon.setLayoutY(baseLayoutY);
+            icon.setFitHeight(iconSmallerBarFitHeight);
+            icon.setFitWidth(iconSmallerBarFitWidth);
+            imageView = icon;
+            hoverFeature();
+            layoutX += incrementSpacingIcon;
+        }
+
+        ImageView gateHouse = IconPath.RIGHT_GATE_HOUSES_ICON.getImageView();
+        gateHouse.setLayoutX(baseLayoutX + incrementSpacingIcon);
+        gateHouse.setLayoutY(baseLayoutY + incrementSpacingIcon);
+        imageView = gateHouse;
+        hoverFeature();
+
+        gateHouse.setFitWidth(iconSmallerBarFitHeight);
+        gateHouse.setFitHeight(iconSmallerBarFitWidth);
+        imageView = gateHouse;
+
+        buttomBar.getChildren().addAll(iconsOfRightMainBar);
+        buttomBar.getChildren().add(gateHouse);
+    }
+
+    private void addBarBuildingIcons() {
+        int baseLayoutX = 270;
+        int baseLayoutY = 215;
+        int incrementSpacingIcon =  75;
+
+        ImageView[] initialIconsInsideTheBar = {
+                IconPath.INITIAL_STAIRS_ICON.getImageView(),
+                IconPath.INITIAL_SMALL_WALL_ICON.getImageView(),
+                IconPath.INITIAL_BIG_WALL_ICON.getImageView(),
+                IconPath.INITIAL_CRENULATED_WALL_ICON.getImageView(),
+                IconPath.INITIAL_BARRACKS_ICON.getImageView(),
+                IconPath.INITIAL_MERCENARY_ICON.getImageView(),
+                IconPath.INITIAL_ARMORY_ICON.getImageView(),
+        };
+
+        int layoutX = baseLayoutX + incrementSpacingIcon;
+        for (ImageView icon : initialIconsInsideTheBar) {
+            icon.setLayoutX(layoutX);
+            icon.setLayoutY(baseLayoutY);
+            imageView = icon;
+            hoverFeature();
+            layoutX += incrementSpacingIcon;
+            icon.setFitWidth(iconBuildingBarFitWidth);
+            icon.setFitHeight(iconBuildingBarFitHeight);
+        }
+
+        buttomBar.getChildren().addAll(initialIconsInsideTheBar);
+
+    }
+
+    private void addBuidlingTypeIcons() {
+        int baseLayoutX = 300;
+        int baseLayoutY = 295;
+        int incrementSpacingIcon = 45;
+
+        ImageView[] buildingTypeButtomBaricons = {
+                IconPath.CASTLE_BUILDING_ICON.getImageView(),
+                IconPath.FARM_BUILDING_ICON.getImageView(),
+                IconPath.INDUSTRY_BUILDING_ICON.getImageView(),
+                IconPath.WEAPON_BUILDING_ICON.getImageView(),
+                IconPath.TOWN_BUILDING_ICON.getImageView(),
+                IconPath.FOOD_PROCESSING_BUILDING_Icon.getImageView()
+        };
+
+        int layoutX = baseLayoutX + incrementSpacingIcon;
+        for (ImageView icon : buildingTypeButtomBaricons) {
+            icon.setLayoutX(layoutX);
+            icon.setLayoutY(baseLayoutY);
+            imageView = icon;
+            iconBehaviour();
+            hoverFeature();
+            layoutX += incrementSpacingIcon;
+        }
+
+        buttomBar.getChildren().addAll(buildingTypeButtomBaricons);
+        //TODO later on add here to the hash maps of loadImages
+    }
+
+    private void iconBehaviour() {
+        imageView.setOnMouseClicked(event -> {
+            if (imageView.getId().equals("farmBuildings")) {
+                barFarmBuildingImageView = IconPath.EMPTY_BAR.getImageView();
+            }
+        });
+    }
+
+
     private void hoverFeature() {
         ColorAdjust colorAdjust = new ColorAdjust();
-        this.imageView.setEffect(colorAdjust);
+        imageView.setEffect(colorAdjust);
+
+//        System.out.println("it comes here to this hover method");
 
         // Add event handlers for hover effect
-        this.imageView.setOnMouseEntered(event -> {
+        imageView.setOnMouseEntered(event -> {
+//            System.out.println("mouse entered this bad method");
             colorAdjust.setBrightness(colorAdjust.getBrightness() + BRIGHTNESS_DELTA);
         });
 
-        this.imageView.setOnMouseExited(event -> {
+        imageView.setOnMouseExited(event -> {
+//            System.out.println("mouse exited this bad method");
             colorAdjust.setBrightness(colorAdjust.getBrightness() - BRIGHTNESS_DELTA);
         });
     }
@@ -278,13 +417,13 @@ public class MapRendererG extends Application {
 
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numColumns; col++) {
-                this.imageView = new ImageView();
-                this.imageView.setImage(desertImage);
-                this.imageView.setFitHeight(targetHeight);
-                this.imageView.setFitWidth(targetWidth);
-                bigPane.getChildren().add(this.imageView);
-                this.imageView.setLayoutX(col * cellSize);
-                this.imageView.setLayoutY(row * cellSize);
+                MapRendererG.imageView = new ImageView();
+                MapRendererG.imageView.setImage(desertImage);
+                MapRendererG.imageView.setFitHeight(targetHeight);
+                MapRendererG.imageView.setFitWidth(targetWidth);
+                bigPane.getChildren().add(MapRendererG.imageView);
+                MapRendererG.imageView.setLayoutX(col * cellSize);
+                MapRendererG.imageView.setLayoutY(row * cellSize);
             }
         }
 
@@ -305,15 +444,14 @@ public class MapRendererG extends Application {
                             if (map[cellRow][cellCol].getTypeofGround().getFullNameType().equals("Earth")) {
                                 continue;
                             }
-                            this.imageView = new ImageView();
-                            this.imageView.setImage(LoadImages.getTileImages().get(map[cellRow][cellCol].getTypeofGround()));
+                            MapRendererG.imageView = new ImageView();
+                            MapRendererG.imageView.setImage(LoadImages.getTileImages().get(map[cellRow][cellCol].getTypeofGround()));
 
-                            this.imageView.setFitWidth(75);
-                            this.imageView.setFitHeight(75);
-                            centralPane.getChildren().add(this.imageView);
+                            MapRendererG.imageView.setFitWidth(75);
+                            MapRendererG.imageView.setFitHeight(75);
+                            centralPane.getChildren().add(MapRendererG.imageView);
                             imageView.setLayoutX(cellCol * 35);
                             imageView.setLayoutY(cellRow * 35);
-                            hoverFeature();
 
 //
 //                            } else if (loadTreesOfMap()) {
@@ -339,17 +477,16 @@ public class MapRendererG extends Application {
                             cellCol = (col - 2) * 8 + smallerCol;
                             if (loadBuildingsOfMap()) {
                                 buildingImageView = new ImageView();
-                                this.buildingImageView.setImage(LoadImages.getBuildingImages().get(map[cellRow][cellCol].getBuilding().getBuildingType()));
-                                this.buildingImageView.setFitWidth(250);
-                                this.buildingImageView.setFitHeight(250);
-                                this.buildingImageView.setLayoutX(cellCol * 35);
-                                this.buildingImageView.setLayoutY(cellRow * 35);
-                                centralPane.getChildren().add(this.buildingImageView);
-//                                hoverFeature();
+                                MapRendererG.buildingImageView.setImage(LoadImages.getBuildingImages().get(map[cellRow][cellCol].getBuilding().getBuildingType()));
+                                MapRendererG.buildingImageView.setFitWidth(250);
+                                MapRendererG.buildingImageView.setFitHeight(250);
+                                MapRendererG.buildingImageView.setLayoutX(cellCol * 35);
+                                MapRendererG.buildingImageView.setLayoutY(cellRow * 35);
+                                centralPane.getChildren().add(MapRendererG.buildingImageView);
 
                             } else if (loadTreesOfMap()) {
                                 treeImageView = new ImageView();
-                                this.treeImageView.setImage(LoadImages.getTreeImages().get(map[cellRow][cellCol].getBuilding().getTreeType()));
+                                MapRendererG.treeImageView.setImage(LoadImages.getTreeImages().get(map[cellRow][cellCol].getBuilding().getTreeType()));
                             }
 
                         }
@@ -404,12 +541,21 @@ public class MapRendererG extends Application {
     private void moveMaP() {
         root.setOnMouseMoved(this::onMouseMoved);
         centralPane.setOnMouseEntered(this::handleMouseEnter);
-        centralPane.setOnMouseExited(this::handleMouseExit);
+//        if (isMovingDown) {
+//            System.out.println("it is moving down on the buttom bar");
+//            buttomBar.setOnMouseEntered(this::handleBottomBarEnter);
+//        } else centralPane.setOnMouseExited(this::handleMouseExit);
 
         timeline = new Timeline(new KeyFrame(UPDATE_INTERVAL, e -> updateMapPosition()));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
+    }
+
+    private void handleBottomBarEnter(MouseEvent mouseEvent) {
+        validMoveDown = true;
+        validMoveRight = true;
+        validMoveLeft = true;
     }
 
     private void handleMouseEnter(MouseEvent event) {
@@ -435,6 +581,10 @@ public class MapRendererG extends Application {
         isMovingRight = mouseExitedX >= primaryStage.getWidth() - 100;
         isMovingUp = mouseExitedY <= 100;
         isMovingDown = mouseExitedY >= primaryStage.getHeight() - 100;
+
+        if (isMovingDown) {
+            buttomBar.setOnMouseEntered(this::handleBottomBarEnter);
+        } else centralPane.setOnMouseExited(this::handleMouseExit);
 
     }
 

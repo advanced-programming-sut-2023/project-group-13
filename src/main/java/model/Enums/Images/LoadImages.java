@@ -1,7 +1,9 @@
-package model.Enums;
+package model.Enums.Images;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import model.BuildingType;
+import model.Enums.TypeofGround;
 import model.TreeType;
 import viewG.GUIController.MapRendererG;
 
@@ -12,10 +14,23 @@ public class LoadImages {
     private static HashMap<TypeofGround, Image> tileImages = new HashMap<>();
     private static HashMap<BuildingType, Image> buildingImages = new HashMap<>();
     private static HashMap<TreeType, Image> treeImages = new HashMap<>();
+
+    private static ImageView[] icons;
     public static void loadAllImages() {
         loadTextures();
         loadBuildings();
         loadTrees();
+    }
+
+    public static ImageView[] loadBuildingIcons() {
+        ImageView[] icons = {
+                IconPath.CASTLE_BUILDING_ICON.getImageView(),
+                IconPath.FARM_BUILDING_ICON.getImageView(),
+                IconPath.INDUSTRY_BUILDING_ICON.getImageView(),
+                IconPath.WEAPON_BUILDING_ICON.getImageView(),
+                IconPath.TOWN_BUILDING_ICON.getImageView()
+        };
+    return icons;
     }
 
     private static void loadTextures() {
