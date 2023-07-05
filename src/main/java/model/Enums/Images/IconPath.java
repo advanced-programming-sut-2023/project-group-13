@@ -37,13 +37,13 @@ public enum IconPath {
     INITIAL_BARRACKS_ICON("/images/game/bar/icons/barracksIcon.png","barracks"),
 
     INDUSTRY_BAR_STOCKPILE_ICON("/images/game/bar/icons/stockPileIcon.png","stockPile"),
-    INDUSTRY_BAR_WOOD_CUTTER_ICON("/images/game/bar/icons/stockPileIcon.png","woodCutter"),
+    INDUSTRY_BAR_WOOD_CUTTER_ICON("/images/game/bar/icons/woodCutterIcon.png","woodCutter"),
     INDUSTRY_BAR_QUARRY_ICON("/images/game/bar/icons/quarryIcon.png","quarry"),
     INDUSTRY_BAR_OX_TETHER_ICON("/images/game/bar/icons/oxTetherIcon.png","oxTether"),
     INDUSTRY_BAR_IRON_MINE_ICON("/images/game/bar/icons/ironMineIcon.png","ironMine"),
     INDUSTRY_BAR_PITCH_RIG_ICON("/images/game/bar/icons/pitchRigIcon.png","pitchRig"),
 
-    INDUSTRY_BAR_MARKET_PLACE_ICON("/images/game/bar/icons/pitchRigIcon.png","marketPlace"),
+    INDUSTRY_BAR_MARKET_PLACE_ICON("/images/game/map/buildings/shop.png","marketPlace"),
     FARM_APPLE_ORCHARD_ICON("/images/game/bar/icons/appleFarmIcon.png","appleOrchard"),
 
     FARM_DAIRY_FARM_ICON("/images/game/bar/icons/dairyIcon.png","dairyFarm"),

@@ -84,7 +84,9 @@ public class MapRendererG extends Application {
 
     private static final double BRIGHTNESS_DELTA = 0.2;
 
-    private Pane buttomBar;
+    public static Pane buttomBar;
+
+    private Pane castlePane;
 
     private int iconBuildingBarFitWidth = 70;
     private int iconBuildingBarFitHeight = 70;
@@ -92,6 +94,7 @@ public class MapRendererG extends Application {
     private int iconSmallerBarFitWidth = 30;
     private int iconSmallerBarFitHeight = 30;
 
+    private BarImages barImages;
 
 
     @Override
@@ -111,6 +114,9 @@ public class MapRendererG extends Application {
         bigPane = new Pane();
         bigPane.setPrefSize(cellSize * numColumns, cellSize * numRows);
         centralPane.setPrefSize(cellSize * (numColumns - 3), cellSize * (numRows - 3));
+
+        buttomBar = new Pane();
+
 
 
 
@@ -166,7 +172,6 @@ public class MapRendererG extends Application {
 
     private void handleButtomBar() {
 
-        buttomBar = new Pane();
         Image barImage = new Image(MapRendererG.class.getResource("/images/game/bar/bar.png").toExternalForm());
         ImageView barImageView = new ImageView(barImage);
         barImageView.setFitWidth(1540);
@@ -175,7 +180,7 @@ public class MapRendererG extends Application {
         miniMapImageView.setLayoutX(1040);
         miniMapImageView.setLayoutY(165);
 //        buttomBar.setMouseTransparent(true);
-
+        barImages = new BarImages();
         addBuidlingTypeIcons();
         addBarBuildingIcons();
         addOtherIconsOfTheRightMainBar();
@@ -239,33 +244,36 @@ public class MapRendererG extends Application {
     }
 
     private void addBarBuildingIcons() {
-        int baseLayoutX = 270;
-        int baseLayoutY = 215;
-        int incrementSpacingIcon =  75;
-
-        ImageView[] initialIconsInsideTheBar = {
-                IconPath.INITIAL_STAIRS_ICON.getImageView(),
-                IconPath.INITIAL_SMALL_WALL_ICON.getImageView(),
-                IconPath.INITIAL_BIG_WALL_ICON.getImageView(),
-                IconPath.INITIAL_CRENULATED_WALL_ICON.getImageView(),
-                IconPath.INITIAL_BARRACKS_ICON.getImageView(),
-                IconPath.INITIAL_MERCENARY_ICON.getImageView(),
-                IconPath.INITIAL_ARMORY_ICON.getImageView(),
-        };
-
-        int layoutX = baseLayoutX + incrementSpacingIcon;
-        for (ImageView icon : initialIconsInsideTheBar) {
-            icon.setLayoutX(layoutX);
-            icon.setLayoutY(baseLayoutY);
-            imageView = icon;
-            hoverFeature();
-            layoutX += incrementSpacingIcon;
-            icon.setFitWidth(iconBuildingBarFitWidth);
-            icon.setFitHeight(iconBuildingBarFitHeight);
-        }
-
-        buttomBar.getChildren().addAll(initialIconsInsideTheBar);
-
+//        int baseLayoutX = 270;
+//        int baseLayoutY = 215;
+//        int incrementSpacingIcon =  75;
+//
+//        ImageView[] initialIconsInsideTheBar = {
+//                IconPath.INITIAL_STAIRS_ICON.getImageView(),
+//                IconPath.INITIAL_SMALL_WALL_ICON.getImageView(),
+//                IconPath.INITIAL_BIG_WALL_ICON.getImageView(),
+//                IconPath.INITIAL_CRENULATED_WALL_ICON.getImageView(),
+//                IconPath.INITIAL_BARRACKS_ICON.getImageView(),
+//                IconPath.INITIAL_MERCENARY_ICON.getImageView(),
+//                IconPath.INITIAL_ARMORY_ICON.getImageView(),
+//        };
+//
+//        int layoutX = baseLayoutX + incrementSpacingIcon;
+//        for (ImageView icon : initialIconsInsideTheBar) {
+//            icon.setLayoutX(layoutX);
+//            icon.setLayoutY(baseLayoutY);
+//            imageView = icon;
+//            hoverFeature();
+//            layoutX += incrementSpacingIcon;
+//                icon.setFitWidth(iconBuildingBarFitWidth);
+//                icon.setFitHeight(iconBuildingBarFitHeight);
+//        }
+//
+//        castlePane = new Pane();
+//        castlePane.getChildren().addAll(initialIconsInsideTheBar);
+////        castlePane.setVisible(false);
+////        buttomBar.getChildren().add(castlePane);
+//        buttomBar.getChildren().add(barImages.loadBarFarmBuildings());
     }
 
     private void addBuidlingTypeIcons() {
@@ -287,7 +295,8 @@ public class MapRendererG extends Application {
             icon.setLayoutX(layoutX);
             icon.setLayoutY(baseLayoutY);
             imageView = icon;
-            iconBehaviour();
+//            System.out.println(imageView.getId());
+            iconBehaviour(icon);
             hoverFeature();
             layoutX += incrementSpacingIcon;
         }
@@ -296,10 +305,21 @@ public class MapRendererG extends Application {
         //TODO later on add here to the hash maps of loadImages
     }
 
-    private void iconBehaviour() {
+    private void iconBehaviour(ImageView imageView) {
         imageView.setOnMouseClicked(event -> {
-            if (imageView.getId().equals("farmBuildings")) {
-                barFarmBuildingImageView = IconPath.EMPTY_BAR.getImageView();
+            System.out.println(imageView.getId());
+            if (imageView.getId().equals("castles")) {
+                barImages.castleVisible(1);
+            } else if (imageView.getId().equals("townBuildings")) {
+                barImages.castleVisible(2);
+            } else if (imageView.getId().equals("farmBuildings")) {
+                barImages.castleVisible(3);
+            } else if (imageView.getId().equals("foodProcessingBuilding")) {
+                barImages.castleVisible(4);
+            } else if (imageView.getId().equals("weaponBuildings")) {
+                barImages.castleVisible(5);
+            } else if (imageView.getId().equals("industryBuildings")) {
+                barImages.castleVisible(6);
             }
         });
     }
@@ -580,7 +600,7 @@ public class MapRendererG extends Application {
         isMovingLeft = mouseExitedX <= 100;
         isMovingRight = mouseExitedX >= primaryStage.getWidth() - 100;
         isMovingUp = mouseExitedY <= 100;
-        isMovingDown = mouseExitedY >= primaryStage.getHeight() - 100;
+        isMovingDown = mouseExitedY >= primaryStage.getHeight() - 50;
 
         if (isMovingDown) {
             buttomBar.setOnMouseEntered(this::handleBottomBarEnter);
