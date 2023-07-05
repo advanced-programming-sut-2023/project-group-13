@@ -1,12 +1,19 @@
-module Signup {
+module com.example.demo1 {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.desktop;
-    requires javafx.media;
     requires com.google.gson;
 
-    opens view to javafx.fxml;
+
+    exports controller;
     exports model;
-    opens model to com.google.gson;
-    exports view;
+
+    opens controller to javafx.fxml;
+    opens model to javafx.fxml, com.google.gson;
+    exports view.controller;
+    opens view.controller to javafx.fxml;
+    exports view.menus;
+    opens view.menus to javafx.fxml;
+
+
+
 }

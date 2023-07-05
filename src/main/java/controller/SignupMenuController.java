@@ -49,14 +49,14 @@ public class SignupMenuController {
             return "Invalid username format.";
         if (Player.getPlayerByUsername(username) != null)
             return "player with this username exist, please try something different.";
-        if (password.equals("random")) {
-            String x = RandomsAndCaptcha.passwordGenerator();
-            System.out.println("your random password is: " + x + "\nplease re-enter your password here:");
-            String y = scanner.nextLine();
-            if (!y.equals(x)) return "random password and your entered password didn't match.";
-            password = x;
-            passwordConfirmation =y;
-        }
+//        if (password.equals("random")) {
+////            String x = RandomsAndCaptcha.passwordGenerator();
+////            System.out.println("your random password is: " + x + "\nplease re-enter your password here:");
+//            String y = scanner.nextLine();
+//            if (!y.equals(x)) return "random password and your entered password didn't match.";
+//            password = x;
+//            passwordConfirmation =y;
+//        }
         if (password.length() < 6)
             return "weak password: password length is below 6.";
         if (!password.matches(".*[a-z].*") || !password.matches(".*[A-Z].*") || !password.matches(".*[0-9].*") || !password.matches(".*\\W.*"))
@@ -88,10 +88,10 @@ public class SignupMenuController {
 
             if (!answerConfirm.equals(answer)) return "answer doesn't match with confirmation";
 
-            String[] a = RandomsAndCaptcha.captchaGenerator();
-            for (int i = 0; i < a.length; i++) {             // print captcha
-                System.out.print(a[i]);
-            }
+//            String[] a = RandomsAndCaptcha.captchaGenerator();
+//            for (int i = 0; i < a.length; i++) {             // print captcha
+//                System.out.print(a[i]);
+//            }
             System.out.println("\nplease enter the captcha numbers.");
             int answerNumber = ScannerMatcher.getScanner().nextInt();
             String temp = ScannerMatcher.getScanner().nextLine();
@@ -100,8 +100,8 @@ public class SignupMenuController {
                 return "answer doesn't match with captcha";
             }
             RandomsAndCaptcha.setRealNumber("");
-            Player player = new Player(username, password, slogan, email, nickname, questionNumber, answer);
-            Player.players.add(player);
+//            Player player = new Player(username, password, slogan, email, nickname, questionNumber, answer);
+//            Player.players.add(player);
             SaveAndLoadData.SaveToJson(Player.players, DataEnumFile.PLAYERS.getFileName());
             return "user was successfully signed up";
         } else return "Invalid command!";
