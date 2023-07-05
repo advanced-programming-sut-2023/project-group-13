@@ -3,7 +3,25 @@ package model;
 public class Soldier extends People {
 
     //todo to add a kingdom of kingdom
-    public Empire owner;
+    private Empire owner;
+
+    public Empire getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Empire owner) {
+        this.owner = owner;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     private  String name;
     private SoldierType soldierType;
     private int situation;
@@ -18,6 +36,10 @@ public class Soldier extends People {
     private int patrol_y_end;
     private int x;
     private int y;
+
+    private SoldierColor soldierColor;
+
+    //todo add the color to each soldier later on
 
     public SoldierType getSoldierType() {
         return soldierType;

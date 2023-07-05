@@ -5,7 +5,7 @@ import model.Enums.TypeofGround;
 import java.util.ArrayList;
 
 public class Cell implements Comparable<Cell> {
-    private String typeofGround;
+    private TypeofGround typeofGround;
     private boolean hasSoldierInCell;
     private boolean hasBuildingInCell;
     private boolean hasTreeInCell;
@@ -23,7 +23,7 @@ public class Cell implements Comparable<Cell> {
     private TreeType tree;
 
     public Cell(int x, int y,boolean obstacle) {
-        typeofGround = TypeofGround.EARTH.getFullNameType();
+        typeofGround = TypeofGround.EARTH;
         this.obstacle = obstacle;
         this.x = x;
         this.y = y;
@@ -32,7 +32,7 @@ public class Cell implements Comparable<Cell> {
         this.parent = null;
     }
 
-    public String getTypeofGround() {
+    public TypeofGround getTypeofGround() {
         return typeofGround;
     }
 
@@ -44,7 +44,7 @@ public class Cell implements Comparable<Cell> {
 //        return buildings;
 //    }
 
-    public void setTypeofGround(String typeofGround) {
+    public void setTypeofGround(TypeofGround typeofGround) {
         this.typeofGround = typeofGround;
     }
 
@@ -63,9 +63,12 @@ public class Cell implements Comparable<Cell> {
     public boolean setBuilding(String building , int x, int y) {
         BuildingType buildingType = BuildingType.getBuildingTypeByName(building);
         if (buildingType == null ) return false;
-        this.building = new Building(buildingType.getHp(),building,buildingType, x, y);
+        this.building = new Building(buildingType.getHp(),building,buildingType, x, y, Empire.getCurrentEmpire());
         // todo get building by name and assign it to this.building = building
         return true;
+    }
+    public void addBuilding(Building building) {
+        this.building = building;
     }
 
     public Building getBuilding() {
@@ -103,7 +106,7 @@ public class Cell implements Comparable<Cell> {
     public void remove() {
         this.building = null;
         this.tree = null;
-        this.setTypeofGround(TypeofGround.EARTH.getFullNameType());
+        this.setTypeofGround(TypeofGround.EARTH);
         this.getSoldiers().clear();
         this.setHasTreeInCell(false);
         this.setHasBuildingInCell(false);
@@ -130,6 +133,7 @@ public class Cell implements Comparable<Cell> {
     public Soldier getSoldier() {
         return soldier;
     }
+
 
     public int getX() {
         return x;

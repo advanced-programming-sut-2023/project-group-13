@@ -1,20 +1,20 @@
 package model;
 
 public class Armoury extends Building {
-   private int MetalArmourAmount;
-   private int LeatherArmourAmount;
-   private int CrossBowAmount;
-   private int MaceAmount;
-   private int PikeAmount;
-   private int SwordAmount;
-   private int BowAmount;
-   private int SpearAmount;
-   private final int capacity = 50;
-   private int totalWeaponAmount;
+    private int MetalArmourAmount;
+    private int LeatherArmourAmount;
+    private int CrossBowAmount;
+    private int MaceAmount;
+    private int PikeAmount;
+    private int SwordAmount;
+    private int BowAmount;
+    private int SpearAmount;
+    private final int capacity = 50;
+    private int totalWeaponAmount;
 
-    public Armoury(int hp,int x, int y, int metalArmourAmount, int leatherArmourAmount,
+    public Armoury(int hp, int x, int y, int metalArmourAmount, int leatherArmourAmount,
                    int crossBowAmount, int maceAmount, int pikeAmount, int swordAmount, int bowAmount, int spearAmount) {
-        super(hp, "armoury" , BuildingType.ARMORY , x ,y );
+        super(hp, "armoury", BuildingType.ARMORY, x, y, Empire.getCurrentEmpire());
         MetalArmourAmount = metalArmourAmount;
         LeatherArmourAmount = leatherArmourAmount;
         CrossBowAmount = crossBowAmount;
@@ -96,12 +96,11 @@ public class Armoury extends Building {
     }
 
     public int getTotalWeaponAmount() {
-        return totalWeaponAmount;
-    }
-
-    public void setTotalWeaponAmount() {
-
         this.totalWeaponAmount = getBowAmount() + getCrossBowAmount() + getPikeAmount() + getLeatherArmourAmount()
-                + getSpearAmount() + getSwordAmount() +getMaceAmount() + getMetalArmourAmount();
+                + getSpearAmount() + getSwordAmount() + getMaceAmount() + getMetalArmourAmount();
+        return totalWeaponAmount;
+
     }
+
+
 }
