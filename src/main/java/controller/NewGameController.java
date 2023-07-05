@@ -92,16 +92,20 @@ public class NewGameController {
             /* it ensures that if the users are more than colors
             the colors repeat again in order which is not necessary in our game*/
 //            empires.add(new Empire(player, color));
-            empires.add(new Empire(player, color, new Building(BuildingType.MAIN_CASTLE.getHp(),
-                    BuildingType.MAIN_CASTLE.getName(), BuildingType.MAIN_CASTLE, x, y),player.getNickname()));
-            empires.get(empires.size()-1).getBuildings().add(new Building( BuildingType.MAIN_CASTLE.getHp(),
-                    BuildingType.MAIN_CASTLE.getName(), BuildingType.MAIN_CASTLE, x, y,empires.get(empires.size()-1)));
+            empires.add(new Empire(player, color));
+            Empire empire = empires.get(empires.size()-1);
+            empire.getBuildings().add(new Building( BuildingType.MAIN_CASTLE.getHp(),
+                    BuildingType.MAIN_CASTLE.getName(), BuildingType.MAIN_CASTLE, x, y,empire));
+            empire.getStockpiles().add(new Stockpile(x, y + 1, 100, 10, 50,
+                    0, 0, 0, 0, 0));
+
             x += increase_coordinateSet;
             y += increase_coordinateSet;
         }
         GameMenuController.setPlayersInGame(players);
         GameMenuController.setEmpires(empires);
         GameMenuController.setCurrentEmpire(empires.get(0));
+        Empire.setCurrentEmpire(empires.get(0));
         return "**game started successfully**";
     }
 

@@ -16,7 +16,7 @@ public class Empire {
         this.popularity = popularity;
     }
 
-    private static Empire currentEmpire;
+    public static Empire currentEmpire;
     private Player player;
     private int totalGoldAmount;
     private GroundColor groundColor;
@@ -125,10 +125,9 @@ public class Empire {
     }
 
 
-    public Empire(Player player, GroundColor groundColor, Building building,  String empireName) {
+    public Empire(Player player, GroundColor groundColor) {
         this.player = player;
         this.groundColor = groundColor;
-        this.lord = new Soldier(SoldierType.KING.getHp(), player.getNickname(), SoldierType.KING, this, kingPit.getX(), kingPit.getY());
         this.allPeopleAmount = 10;
         this.noneWorkerAmount = 10;
         this.SoldierAmount = 0;
@@ -145,8 +144,6 @@ public class Empire {
         this.fearRate = 0;
         this.foodRate = 0;
         this.popularity = 100;
-        stockpiles.add(new Stockpile(kingPit.getX(), kingPit.getY() + 1, 100, 10, 50,
-                0, 0, 0, 0, 0));
 
     }
 
