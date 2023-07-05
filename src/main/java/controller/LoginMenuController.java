@@ -18,7 +18,7 @@ public class LoginMenuController {
         String username = matcher.group("username");
         Player player = Player.getPlayerByUsername(username);
         if (player == null) return "no user with this username exist.";
-        System.out.println(Player.securityQuestions[player.getQuestionNumber()-1]);
+       // System.out.println(Player.securityQuestions[player.getQuestionNumber()-1]);
         String answer = ScannerMatcher.getScanner().nextLine();
         if (!answer.equals(player.getSecurityQuestionAnswer())) return "answer is wrong";
         //go to main menu
@@ -29,11 +29,11 @@ public class LoginMenuController {
             String passwordConfirmation = matcher.group("passwordConfirmation");
             if (!passwordConfirmation.equals(password)) return "password and password confirmation doesn't match.";
 
-            String[] a = RandomsAndCaptcha.captchaGenerator();
-            for (int i = 0; i < a.length; i++) {             // print captcha
-                System.out.print(a[i]);
-            }
-            System.out.println("\nplease enter the captcha numbers.");
+//            String[] a = RandomsAndCaptcha.captchaGenerator();
+//            for (int i = 0; i < a.length; i++) {             // print captcha
+//                System.out.print(a[i]);
+//            }
+//            System.out.println("\nplease enter the captcha numbers.");
             int answerNumber = ScannerMatcher.getScanner().nextInt();
             String temp = ScannerMatcher.getScanner().nextLine();
             if (answerNumber != (Integer.parseInt(RandomsAndCaptcha.getRealNumber()))) {

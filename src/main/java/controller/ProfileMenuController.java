@@ -48,10 +48,10 @@ public class ProfileMenuController {
                 System.out.println("please re-enter your new password:");
                 String confirmation = ScannerMatcher.getScanner().nextLine();
                 if (confirmation.equals(newPassword)) {
-                    String[] a = RandomsAndCaptcha.captchaGenerator();
-                    for (int i = 0; i < a.length; i++) {             // print captcha
-                        System.out.print(a[i]);
-                    }
+//                    String[] a = RandomsAndCaptcha.captchaGenerator();
+//                    for (int i = 0; i < a.length; i++) {             // print captcha
+//                        System.out.print(a[i]);
+//                    }
                     System.out.println("\nplease enter the captcha numbers.");
                     int answerNumber = ScannerMatcher.getScanner().nextInt();
                     String temp = ScannerMatcher.getScanner().nextLine();

@@ -11,7 +11,8 @@ public class Player {
     private String slogan;
     private String email;
     private String nickname;
-    private int questionNumber;
+    private String question;
+
     private String securityQuestionAnswer;
     private int playerRank;
     private int highScore;
@@ -19,6 +20,15 @@ public class Player {
     public static String[] securityQuestions = {"1. What is my father’s name?",
             "2. What was my first pet’s name?",
             "3. What is my mother’s last name?"};
+    private String avatarResource;
+
+    public String getAvatarResource() {
+        return avatarResource;
+    }
+
+    public void setAvatarResource(String avatarResource) {
+        this.avatarResource = avatarResource;
+    }
 
     public static ArrayList<Player> getPlayers() {
         return players;
@@ -36,13 +46,13 @@ public class Player {
         this.playerRank = playerRank;
     }
 
-    public Player(String username, String password, String slogan, String email, String nickname, int questionNumber, String securityQuestionAnswer) {
+    public Player(String username, String password, String slogan, String email, String nickname, String question, String securityQuestionAnswer) {
         this.username = username;
         this.password = password;
         this.slogan = slogan;
         this.email = email;
         this.nickname = nickname;
-        this.questionNumber = questionNumber;
+        this.question = question;
         this.securityQuestionAnswer = securityQuestionAnswer;
 
     }
@@ -87,14 +97,6 @@ public class Player {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
-    }
-
-    public int getQuestionNumber() {
-        return questionNumber;
-    }
-
-    public void setQuestionNumber(int questionNumber) {
-        this.questionNumber = questionNumber;
     }
 
     public String getSecurityQuestionAnswer() {

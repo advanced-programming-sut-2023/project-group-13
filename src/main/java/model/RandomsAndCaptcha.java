@@ -1,10 +1,8 @@
 package model;
 
-import view.ScannerMatcher;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
+import java.util.Random;
 
 public class RandomsAndCaptcha {
     private static String realNumber = "";
@@ -17,167 +15,7 @@ public class RandomsAndCaptcha {
         RandomsAndCaptcha.realNumber = realNumber;
     }
 
-    public static String[] captchaNumbers = {
-            "               \n" +
-                    "               \n" +
-                    "    ,----..    \n" +
-                    "   /   /   \\   \n" +
-                    "  /   .     :  \n" +
-                    " .   /   ;.  \\ \n" +
-                    ".   ;   /  ` ; \n" +
-                    ";   |  ; \\ ; | \n" +
-                    "|   :  | ; | ' \n" +
-                    ".   |  ' ' ' : \n" +
-                    "'   ;  \\; /  | \n" +
-                    " \\   \\  ',  /  \n" +
-                    "  ;   :    /   \n" +
-                    "   \\   \\ .'    \n" +
-                    "    `---`      \n" +
-                    "               ",
-            "           \n" +
-                    "           \n" +
-                    "     ,---, \n" +
-                    "  ,`--.' | \n" +
-                    " /    /  : \n" +
-                    ":    |.' ' \n" +
-                    "`----':  | \n" +
-                    "   '   ' ; \n" +
-                    "   |   | | \n" +
-                    "   '   : ; \n" +
-                    "   |   | ' \n" +
-                    "   '   : | \n" +
-                    "   ;   |.' \n" +
-                    "   '---'   \n" +
-                    "           \n" +
-                    "           ",
-            "               \n" +
-                    "               \n" +
-                    "      ,----,   \n" +
-                    "    .'   .' \\  \n" +
-                    "  ,----,'    | \n" +
-                    "  |    :  .  ; \n" +
-                    "  ;    |.'  /  \n" +
-                    "  `----'/  ;   \n" +
-                    "    /  ;  /    \n" +
-                    "   ;  /  /-,   \n" +
-                    "  /  /  /.`|   \n" +
-                    "./__;      :   \n" +
-                    "|   :    .'    \n" +
-                    ";   | .'       \n" +
-                    "`---'          \n" +
-                    "               ",
-            "                \n" +
-                    "  .--,-``-.     \n" +
-                    " /   /     '.   \n" +
-                    "/ ../        ;  \n" +
-                    "\\ ``\\  .`-    ' \n" +
-                    " \\___\\/   \\   : \n" +
-                    "      \\   :   | \n" +
-                    "      /  /   /  \n" +
-                    "      \\  \\   \\  \n" +
-                    "  ___ /   :   | \n" +
-                    " /   /\\   /   : \n" +
-                    "/ ,,/  ',-    . \n" +
-                    "\\ ''\\        ;  \n" +
-                    " \\   \\     .'   \n" +
-                    "  `--`-,,-'     \n" +
-                    "                ",
-            "             \n" +
-                    "        ,--, \n" +
-                    "      ,--.'| \n" +
-                    "   ,--,  | : \n" +
-                    ",---.'|  : ' \n" +
-                    ";   : |  | ; \n" +
-                    "|   | : _' | \n" +
-                    ":   : |.'  | \n" +
-                    "|   ' '  ; : \n" +
-                    "\\   \\  .'. | \n" +
-                    " `---`:  | ' \n" +
-                    "      '  ; | \n" +
-                    "      |  : ; \n" +
-                    "      '  ,/  \n" +
-                    "      '--'   \n" +
-                    "             ",
-            "       ,----,. \n" +
-                    "     ,'   ,' | \n" +
-                    "   ,'   .'   | \n" +
-                    " ,----.'    .' \n" +
-                    " |    |   .'   \n" +
-                    " :    :  |--,  \n" +
-                    " :    |  ;.' \\ \n" +
-                    " |    |      | \n" +
-                    " `----'.'\\   ; \n" +
-                    "   __  \\  .  | \n" +
-                    " /   /\\/  /  : \n" +
-                    "/ ,,/  ',-   . \n" +
-                    "\\ ''\\       ;  \n" +
-                    " \\   \\    .'   \n" +
-                    "  `--`-,-'     \n" +
-                    "               ",
-            "             \n" +
-                    "             \n" +
-                    "             \n" +
-                    "    ,---.    \n" +
-                    "   /     \\   \n" +
-                    "  /    / '   \n" +
-                    " .    ' /    \n" +
-                    "'    / ;     \n" +
-                    "|   :  \\     \n" +
-                    ";   |   ``.  \n" +
-                    "'   ;      \\ \n" +
-                    "'   |  .\\  | \n" +
-                    "|   :  ';  : \n" +
-                    " \\   \\    /  \n" +
-                    "  `---`--`   \n" +
-                    "             ",
-            "         ,----, \n" +
-                    "       .'   .`| \n" +
-                    "    .'   .'   ; \n" +
-                    "  ,---, '    .' \n" +
-                    "  |   :     ./  \n" +
-                    "  ;   | .'  /   \n" +
-                    "  `---' /  ;    \n" +
-                    "    /  ;  /     \n" +
-                    "   ;  /  /      \n" +
-                    "  /  /  /       \n" +
-                    "./__;  /        \n" +
-                    "|   : /         \n" +
-                    ";   |/          \n" +
-                    "`---'           \n" +
-                    "                \n" +
-                    "                ",
-            "   ,---.-,    \n" +
-                    "  '   ,'  '.  \n" +
-                    " /   /      \\ \n" +
-                    ".   ;  ,/.  : \n" +
-                    "'   |  | :  ; \n" +
-                    "'   |  ./   : \n" +
-                    "|   :       , \n" +
-                    " \\   \\     /  \n" +
-                    "  ;   ,   '\\  \n" +
-                    " /   /      \\ \n" +
-                    ".   ;  ,/.  : \n" +
-                    "'   |  | :  ; \n" +
-                    "'   |  ./   : \n" +
-                    "|   :      /  \n" +
-                    " \\   \\   .'   \n" +
-                    "  `---`-'     ",
-            "              \n" +
-                    "   ,---.-,    \n" +
-                    "  '   ,'  '.  \n" +
-                    " /   /      \\ \n" +
-                    ".   ;  ,/.  : \n" +
-                    "'   |  | :  ; \n" +
-                    "'   |  ./   : \n" +
-                    "|   :       , \n" +
-                    " \\   \\      | \n" +
-                    "  `---`---  ; \n" +
-                    "     |   |  | \n" +
-                    "     '   :  ; \n" +
-                    "     |   |  ' \n" +
-                    "     ;   |.'  \n" +
-                    "     '---'    \n" +
-                    "              "};
+
     public static String[] randomSlogansText = {
             "you are cockroach",
             "i always win",
@@ -192,7 +30,13 @@ public class RandomsAndCaptcha {
     };
 
     //  source origin from: https://patorjk.com/software/taag/#p=display&f=3D%20Diagonal&t=9
-    public static String passwordGenerator() {
+
+
+    public static String randomSloganGenerator() {
+        return randomSlogansText[(int) (Math.random() * 10)];
+    }
+
+    public static String randomPasswordGenerator() {
         int numberOfLLetters = (int) (Math.random() * 3 + 1);
         int numberOfCLetters = (int) (Math.random() * 3 + 1);
         int numberOfNumbers = (int) (Math.random() * 2 + 2);
@@ -222,34 +66,15 @@ public class RandomsAndCaptcha {
         return randomPassword;
     }
 
-    public static String[] captchaGenerator() {
-        int captchaLength = (int) (Math.random() * 5 + 4);
-        String[] selectedNumbers = new String[captchaLength];
 
-        for (int i = 0; i < captchaLength; i++) {
-            int x = (int) (Math.random() * 10);
-            selectedNumbers[i] = captchaNumbers[x];
-            realNumber += x;
-        }
-        return selectedNumbers;
-    }
+    public static String captchaGenerator() {
+        Random random = new Random();
 
-    public static String randomSloganGenerator() {
-        return randomSlogansText[(int) (Math.random() * 10)];
+        int indexOfRandomCaptcha = (int) random.nextInt(21);
+        String number = images[indexOfRandomCaptcha];
+        realNumber = number;
+        return number;
     }
-    public static String randomCaptcha() {
-        String[] a = RandomsAndCaptcha.captchaGenerator();
-        for (int i = 0; i < a.length; i++) {             // print captcha
-            System.out.print(a[i]);
-        }
-        System.out.println("\nplease enter the captcha numbers.");
-        int answerNumber = ScannerMatcher.getScanner().nextInt();
-        String temp = ScannerMatcher.getScanner().nextLine();
-        if (answerNumber != (Integer.parseInt(RandomsAndCaptcha.getRealNumber()))) {
-            RandomsAndCaptcha.setRealNumber("");
-            return "answer doesn't match with captcha";
-        }
-        RandomsAndCaptcha.setRealNumber("");
-        return "successfully done.";
-    }
+    public static String[] images = {"1181" , "1381", "1491", "1722", "1959", "2163", "2177", "2723", "2785", "3541",
+            "3847", "3855", "3876", "3967", "4185", "4310", "4487", "4578", "4602", "5326", "5771"};
 }
