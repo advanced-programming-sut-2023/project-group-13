@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view.menus.ProfileMenuG"
+            prefHeight="400.0" prefWidth="600.0">
+
+
+    <ImageView fitHeight="400.0" fitWidth="520.0" pickOnBounds="true" preserveRatio="true">
+        <Image requestedHeight="400" requestedWidth="520" url="@../png/mainmenu.jpg"/>
+    </ImageView>
+    <Text fill="GOLD" layoutX="67.0" layoutY="90.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0"
+          text="Change Your Slogan">
+        <font>
+            <Font size="38.0"/>
+        </font>
+    </Text>
+    <TextField fx:id="slogan" layoutX="185.0" layoutY="157.0" promptText="New Slogan"
+               style="-fx-background-radius: 10; -fx-border-radius: 10;"/>
+    <Button layoutX="200.0" layoutY="217.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="57.0"
+            style="-fx-background-color: black; -fx-background-radius: 10;" text="Set" textAlignment="CENTER"
+            textFill="WHITE" onMouseClicked="#setNewSlogan"/>
+    <Button layoutX="260.0" layoutY="217.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="57.0"
+            style="-fx-background-color: black; -fx-background-radius: 10;" text="Cancel" textAlignment="CENTER"
+            textFill="WHITE" onMouseClicked="#backToProfile"/>
+
+</AnchorPane>

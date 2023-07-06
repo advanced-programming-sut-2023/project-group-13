@@ -13,7 +13,6 @@ public class PasswordFieldMaker extends PasswordField {
     private String promptText;
     private String labelText;
     public Label errorLabel;
-//    private TextFieldMaker passwordTextField;
     private CheckBox showPassword;
 
     public PasswordFieldMaker(Pane pane, String promptText, String labelText, double x, double y , Label errorLabel ) {
@@ -33,32 +32,11 @@ public class PasswordFieldMaker extends PasswordField {
 
         this.setFont(Font.font("Bodoni MT Italic", FontWeight.BOLD, 16));
         this.setPromptText(promptText);
-//        this.createShowPassword();
-//        updateFieldValues();
+
     }
 
 
 
-//    private void createShowPassword() {
-//        showPassword = new CheckBox("\uD83D\uDC41");
-//        showPassword.setStyle("-fx-background-color: rgba(42, 42, 42, 0.7); -fx-text-fill: gray; -fx-font-size: 16; " +
-//                "-fx-font-family: 'Bodoni MT Italic'; -fx-font-weight: bold; -fx-padding: 3; -fx-background-radius: 3");
-//        showPassword.setTranslateX(this.getTranslateX() + 185);
-//        showPassword.setTranslateY(this.getTranslateY());
-//        showPassword.selectedProperty().addListener(new ChangeListener<Boolean>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
-//                if (newValue) {
-//                    setVisible(false);
-//                    passwordTextField.setVisible(true);
-//                } else {
-//                    setVisible(true);
-//                    passwordTextField.setVisible(false);
-//                }
-//            }
-//        });
-//        //pane.getChildren().add(showPassword);
-//    }
 
 
 
@@ -74,33 +52,11 @@ public class PasswordFieldMaker extends PasswordField {
         errorLabel.setText(correctMessage);
     }
 
-//    private void updateFieldValues() {
-//        this.textProperty().addListener(new ChangeListener<String>() {
-//            @Override
-//            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-//                passwordTextField.setText(newValue);
-//            }
-//        });
-//
-//        passwordTextField.textProperty().addListener(new ChangeListener<String>() {
-//            @Override
-//            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-//                setText(newValue);
-//            }
-//        });
-//    }
 
     public void clearErrorOrMessage() {
         errorLabel.setText("");
     }
 
-//    public TextFieldMaker getPasswordTextField() {
-//        return passwordTextField;
-//    }
-
-//    public void setPasswordTextField(TextFieldMaker passwordTextField) {
-//        this.passwordTextField = passwordTextField;
-//    }
 
     public CheckBox getShowPassword() {
         return showPassword;

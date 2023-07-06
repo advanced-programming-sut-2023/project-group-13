@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -45,18 +47,18 @@ public class ButtonMaker extends Button {
         this.setOnMouseEntered(new EventHandler<>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-//                playSoundOfHovering();
+                playSoundOfHovering();
             }
         });
     }
 
 
-//    private void playSoundOfHovering() {
-//        Media media = new Media(getClass().getResource("../sources/sounds/swordSound.mp3").toExternalForm());
-//        MediaPlayer mediaPlayer = new MediaPlayer(media);
-//        mediaPlayer.setVolume(0.2);
-//        mediaPlayer.setCycleCount(1);
-//        mediaPlayer.play();
-//    }
+    private void playSoundOfHovering() {
+        Media media = new Media((LoginMenuG.class.getResource("/sounds/swordSound.mp3").toExternalForm()));
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setVolume(0.2);
+        mediaPlayer.setCycleCount(1);
+        mediaPlayer.play();
+    }
 
 }

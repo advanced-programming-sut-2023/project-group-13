@@ -6,35 +6,34 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <Pane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menus.ProfileMenuG">
    <children>
-      <Button layoutX="257.0" layoutY="59.0" mnemonicParsing="false" text="change username" textFill="#c11dab" onMouseClicked="#enterChangeMenu">
+      <Button layoutX="257.0" layoutY="59.0" mnemonicParsing="false" onMouseClicked="#enterChangeMenu" text="change username" textFill="#c11dab">
          <font>
             <Font name="Bodoni MT Italic" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="257.0" layoutY="106.0" mnemonicParsing="false" text="change password" textFill="#c11dab" onMouseClicked="#enterChangePassword">
+      <Button layoutX="257.0" layoutY="106.0" mnemonicParsing="false" onMouseClicked="#enterChangePassword" text="change password" textFill="#c11dab">
          <font>
             <Font name="Bodoni MT Italic" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="257.0" layoutY="154.0" mnemonicParsing="false" text="change email" textFill="#c11dab">
+      <Button layoutX="257.0" layoutY="154.0" mnemonicParsing="false" onMouseClicked="#enterChangeEmail" text="change email" textFill="#c11dab">
          <font>
             <Font name="Bodoni MT Italic" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="257.0" layoutY="200.0" mnemonicParsing="false" text="change nickname" textFill="#c11dab">
+      <Button layoutX="257.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#enterChangeNickname" text="change nickname" textFill="#c11dab">
          <font>
             <Font name="Bodoni MT Italic" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="257.0" layoutY="247.0" mnemonicParsing="false" text="change slogan" textFill="#c11dab">
+      <Button layoutX="257.0" layoutY="247.0" mnemonicParsing="false" onMouseClicked="#enterChangeSlogan" text="change slogan" textFill="#c11dab">
          <font>
             <Font name="Bodoni MT Italic" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="257.0" layoutY="289.0" mnemonicParsing="false" text="change avatar" textFill="#c11dab">
+      <Button layoutX="257.0" layoutY="289.0" mnemonicParsing="false" onMouseClicked="#enterChooseAvatar" text="change avatar" textFill="#c11dab">
          <font>
             <Font name="Bodoni MT Italic" size="18.0" />
          </font>
@@ -70,5 +69,10 @@
             <Font name="Bodoni MT Italic" size="20.0" />
          </font>
       </Text>
+      <Button layoutX="290.0" layoutY="333.0" mnemonicParsing="false" onMouseClicked="#backToMainMenu" text="back" textFill="#c11dab">
+         <font>
+            <Font name="Bodoni MT Italic" size="18.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

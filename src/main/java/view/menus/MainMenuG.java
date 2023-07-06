@@ -21,6 +21,7 @@ public class MainMenuG extends Application {
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         pane.setBackground(new Background(x));
         Scene scene = new Scene(pane);
+
         stage.setTitle("MainMenu");
         stage.setMaximized(true);
         stage.setScene(scene);
@@ -35,10 +36,12 @@ public class MainMenuG extends Application {
         new MapMenu().start(ControllerControllersG.stage);
     }
 
-    public void newGame(MouseEvent mouseEvent) {
+    public void newGame(MouseEvent mouseEvent) throws Exception {
+        new NewGameMenu().start(ControllerControllersG.stage);
     }
 
     public void profileMenu(MouseEvent mouseEvent) throws Exception {
         new ProfileMenuG().start(ControllerControllersG.stage);
     }
+
 }
