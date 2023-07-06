@@ -2,13 +2,10 @@ package view.menus;
 
 import controller.ControllerControllersG;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -19,14 +16,12 @@ import model.Enums.DataEnumFile;
 import model.Map;
 import model.Player;
 import model.SaveAndLoadData;
-
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
+import javafx.scene.control.Label;
 
 public class NewGameMenu extends Application {
-    ListView<String> playerListView = new ListView<>();
-    Label errorLabel = new Label();
+    private Label errorLabel;
+
     private ComboBox mapsCombo = new ComboBox<>();
     private TextField username = new TextField();
     private static ArrayList<Player> selectedPlayer = new ArrayList<>();
@@ -43,19 +38,21 @@ public class NewGameMenu extends Application {
 
         Pane pane = new FXMLLoader(LoginMenuG.class.getResource("/fxml/newGameMenu.fxml")).load();
         Image background = new Image(LoginMenuG.class.getResource("/png/mainmenu.jpg").toExternalForm());
+        errorLabel =  new Label("error");
         username.setLayoutY(90);
         username.setLayoutX(150);
         mapsCombo.setLayoutY(150);
         mapsCombo.setLayoutX(500);
-        errorLabel.setLocation(150 , 180);
-        errorLabel.setForeground(Color.YELLOW);
+        errorLabel.setLayoutX(150);
+        errorLabel.setLayoutY(180);
         mapsCombo.getItems().addAll(mapNames);
         stage.setTitle("LoginMenu!");
         BackgroundImage x = new BackgroundImage(background,
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         pane.setBackground(new Background(x));
-        pane.getChildren().addAll(username , mapsCombo);
+        pane.getChildren().addAll(username , mapsCombo );
+        pane.getChildren().add(errorLabel);
 
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         Scene scene = new Scene(pane, screenBounds.getWidth(), screenBounds.getHeight());
@@ -67,6 +64,16 @@ public class NewGameMenu extends Application {
 
     }
     public void initialize() {
+
+    }
+    public void select(MouseEvent mouseEvent) {
+        if (username.getText() == null) {
+            errorLabel.setText("choose 2 player atleast");
+        } else  {
+            Player player = Player.getPlayerByUsername(username.getText());
+            if (player == null) errorLabel.setText("player not found");
+            else selectedPlayer.add(player);
+        }
     }
 
     public void runGame(MouseEvent mouseEvent) {
@@ -78,13 +85,5 @@ public class NewGameMenu extends Application {
     }
 
 
-    public void select(MouseEvent mouseEvent) {
-        if (username.getText().equals("")) {
-            errorLabel.setText("choose 2 player atleast");
-        } else  {
-            Player player = Player.getPlayerByUsername(username.getText());
-            if (player == null) errorLabel.setText("player not found");
-            else selectedPlayer.add(player);
-        }
-    }
+
 }

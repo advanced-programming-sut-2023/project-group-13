@@ -5,7 +5,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menus.NewGameMenu">
+<?import javafx.scene.layout.Pane?>
+<Pane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menus.NewGameMenu">
 
 
     <Button layoutX="190.0" layoutY="275.0" mnemonicParsing="false" onMouseClicked="#runGame" text="start new game" textFill="#f847ff">
@@ -33,4 +34,4 @@
          <Font name="Bodoni MT Italic" size="18.0" />
       </font>
    </Button>
-</AnchorPane>
+</Pane>
