@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class ProfileMenuG extends Application {
+    public static boolean justOne = true;
     @FXML
     private Text usernameText;
     @FXML
@@ -58,6 +59,12 @@ public class ProfileMenuG extends Application {
     private ImageView avatar6;
     public static Stage stage;
     private Player player;
+    @FXML
+    private TextField nickname;
+    @FXML
+    private TextField email;
+    @FXML
+    private TextField slogan;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -81,17 +88,23 @@ public class ProfileMenuG extends Application {
         start(ControllerControllersG.stage);
     }
 
-    //    public void initialize() {
-//        player = Player.getCurrentPlayer();
-//        usernameText.setText("username : " + player.getUsername());
-//        emailText.setText("email : " + player.getEmail());
-//        passwordText.setText("password : " + player.getPassword());
-//        nicknameText.setText("nickname : " + player.getNickname());
-//        if (player.getSlogan().equals("")) {
-//            sloganText.setText("slogan: ---");
-//        } else sloganText.setText("slogan : " + player.getSlogan());
-//    }
+    public void initialize() {
+
+        if (justOne) {
+            player = Player.getCurrentPlayer();
+            usernameText.setText("username : " + player.getUsername());
+            emailText.setText("email : " + player.getEmail());
+            passwordText.setText("password : " + player.getPassword());
+            nicknameText.setText("nickname : " + player.getNickname());
+            if (player.getSlogan().equals("")) {
+                sloganText.setText("slogan: ---");
+            } else sloganText.setText("slogan : " + player.getSlogan());
+        }
+
+    }
+
     public void enterChangeMenu(MouseEvent mouseEvent) throws IOException {
+        justOne = false;
         AnchorPane anchorPane = FXMLLoader.load(LoginMenuG.class.getResource("/fxml/changeUsername.fxml"));
         Scene scene = new Scene(anchorPane, 520, 400);
 
@@ -100,7 +113,9 @@ public class ProfileMenuG extends Application {
         stage.show();
     }
 
+
     public void setNewUsername(MouseEvent mouseEvent) throws Exception {
+        justOne = true;
         String username = this.username.getText();
         if (Player.getPlayerByUsername(username) != null)
             showAlert(Alert.AlertType.ERROR, "Change Error!", "A user with this username already exists!");
@@ -110,6 +125,7 @@ public class ProfileMenuG extends Application {
             Player.getCurrentPlayer().setUsername(username);
             SaveAndLoadData.SaveToJson(Player.players, DataEnumFile.PLAYERS.getFileName());
             showAlert(Alert.AlertType.INFORMATION, "Change Successful!", "Your username successfully changed!");
+
             start(ControllerControllersG.stage);
         }
     }
@@ -123,28 +139,35 @@ public class ProfileMenuG extends Application {
     }
 
     public void enterChangePassword(MouseEvent mouseEvent) throws IOException {
+        justOne = false;
         AnchorPane anchorPane = FXMLLoader.load(LoginMenuG.class.getResource("/fxml/changePassword.fxml"));
         Scene scene = new Scene(anchorPane, 520, 400);
 
         stage.setScene(scene);
         stage.show();
     }
+
     public void enterChangeEmail(MouseEvent mouseEvent) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(LoginMenuG.class.getResource("/fxml/changePassword.fxml"));
+        justOne = false;
+        AnchorPane anchorPane = FXMLLoader.load(LoginMenuG.class.getResource("/fxml/changeEmail.fxml"));
         Scene scene = new Scene(anchorPane, 520, 400);
 
         stage.setScene(scene);
         stage.show();
     }
+
     public void enterChangeNickname(MouseEvent mouseEvent) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(LoginMenuG.class.getResource("/fxml/changePassword.fxml"));
+        justOne = false;
+        AnchorPane anchorPane = FXMLLoader.load(LoginMenuG.class.getResource("/fxml/changeNickname.fxml"));
         Scene scene = new Scene(anchorPane, 520, 400);
 
         stage.setScene(scene);
         stage.show();
     }
+
     public void enterChangeSlogan(MouseEvent mouseEvent) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(LoginMenuG.class.getResource("/fxml/changePassword.fxml"));
+        justOne = false;
+        AnchorPane anchorPane = FXMLLoader.load(LoginMenuG.class.getResource("/fxml/changeSlogan.fxml"));
         Scene scene = new Scene(anchorPane, 520, 400);
 
         stage.setScene(scene);
@@ -152,6 +175,7 @@ public class ProfileMenuG extends Application {
     }
 
     public void setNewPassword(MouseEvent mouseEvent) throws Exception {
+        justOne = true;
         String newPassword = this.password.getText();
         if (newPassword.isEmpty())
             showAlert(Alert.AlertType.ERROR, "Change Error!", "Password is empty!");
@@ -160,6 +184,7 @@ public class ProfileMenuG extends Application {
             player.setPassword(newPassword);
             SaveAndLoadData.SaveToJson(Player.players, DataEnumFile.PLAYERS.getFileName());
             showAlert(Alert.AlertType.INFORMATION, "Change Successful!", "Your password successfully changed!");
+
             start(stage);
         }
 
@@ -183,6 +208,7 @@ public class ProfileMenuG extends Application {
     }
 
     public void enterChooseAvatar(MouseEvent mouseEvent) throws IOException {
+        justOne = false;
         AnchorPane anchorPane = FXMLLoader.load(LoginMenuG.class.getResource("/fxml/avatar.fxml"));
         myAvatar = (ImageView) anchorPane.lookup("#myAvatar");
         if (Player.getCurrentPlayer().getAvatarResource() != null)
@@ -191,7 +217,7 @@ public class ProfileMenuG extends Application {
         Button chooseFile = new Button("Choose your photo");
         chooseFile.setLayoutX(10);
         chooseFile.setLayoutY(360);
-        chooseFile.setOnAction(new EventHandler<ActionEvent>() {
+             chooseFile.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 File selectedFile = fileChooser.showOpenDialog(stage);
@@ -203,6 +229,7 @@ public class ProfileMenuG extends Application {
             }
         });
         anchorPane.getChildren().add(chooseFile);
+
         Scene scene = new Scene(anchorPane, 520, 400);
 
         stage.setScene(scene);
@@ -210,18 +237,62 @@ public class ProfileMenuG extends Application {
     }
 
     private void setAvatar(File selectedFile) throws Exception {
-        String url = selectedFile.getAbsolutePath();
+        justOne = true;
+        start(stage);  String url = selectedFile.getAbsolutePath();
         Player player = Player.getCurrentPlayer();
         player.setAvatarResource(url);
         SaveAndLoadData.SaveToJson(Player.players, DataEnumFile.PLAYERS.getFileName());
-        start(stage);
+
     }
 
     public void chooseAvatar(MouseEvent mouseEvent) throws Exception {
+        justOne = true;
         ImageView imageView = (ImageView) mouseEvent.getSource();
         Player player = Player.getCurrentPlayer();
         player.setAvatarResource(imageView.getImage().getUrl());
         SaveAndLoadData.SaveToJson(Player.players, DataEnumFile.PLAYERS.getFileName());
         start(stage);
+    }
+
+    public void setNewSlogan(MouseEvent mouseEvent) throws Exception {
+        justOne = true;
+        String newSlogan = this.slogan.getText();
+        if (newSlogan.isEmpty())
+            showAlert(Alert.AlertType.ERROR, "Change Error!", "slogan is empty!");
+        else {
+            Player player = Player.getCurrentPlayer();
+            player.setSlogan(newSlogan);
+            SaveAndLoadData.SaveToJson(Player.players, DataEnumFile.PLAYERS.getFileName());
+            showAlert(Alert.AlertType.INFORMATION, "Change Successful!", "Your slogan successfully changed!");
+            start(stage);
+        }
+    }
+
+    public void setNewNickname(MouseEvent mouseEvent) throws Exception {
+        justOne = true;
+        String newPassword = this.password.getText();
+        if (newPassword.isEmpty())
+            showAlert(Alert.AlertType.ERROR, "Change Error!", "nickname is empty!");
+        else {
+            Player player = Player.getCurrentPlayer();
+            player.setNickname(newPassword);
+            SaveAndLoadData.SaveToJson(Player.players, DataEnumFile.PLAYERS.getFileName());
+            showAlert(Alert.AlertType.INFORMATION, "Change Successful!", "Your nickname successfully changed!");
+            start(stage);
+        }
+    }
+
+    public void setNewEmail(MouseEvent mouseEvent) throws Exception {
+        justOne = true;
+        String newEmail = this.password.getText();
+        if (newEmail.isEmpty())
+            showAlert(Alert.AlertType.ERROR, "Change Error!", "Password is empty!");
+        else {
+            Player player = Player.getCurrentPlayer();
+            player.setEmail(newEmail);
+            SaveAndLoadData.SaveToJson(Player.players, DataEnumFile.PLAYERS.getFileName());
+            showAlert(Alert.AlertType.INFORMATION, "Change Successful!", "Your email successfully changed!");
+            start(stage);
+        }
     }
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menus.NewGameMenu">
+
+
+    <Button layoutX="190.0" layoutY="275.0" mnemonicParsing="false" onMouseClicked="#runGame" text="start new game" textFill="#f847ff">
+        <font>
+          <Font name="Bodoni MT Italic" size="18.0" />
+        </font>
+    </Button>
+    <Button layoutX="356.0" layoutY="275.0" mnemonicParsing="false" onMouseClicked="#backToMainMenu" text="back" textFill="#f847ff">
+        <font>
+          <Font name="Bodoni MT Italic" size="18.0" />
+        </font>
+    </Button>
+    <Text fill="#d68aff" layoutX="394.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="maps: choose one of them">
+        <font>
+          <Font name="Bodoni MT Italic" size="18.0" />
+        </font>
+    </Text>
+    <Text fill="#d68aff" layoutX="89.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="players: choose some of them">
+        <font>
+          <Font name="Bodoni MT Italic" size="18.0" />
+        </font>
+    </Text>
+   <Button layoutX="178.0" layoutY="126.0" mnemonicParsing="false" onMouseClicked="#select" text="select" textFill="#f847ff" >
+      <font>
+         <Font name="Bodoni MT Italic" size="18.0" />
+      </font>
+   </Button>
+</AnchorPane>

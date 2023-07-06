@@ -101,7 +101,7 @@ public class MapRendererG extends Application {
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
 
-        map = Map.loadMap("desert");
+        map = Map.loadMap("a");
 
         LoadImages.loadAllImages();
 
