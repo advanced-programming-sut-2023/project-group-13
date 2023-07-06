@@ -24,11 +24,11 @@ public class LoadImages {
 
     public static ImageView[] loadBuildingIcons() {
         ImageView[] icons = {
-                IconPath.CASTLE_BUILDING_ICON.getImageView(),
-                IconPath.FARM_BUILDING_ICON.getImageView(),
-                IconPath.INDUSTRY_BUILDING_ICON.getImageView(),
-                IconPath.WEAPON_BUILDING_ICON.getImageView(),
-                IconPath.TOWN_BUILDING_ICON.getImageView()
+                IconPath.CASTLE_BUILDING_ICON.getIconImageView(),
+                IconPath.FARM_BUILDING_ICON.getIconImageView(),
+                IconPath.INDUSTRY_BUILDING_ICON.getIconImageView(),
+                IconPath.WEAPON_BUILDING_ICON.getIconImageView(),
+                IconPath.TOWN_BUILDING_ICON.getIconImageView()
         };
     return icons;
     }
@@ -60,6 +60,7 @@ public class LoadImages {
     }
 
     public static HashMap<BuildingType, Image> getBuildingImages() {
+        System.out.println("it successfully loads the image");
         return buildingImages;
     }
 

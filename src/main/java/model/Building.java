@@ -63,6 +63,7 @@ public class Building {
     }
 
     public BuildingType getBuildingType() {
+        System.out.println("it comes here to the buildingType enum");
         return buildingType;
     }
 

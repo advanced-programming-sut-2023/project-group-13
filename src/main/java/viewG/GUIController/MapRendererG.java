@@ -1,5 +1,6 @@
 package viewG.GUIController;
 
+import controller.MapMenuController;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -14,6 +15,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
@@ -46,7 +48,7 @@ public class MapRendererG extends Application {
 
     private Pane backGroundPane;
     private Pane bigPane;
-    private Pane centralPane;
+    public static Pane centralPane;
     private Scene scene;
 
     // move map automatically
@@ -59,6 +61,8 @@ public class MapRendererG extends Application {
     private boolean validMoveLeft = false;
     private boolean validMoveRight = false;
     private boolean validMoveDown = false;
+
+    private MediaPlayer mediaPlayer;
 
     double minScale = 0.7;  // Minimum scale (50% zoom)
     double maxScale = 2.0;  // Maximum scale (200% zoom)
@@ -75,7 +79,7 @@ public class MapRendererG extends Application {
 
     private Pane cellContainer;
 
-    private Cell[][] map;
+    public static Cell[][] map;
 
     private int cellRow;
     private int cellCol;
@@ -96,12 +100,18 @@ public class MapRendererG extends Application {
 
     private BarImages barImages;
 
+    public static MapMenuController mapMenuController = new MapMenuController();
+
+    public static double currentLayoutXOfCentralPane;
+    public static double currentLayoutYOfCentralPane;
+
 
     @Override
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
 
-        map = Map.loadMap("desert");
+//        map = Map.loadMap("desert");
+        map = mapMenuController.loadMap("desert");
 
         LoadImages.loadAllImages();
 
@@ -118,6 +128,11 @@ public class MapRendererG extends Application {
         buttomBar = new Pane();
 
 
+//        centralPane.setOnMousePressed(event -> {
+//            double mouseX = event.getX();
+//            double mouseY = event.getY();
+//            System.out.println("x = " + mouseX + ", y = " + mouseY);
+//        });
 
 
         Image desertImage = new Image(MapRendererG.class.getResource(Paths.DESERT_BACKGROUND.getPath()).toExternalForm());
@@ -193,8 +208,8 @@ public class MapRendererG extends Application {
         int incrementSpacingIcon = 45;
 
         ImageView[] iconsOfButtomRightMainBar = {
-                IconPath.RIGHT_BOTTOM_TALK_TO_ALLIES.getImageView()
-                , IconPath.RIGHT_BOTTOM_ORDER_OF_MERIT_ICON.getImageView()
+                IconPath.RIGHT_BOTTOM_TALK_TO_ALLIES.getIconImageView()
+                , IconPath.RIGHT_BOTTOM_ORDER_OF_MERIT_ICON.getIconImageView()
         };
 
         int layoutX = baseLayoutX + incrementSpacingIcon;
@@ -215,8 +230,8 @@ public class MapRendererG extends Application {
         int incrementSpacingIcon = 45;
 
         ImageView[] iconsOfRightMainBar = {
-                IconPath.RIGHT_TOWERS_ICON.getImageView(),
-                IconPath.RIGHT_MILITARY_ICON.getImageView(),
+                IconPath.RIGHT_TOWERS_ICON.getIconImageView(),
+                IconPath.RIGHT_MILITARY_ICON.getIconImageView(),
         };
         int layoutX = baseLayoutX + incrementSpacingIcon;
         for (ImageView icon : iconsOfRightMainBar) {
@@ -229,7 +244,7 @@ public class MapRendererG extends Application {
             layoutX += incrementSpacingIcon;
         }
 
-        ImageView gateHouse = IconPath.RIGHT_GATE_HOUSES_ICON.getImageView();
+        ImageView gateHouse = IconPath.RIGHT_GATE_HOUSES_ICON.getIconImageView();
         gateHouse.setLayoutX(baseLayoutX + incrementSpacingIcon);
         gateHouse.setLayoutY(baseLayoutY + incrementSpacingIcon);
         imageView = gateHouse;
@@ -248,15 +263,6 @@ public class MapRendererG extends Application {
 //        int baseLayoutY = 215;
 //        int incrementSpacingIcon =  75;
 //
-//        ImageView[] initialIconsInsideTheBar = {
-//                IconPath.INITIAL_STAIRS_ICON.getImageView(),
-//                IconPath.INITIAL_SMALL_WALL_ICON.getImageView(),
-//                IconPath.INITIAL_BIG_WALL_ICON.getImageView(),
-//                IconPath.INITIAL_CRENULATED_WALL_ICON.getImageView(),
-//                IconPath.INITIAL_BARRACKS_ICON.getImageView(),
-//                IconPath.INITIAL_MERCENARY_ICON.getImageView(),
-//                IconPath.INITIAL_ARMORY_ICON.getImageView(),
-//        };
 //
 //        int layoutX = baseLayoutX + incrementSpacingIcon;
 //        for (ImageView icon : initialIconsInsideTheBar) {
@@ -282,12 +288,12 @@ public class MapRendererG extends Application {
         int incrementSpacingIcon = 45;
 
         ImageView[] buildingTypeButtomBaricons = {
-                IconPath.CASTLE_BUILDING_ICON.getImageView(),
-                IconPath.FARM_BUILDING_ICON.getImageView(),
-                IconPath.INDUSTRY_BUILDING_ICON.getImageView(),
-                IconPath.WEAPON_BUILDING_ICON.getImageView(),
-                IconPath.TOWN_BUILDING_ICON.getImageView(),
-                IconPath.FOOD_PROCESSING_BUILDING_Icon.getImageView()
+                IconPath.CASTLE_BUILDING_ICON.getIconImageView(),
+                IconPath.FARM_BUILDING_ICON.getIconImageView(),
+                IconPath.INDUSTRY_BUILDING_ICON.getIconImageView(),
+                IconPath.WEAPON_BUILDING_ICON.getIconImageView(),
+                IconPath.TOWN_BUILDING_ICON.getIconImageView(),
+                IconPath.FOOD_PROCESSING_BUILDING_Icon.getIconImageView()
         };
 
         int layoutX = baseLayoutX + incrementSpacingIcon;
@@ -354,6 +360,12 @@ public class MapRendererG extends Application {
                 window.setFill(Color.TRANSPARENT); // Make the rectangle transparent
                 window.setStroke(Color.BLACK); // Add a border to the rectangle
 
+                currentLayoutXOfCentralPane = event.getX();
+                currentLayoutYOfCentralPane = event.getY();
+
+//                System.out.println(currentLayoutXOfCentralPane);
+//                System.out.println(currentLayoutYOfCentralPane);
+
                 initialMouseX.set(event.getX());
                 initialMouseY.set(event.getY());
 
@@ -416,7 +428,7 @@ public class MapRendererG extends Application {
 
                 double x = event.getX();
                 double y = event.getY();
-//            System.out.println("x = " + x + ", y = " + y);
+            System.out.println("x = " + x + ", y = " + y);
                 double x_coordinate = x / 35;
                 double y_coordinate = y / 35;
                 selectImageView.setImage(selectImageWhite);
@@ -497,6 +509,8 @@ public class MapRendererG extends Application {
                             cellCol = (col - 2) * 8 + smallerCol;
                             if (loadBuildingsOfMap()) {
                                 buildingImageView = new ImageView();
+                                System.out.println("the number of cell row for exception is: " + cellRow);
+                                System.out.println("the number of cell col for exception is: " + cellCol);
                                 MapRendererG.buildingImageView.setImage(LoadImages.getBuildingImages().get(map[cellRow][cellCol].getBuilding().getBuildingType()));
                                 MapRendererG.buildingImageView.setFitWidth(250);
                                 MapRendererG.buildingImageView.setFitHeight(250);

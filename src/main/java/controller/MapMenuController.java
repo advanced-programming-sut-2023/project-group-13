@@ -4,6 +4,7 @@ import model.*;
 import model.Enums.DataEnumFile;
 import model.Enums.TypeofGround;
 import view.MapMenu;
+import viewG.GUIController.MapRendererG;
 
 import java.io.File;
 import java.io.IOException;
@@ -338,8 +339,11 @@ public class MapMenuController {
     }
 
     private boolean checkTypeOfGround(String dropType, int x, int y, String drop) {
-        cell = map.getMapCells(x, y);
-        TypeofGround typeOfGround = map.getMapCells(x,y).getTypeofGround();
+        if (map == null) {
+            cell = MapRendererG.map[x][y];
+        } else cell = map.getMapCells(x, y);
+
+        TypeofGround typeOfGround = cell.getTypeofGround();
         if (dropType.equals("Soldier")) {
             if (typeOfGround.equals(TypeofGround.SEA) ||
                     typeOfGround.equals(TypeofGround.BIGPOOL)) {
@@ -428,6 +432,11 @@ public class MapMenuController {
 //                return "you can't drop building in here";
 //                // todo to put check type of ground in an enum which needs more effort
 //            }
+
+        if (cell.isBuildingObstacle()) {
+            return "you can't drop building in here it is occupied with another building";
+        }
+
         if (!cell.setBuilding(type,x,y)) {
             return "there is no building with this type name!";
         }
@@ -436,13 +445,26 @@ public class MapMenuController {
                 && !BuildingType.HOPS_FARMER.getName().equals(type)) {
             cell.setObstacle(true);
         }
+
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                map.getMapCells(x - Math.min(i, x), y - Math.min(j, y)).setBuildingObstacle(true);
+                map.getMapCells(x + Math.min(199 - x, i), y + Math.min(199 - y, j)).setBuildingObstacle(true);
+                map.getMapCells(x + Math.min(199 - x, i), y - Math.min(j, y)).setBuildingObstacle(true);
+                map.getMapCells(x - Math.min(i, x), y + Math.min(199 - y, j)).setBuildingObstacle(true);
+            }
+        }
         cell.setHasBuildingInCell(true);
         map.SavetoJason();
+
         return "building dropped successfully";
         // todo to complete this method
     }
     public String dropBuilding(int x, int y, String type) {
-        cell = map.getMapCells(x,y);
+        if (map == null) {
+            cell = MapRendererG.map[x][y];
+
+        } else cell = map.getMapCells(x, y);
         if (!checkNegativity(x, y)) {
             return "negative index!";
         }
@@ -457,6 +479,11 @@ public class MapMenuController {
 //                return "you can't drop building in here";
 //                // todo to put check type of ground in an enum which needs more effort
 //            }
+
+        if (cell.isBuildingObstacle()) {
+            return "you can't drop building in here it is occupied with another building";
+        }
+
         if (!cell.setBuilding(type,x,y)) {
             return "there is no building with this type name!";
         }
@@ -464,6 +491,14 @@ public class MapMenuController {
                 && !BuildingType.APPLE_ORCHARD.getName().equals(type) && !BuildingType.WHEAT_FARMER.getName().equals(type)
                 && !BuildingType.HOPS_FARMER.getName().equals(type)) {
             cell.setObstacle(true);
+        }
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                map.getMapCells(x - Math.min(i, x), y - Math.min(j, y)).setBuildingObstacle(true);
+                map.getMapCells(x + Math.min(199 - x, i), y + Math.min(199 - y, j)).setBuildingObstacle(true);
+                map.getMapCells(x + Math.min(199 - x, i), y - Math.min(j, y)).setBuildingObstacle(true);
+                map.getMapCells(x - Math.min(i, x), y + Math.min(199 - y, j)).setBuildingObstacle(true);
+            }
         }
         cell.setHasBuildingInCell(true);
         map.SavetoJason();
@@ -548,6 +583,17 @@ public class MapMenuController {
         map = new Map(loaded_map.length, mapName);
         map.setMap(loaded_map);
         return "map loaded successfully!";
+    }
+
+    public Cell[][] loadMap(String mapName) throws IOException {
+//        String mapName = matcher.group("mapName");
+        // todo to upgrade the size of the map while loading the map;
+        if ((loaded_map = Map.loadMap(mapName)) == null) {
+            System.out.println("there is no such map");
+        }
+        map = new Map(loaded_map.length, mapName);
+        map.setMap(loaded_map);
+        return map.getMap();
     }
 
     public boolean CheckMapExist(String command, ArrayList<Map> maps) {

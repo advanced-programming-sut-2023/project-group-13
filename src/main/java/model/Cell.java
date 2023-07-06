@@ -18,6 +18,8 @@ public class Cell implements Comparable<Cell> {
     private int f; // it understands the cost of the path
     private int g; // it understand the distance
     private boolean obstacle;
+
+    private boolean buildingObstacle;
     private Cell parent;
 
     private TreeType tree;
@@ -72,6 +74,7 @@ public class Cell implements Comparable<Cell> {
     }
 
     public Building getBuilding() {
+        System.out.println("it comes here to the building class");
         return building;
     }
 
@@ -178,5 +181,13 @@ public class Cell implements Comparable<Cell> {
 
     public void setObstacle(boolean obstacle) {
         this.obstacle = obstacle;
+    }
+
+    public boolean isBuildingObstacle() {
+        return buildingObstacle;
+    }
+
+    public void setBuildingObstacle(boolean buildingObstacle) {
+        this.buildingObstacle = buildingObstacle;
     }
 }
